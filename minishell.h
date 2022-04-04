@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/04 17:55:38 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/04 19:16:36 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@
 # include <time.h>
 # include <stdlib.h>
 # include <pthread.h>
+
+char	*quotation_open(char *str);
 
 #endif
