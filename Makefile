@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
+#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/04/04 17:43:38 by aherrero         ###   ########.fr        #
+#    Updated: 2022/04/04 18:03:22 by cbustama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,11 @@ HEADERS = includes/minishell.h
 LIBFT = libft/libft.a
 CC = gcc
 
-READLINE_DIR = ~/.brew/Cellar/readline/8.1.2
+READLINE_DIR = ~/.brew/opt/readline/include
 
 
-FLAGS = -Wall -Wextra -Werror -I $(READLINE_DIR)/include/ -L $(READLINE_DIR)/lib/ -lreadline -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror 
+F_READLINE = -I $(READLINE_DIR) -L $(READLINE_DIR)/lib/ -lreadline 
 
 .c.o: $(SRC)
 	@$(CC) $(FLAGS) -c -o $@ $<
@@ -40,7 +41,7 @@ $(NAME):$(OBJ)
 		@${MAKE} -C libft
 		@echo "$(GREEN)Libraries done.$(EOC)"
 		@echo "$(WHT)Compiling Minishell...$(EOC)"
-		@$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT)
+		@$(CC) $(FLAGS) -o $(NAME) $(F_READLINE) $(OBJ) $(LIBFT)
 		@echo "$(GREEN)Minishell build completed.$(EOC)"
 
 all: $(NAME)
