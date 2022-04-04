@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/04/04 16:47:31 by aherrero         ###   ########.fr        #
+#    Updated: 2022/04/04 17:43:38 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,10 @@ HEADERS = includes/minishell.h
 LIBFT = libft/libft.a
 CC = gcc
 
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+READLINE_DIR = ~/.brew/Cellar/readline/8.1.2
+
+
+FLAGS = -Wall -Wextra -Werror -I $(READLINE_DIR)/include/ -L $(READLINE_DIR)/lib/ -lreadline -g3 -fsanitize=address
 
 .c.o: $(SRC)
 	@$(CC) $(FLAGS) -c -o $@ $<
