@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 15:15:13 by errero            #+#    #+#             */
-/*   Updated: 2022/02/03 18:20:03 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/04 18:27:30 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_print_colors(char *str, char *color);
 char	*ft_read_file(char *name, int len);
+int		ft_str_equals(const char *s1, const char *s2);
 
 #endif

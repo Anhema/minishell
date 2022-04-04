@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
+#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/04/04 18:03:22 by cbustama         ###   ########.fr        #
+#    Updated: 2022/04/04 18:30:10 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CC = gcc
 READLINE_DIR = ~/.brew/opt/readline/include
 
 
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 F_READLINE = -I $(READLINE_DIR) -L $(READLINE_DIR)/lib/ -lreadline 
 
 .c.o: $(SRC)

@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 14:32:42 by errero            #+#    #+#              #
-#    Updated: 2022/04/04 16:47:29 by aherrero         ###   ########.fr        #
+#    Updated: 2022/04/04 18:27:01 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCS = ft_memset.c\
 		ft_putnbr_fd.c\
         ft_print_colors.c\
 		ft_read_file.c\
+		ft_str_equals.c\
 
 BONUS = ft_lstnew.c\
           ft_lstadd_front.c\

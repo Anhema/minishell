@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_str_equals.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/04 17:55:38 by aherrero         ###   ########.fr       */
+/*   Created: 2022/04/04 18:25:30 by aherrero          #+#    #+#             */
+/*   Updated: 2022/04/04 18:27:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <stddef.h>
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <string.h>
-# include <sys/time.h>
-# include <limits.h>
-# include <time.h>
-# include <stdlib.h>
-# include <pthread.h>
+int	ft_str_equals(const char *s1, const char *s2)
+{
+	int	i;
 
-#endif
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (0);
+	while (s1[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}
