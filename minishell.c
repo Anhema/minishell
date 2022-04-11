@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/04 19:18:26 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:37:11 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,19 @@ void	ft_exit(char *str)
 	exit(0);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
+	int		i;
 
+	i = 0;
+	(void)argc;
+	(void)argv;
+	while (envp[i])
+	{
+		printf("%s\n", envp[i]);
+		i++;
+	}	
 	str = readline("> ");
 	while (1)
 	{

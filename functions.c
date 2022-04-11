@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/11 17:35:04 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/04/11 17:40:24 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ int main (int argc, char **argv)
 	(void)argc;
 	
 	printf("%s\n",ft_sort(argv[1]));
-	printf("%d\n",n_exit);
+	printf("%d\n",e_exit);
 	return (0);
 }
