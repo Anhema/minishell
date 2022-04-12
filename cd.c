@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/11 17:29:14 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/12 16:24:55 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*get_path(char *str)
 	path = malloc(sizeof(char) * ft_strlen(command[1]));
 	if (!path)
 		return (NULL);
-	
 	path = command[1];
 	printf("PATH: %s\n", path);
 	printf("ENV: %s\n", getenv());
@@ -45,15 +44,13 @@ char	*get_path(char *str)
 	return (path);
 }
 
-void	cd(char *str)
+void	cd(char *str, t_dict *env)
 {
 	char	*path;
 
 	path = get_path(str);
 	if (!path)
-	{
-		path = ft_strjoin("/Users/", getenv("USER"));
-	}
+		path = ft_strjoin("/Users/", get_dict_value(env, "USER"));
 	if (chdir(path) == 0)
 		ft_pwd();
 	else

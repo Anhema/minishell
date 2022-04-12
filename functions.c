@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/11 17:40:24 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:50:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_sort(char *c)
 {
-	char	*s;
+	char	**s;
 
-	s = *ft_split(c, ' ');
+	s = ft_split(c, ' ');
 	return (*&s);
 }
 // enum	e_builtins
