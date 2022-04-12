@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/12 17:50:15 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/12 18:28:05 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,20 @@
 char	*ft_sort(char *c)
 {
 	char	**s;
-
-	s = ft_split(c, ' ');
-	return (*&s);
+	char	value;
+	int		i;
+	i = 0;
+	while (c[i])
+	{
+		if (c[i] == ' ')
+		 	value = ' ';
+		else if (c[i] == '\t')
+			value = '\t';
+		i++;
+	}
+	s = ft_split(c, value);
+	
+	return (*s);
 }
 // enum	e_builtins
 // {
@@ -55,6 +66,6 @@ int main (int argc, char **argv)
 	(void)argc;
 	
 	printf("%s\n",ft_sort(argv[1]));
-	printf("%d\n",e_exit);
+	
 	return (0);
 }
