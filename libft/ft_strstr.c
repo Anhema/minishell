@@ -1,32 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/18 17:32:19 by aherrero         ###   ########.fr       */
+/*   Created: 2021/07/27 15:52:26 by aherrero          #+#    #+#             */
+/*   Updated: 2022/04/19 17:15:34 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stddef.h>
+#include "libft.h"
 
-char	**ft_sort(char *c)
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	char	**s;
-	char	value;
-	int		i;
+	size_t	i;
+	size_t	j;
 
+	if (*needle == 0)
+		return ((char *)haystack);
 	i = 0;
-	while (c[i])
+	while (haystack[i] != '\0')
 	{
-		if (c[i] == ' ')
-			value = ' ';
-		else if (c[i] == '\t')
-			value = '\t';
+		j = 0;
+		while (needle[j] != '\0' && haystack[i + j] != '\0'
+			&& needle[j] == haystack[i + j])
+		{
+			if (needle[j + 1] == '\0')
+			{
+				return ((char *)(haystack + i));
+			}
+			j++;
+		}
 		i++;
 	}
-	s = ft_split(c, value);
-	return (s);
+	return (0);
 }

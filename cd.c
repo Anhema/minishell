@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/12 16:24:55 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/18 17:32:36 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,4 @@ void	cd(char *str, t_dict *env)
 	else
 		printf("cd: no such file or directory: %s\n", path);
 	free(path);
-}
-
-int main (void)
-{
-	cd("cd /~/");
-	return (0);
 }

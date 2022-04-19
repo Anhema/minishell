@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/19 14:32:42 by errero            #+#    #+#              #
-#    Updated: 2022/04/04 18:27:01 by aherrero         ###   ########.fr        #
+#    Updated: 2022/04/19 17:25:17 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,15 @@ NAME = libft.a
 SRCS = ft_memset.c\
 		ft_strlen.c\
 		ft_strlcpy.c\
+		ft_strcpy.c\
+		ft_strncpy.c\
 		ft_strlcat.c\
 		ft_strncmp.c\
 		ft_strcmp.c\
 		ft_strchr.c\
 		ft_strrchr.c\
 		ft_strnstr.c\
+		ft_strstr.c\
 		ft_strdup.c\
 		ft_isalpha.c\
 		ft_isdigit.c\
@@ -51,6 +54,7 @@ SRCS = ft_memset.c\
         ft_print_colors.c\
 		ft_read_file.c\
 		ft_str_equals.c\
+		ft_strreplace.c\
 
 BONUS = ft_lstnew.c\
           ft_lstadd_front.c\

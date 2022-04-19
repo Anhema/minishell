@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   functions.c                                        :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/18 17:32:19 by aherrero         ###   ########.fr       */
+/*   Created: 2021/07/19 14:28:00 by errero            #+#    #+#             */
+/*   Updated: 2022/04/19 17:24:40 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stddef.h>
 
-char	**ft_sort(char *c)
+char	*ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	char	**s;
-	char	value;
-	int		i;
+	size_t	count;
+	size_t	i;
 
+	count = 0;
 	i = 0;
-	while (c[i])
+	if (dst == NULL || src == NULL)
+		return (NULL);
+	while (src[count] != '\0')
+		count++;
+	if (dstsize != 0)
 	{
-		if (c[i] == ' ')
-			value = ' ';
-		else if (c[i] == '\t')
-			value = '\t';
-		i++;
+		while (src[i] != '\0' && i < (dstsize - 1))
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
 	}
-	s = ft_split(c, value);
-	return (s);
+	return (dst);
 }

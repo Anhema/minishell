@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/12 17:46:41 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/18 17:56:22 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,9 @@ t_dict	*del_one(t_dict *dict, char	*key);
 char	*quotation_open(char *str);
 void	print_env(t_dict *env);
 t_dict	*create_env(char **str);
+t_dict	*ft_export(t_dict *env, char **str);
+t_dict	*ft_unset(t_dict *env, char **str);
+
+char	**ft_sort(char *c);
 
 #endif

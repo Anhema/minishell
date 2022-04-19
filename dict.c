@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/12 17:45:26 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/19 16:35:45 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_dict	*dict_new(char *key, char *value)
 
 	list = malloc(sizeof(t_dict));
 	if (list == NULL)
-		return (0);
+		return (NULL);
 	if (!key)
 		list->key = NULL;
 	else
@@ -62,26 +62,27 @@ t_dict	*dict_add_front(t_dict *lst, t_dict *new)
 t_dict	*del_one(t_dict *dict, char	*key)
 {
 	t_dict	*temp;
+	t_dict	*result;
+	t_dict	*new;
 
 	temp = dict;
+	result = NULL;
 	if (!dict)
 		return (NULL);
 	else
 	{
-		while (dict != NULL)
+		while (dict->next != NULL)
 		{
-			if (temp->key == key)
+			if (ft_str_equals(temp->key, key) == 0)
 			{
-				free (temp->key);
-				free (temp->value);
-				temp = temp->next;
-				break ;
+				new = dict_new(dict->key, dict->value);
+				result = dict_add_back(result, new);
 			}
 			temp = dict->next;
 			dict = temp;
 		}
 	}
-	return (dict);
+	return (result);
 }
 
 char	*get_dict_value(t_dict *dict, char	*key)
@@ -95,7 +96,7 @@ char	*get_dict_value(t_dict *dict, char	*key)
 	{
 		while (dict != NULL)
 		{
-			if (temp->key == key)
+			if (ft_str_equals(temp->key, key) == 1)
 				return (temp->value);
 			temp = dict->next;
 			dict = temp;

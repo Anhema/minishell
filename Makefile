@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/04/11 19:36:32 by aherrero         ###   ########.fr        #
+#    Updated: 2022/04/12 18:57:02 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC = minishell.c \
 		errors.c \
 		env.c \
 		dict.c \
+		functions.c \
 
 OBJ = $(SRC:.c=.o)
 
