@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/21 17:29:58 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:16:03 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_dict	*del_one(t_dict *dict, char	*key)
 		return (NULL);
 	else
 	{
-		while (dict->next != NULL)
+		while (dict)
 		{
 			if (ft_str_equals(temp->key, key) == 0)
 			{

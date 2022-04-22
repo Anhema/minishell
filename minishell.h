@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/22 16:54:30 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:34:28 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,19 @@ enum	e_builtins
 	e_exit = 7,
 }	builtins;
 
-typedef struct dict_t_struct
+typedef struct s_dict_t_struct
 {
 	char					*key;
 	char					*value;
-	struct dict_t_struct	*next;
+	struct s_dict_t_struct	*next;
 }	t_dict;
+
+typedef struct s_data
+{
+	t_dict					*env;
+	t_dict					*commands;
+	char					*usr;
+}	t_data;
 
 t_dict	**dicta_alloc(void);
 void	dict_dealloc(t_dict **dict);
@@ -55,14 +62,14 @@ t_dict	*dict_add_front(t_dict *lst, t_dict *new);
 char	*get_dict_value(t_dict *dict, char	*key);
 t_dict	*del_one(t_dict *dict, char	*key);
 char	*quotation_open(char *str);
-void	print_env(t_dict *env);
+void	print_dict(t_dict *env);
 t_dict	*create_env(char **str);
 t_dict	*ft_export(t_dict *env, char **str);
 t_dict	*ft_unset(t_dict *env, char **str);
-void	_cd(char *str, t_dict *env);
+void	_cd(char *str, char *usr);
 void	ft_pwd(void);
 
-char	**ft_sort(char *c);
+t_dict	*ft_sort(char **c);
 char	*ft_history(char *str);
 
 

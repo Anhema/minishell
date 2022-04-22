@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/21 18:10:28 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/04/22 18:57:09 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,40 @@ char	*space_front_to_back(char *c)
 	return (str);
 }
 
-char	**ft_sort(char *c)
+t_dict	*ft_sort(char **c)
 {
-	char	**s;
+	t_dict	*command;
+	t_dict	*new;
+	char	**temp;
+	char	*str;
+	int		i;
+	int		j;
 
 	if (!c)
 		return (NULL);
-	s = ft_split(space_front_to_back(c), ' ');
-	return (s);
+	command = NULL;
+	j = 0;
+	while (c[j])
+	{
+		str = NULL;
+		temp = ft_split(space_front_to_back(c[j]), ' ');
+		i = 1;
+		while (temp[i])
+		{
+			str = ft_strjoin(str, temp[i]);
+			i++;
+		}
+		new = dict_new(temp[0], str);
+		command = dict_add_back(command, new);
+		j++;
+	}
+	return (command);
 }
 
 char	*ft_history(char *str)
 {
 	int		i;
 	int		fd;
-	//char	*s;
 	char	*dst;
 
 	i = -1;

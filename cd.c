@@ -6,55 +6,54 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/21 17:44:27 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/22 17:19:02 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	ft_pwd(void)
-// {
-// 	char	*s;
-
-// 	s = getcwd(NULL, 0);
-// 	printf("%s\n", s);
-// 	free (s);
-// }
-
 char	*get_path(char *str)
 {
 	char	**command;
 	char	*path;
-	int		i;
 
 	command = ft_split(str, ' ');
+	if (!command[1] || ft_str_equals(command[1], "~") == 1)
+		return (NULL);
 	path = malloc(sizeof(char) * ft_strlen(command[1]));
 	if (!path)
 		return (NULL);
 	path = command[1];
-	//printf("PATH: %s\n", path);
-	//printf("ENV: %s\n", getenv());
-	i = 0;
-	// while (command[i])
-	// {
-	// 	free(command[i]);
-	// 	i++;
-	// }
-	// free(command);
+	free(command);
 	return (path);
 }
 
-void	_cd(char *str, t_dict *env)
+void	_cd(char *str, char *usr)
 {
 	char	*path;
 
 	path = get_path(str);
 	(void)env;
-	if (chdir(path) == 0)
+	if (!path)
 	{
-		ft_pwd();
+		path = ft_strjoin("/Users/", usr);
+		if (chdir(path) == 0)
+		{
+			free(path);
+			return ;
+		}
+		else
+			printf("cd: no such file or directory: %s\n", path);
 	}
 	else
-		printf("cd: no such file or directory: %s\n", path);
+	{
+		if (chdir(path) == 0)
+		{
+			free(path);
+			return ;
+		}
+		else
+			printf("cd: %s: No such file or directory\n", path);
+	}
 	free(path);
 }

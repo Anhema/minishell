@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/22 16:55:37 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:27:18 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,44 +51,42 @@ char	*get_prompt(char *usr)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
-	char	*usr;
 	int		i;
-	t_dict	*env;
-	char	**built;
+	t_data	data;
 
 	i = 0;
 	(void)argc;
 	(void)argv;
-	env = create_env(envp);
-	usr = get_dict_value(env, "USER");
-	str = readline(get_prompt(usr));
-	//ft_history(str);
+	data.env = create_env(envp);
+	data.usr = get_dict_value(data.env, "USER");
+	str = readline(get_prompt(data.usr));
 	while (1)
 	{
 		ft_history(str);
-		built = ft_sort(str);
-		if (built[0])
+		data.commands = ft_sort(ft_split(str, '|'));
+		//print_dict(data.commands);
+		if (data.commands)
 		{
-			if (ft_str_equals(str, "exit") == 1)
+			if (ft_str_equals(str, "exit"))
 				ft_exit(str);
 			else if (quotation_open(str) == 0)
 				printf("Cierra las comillas: %s\n", str);
-			else if (ft_str_equals(str, "pwd") == 1)
+			else if (ft_str_equals(data.commands->key, "pwd"))
 				ft_pwd();
-			else if (ft_str_equals(str, "env") == 1)
-				print_env(env);
-			else if (ft_str_equals(str, "history") == 1)
+			else if (ft_str_equals(data.commands->key, "env") && !data.commands->value)
+				print_dict(data.env);
+			else if (ft_str_equals(str, "history"))
 				ft_read_file(".history", 0);
-			else if (ft_str_equals(built[0], "cd") == 1)
-				_cd(str, env);
-			else if (ft_str_equals(built[0], "export") == 1)
-				env = ft_export(env, built);
-			else if (ft_str_equals(built[0], "unset") == 1)
-				env = ft_unset(env, built);
+			else if (ft_str_equals(data.commands->key, "cd"))
+				_cd(str, data.usr);
+			else if (ft_str_equals(data.commands->key, "export"))
+				data.env = ft_export(data.env, ft_split(str, ' '));
+			else if (ft_str_equals(data.commands->key, "unset"))
+				data.env = ft_unset(data.env, ft_split(str, ' '));
 			else
 				printf("command not found: %s\n", str);
 		}
-		str = readline(get_prompt(usr));
+		str = readline(get_prompt(data.usr));
 	}
 	return (0);
 }

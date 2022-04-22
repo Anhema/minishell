@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/20 17:01:23 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/04/22 19:26:38 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ t_dict	*create_env(char **str)
 	return (env);
 }
 
-void	print_env(t_dict *env)
+void	print_dict(t_dict *env)
 {
 	t_dict	*temp;
 
 	temp = env;
 	if (!env)
 	{
-		printf("ENV NULL\n");
+		printf("DICT NULL\n");
 		return ;
 	}
 	else
 	{
-		while (env != NULL)
+		while (env)
 		{
 			if (temp->value)
 			{
@@ -78,6 +78,11 @@ t_dict	*ft_export(t_dict *env, char **str)
 	i = 1;
 	while (str[i])
 	{
+		if (!((str[i][0] >= 'a' && str[i][0] <= 'z') || (str[i][0] >= 'A' && str[i][0] <= 'Z')))
+		{
+			printf("export: '%s': not a valid identifier\n", str[i]);
+			return (env);
+		}
 		key_value = ft_split(str[i], '=');
 		new = dict_new(key_value[0], key_value[1]);
 		env = dict_add_back(env, dict_new(key_value[0], key_value[1]));
