@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
+#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/04/21 16:10:05 by cbustama         ###   ########.fr        #
+#    Updated: 2022/04/22 16:54:43 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC = minishell.c \
 		env.c \
 		dict.c \
 		functions.c \
+		cd.c \
 
 OBJ = $(SRC:.c=.o)
 

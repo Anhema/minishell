@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/21 18:11:32 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:55:37 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,28 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_history(str);
 		built = ft_sort(str);
-		if (ft_str_equals(str, "exit") == 1)
-			ft_exit(str);
-		else if (quotation_open(str) == 0)
-			printf("Cierra las comillas: %s\n", str);
-		else if (ft_str_equals(str, "pwd") == 1)
-			ft_pwd();
-		else if (ft_str_equals(str, "env") == 1)
-			print_env(env);
-		else if (ft_str_equals(str, "history") == 1)
-			ft_read_file(".history", 0);
-		else if (ft_str_equals(built[0], "export") == 1)
-			env = ft_export(env, built);
-		else if (ft_str_equals(built[0], "unset") == 1)
-			env = ft_unset(env, built);
-		else
-			printf("command not found: %s\n", str);
+		if (built[0])
+		{
+			if (ft_str_equals(str, "exit") == 1)
+				ft_exit(str);
+			else if (quotation_open(str) == 0)
+				printf("Cierra las comillas: %s\n", str);
+			else if (ft_str_equals(str, "pwd") == 1)
+				ft_pwd();
+			else if (ft_str_equals(str, "env") == 1)
+				print_env(env);
+			else if (ft_str_equals(str, "history") == 1)
+				ft_read_file(".history", 0);
+			else if (ft_str_equals(built[0], "cd") == 1)
+				_cd(str, env);
+			else if (ft_str_equals(built[0], "export") == 1)
+				env = ft_export(env, built);
+			else if (ft_str_equals(built[0], "unset") == 1)
+				env = ft_unset(env, built);
+			else
+				printf("command not found: %s\n", str);
+		}
 		str = readline(get_prompt(usr));
-		//ft_history(str);
 	}
 	return (0);
 }

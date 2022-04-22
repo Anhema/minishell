@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/21 18:10:41 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/04/22 16:54:30 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	print_env(t_dict *env);
 t_dict	*create_env(char **str);
 t_dict	*ft_export(t_dict *env, char **str);
 t_dict	*ft_unset(t_dict *env, char **str);
+void	_cd(char *str, t_dict *env);
+void	ft_pwd(void);
 
 char	**ft_sort(char *c);
 char	*ft_history(char *str);

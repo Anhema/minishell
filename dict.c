@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/19 16:35:45 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/21 17:29:58 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,14 @@ t_dict	*dict_add_back(t_dict *lst, t_dict *new)
 	else
 	{
 		while (temp->next)
+		{
+			if (ft_str_equals(temp->next->key, new->key) == 1)
+			{
+				temp->next->value = new->value;
+				return (lst);
+			}
 			temp = temp->next;
+		}
 		temp->next = new;
 	}
 	return (lst);
