@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/18 17:56:22 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:10:41 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <unistd.h>
+#include <fcntl.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -60,5 +61,7 @@ t_dict	*ft_export(t_dict *env, char **str);
 t_dict	*ft_unset(t_dict *env, char **str);
 
 char	**ft_sort(char *c);
+char	*ft_history(char *str);
+
 
 #endif

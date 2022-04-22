@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/19 18:20:52 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/21 18:11:32 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ void	ft_pwd(void)
 
 void	ft_exit(char *str)
 {
+	int fd;
+
+	fd  = open(".history", O_RDONLY);
+	unlink(".history");
+	close (fd);
 	free(str);
 	exit(0);
 }
@@ -57,8 +62,10 @@ int	main(int argc, char **argv, char **envp)
 	env = create_env(envp);
 	usr = get_dict_value(env, "USER");
 	str = readline(get_prompt(usr));
+	//ft_history(str);
 	while (1)
 	{
+		ft_history(str);
 		built = ft_sort(str);
 		if (ft_str_equals(str, "exit") == 1)
 			ft_exit(str);
@@ -68,6 +75,8 @@ int	main(int argc, char **argv, char **envp)
 			ft_pwd();
 		else if (ft_str_equals(str, "env") == 1)
 			print_env(env);
+		else if (ft_str_equals(str, "history") == 1)
+			ft_read_file(".history", 0);
 		else if (ft_str_equals(built[0], "export") == 1)
 			env = ft_export(env, built);
 		else if (ft_str_equals(built[0], "unset") == 1)
@@ -75,6 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 			printf("command not found: %s\n", str);
 		str = readline(get_prompt(usr));
+		//ft_history(str);
 	}
 	return (0);
 }
