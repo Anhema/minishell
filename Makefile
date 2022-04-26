@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/04/22 16:54:43 by aherrero         ###   ########.fr        #
+#    Updated: 2022/04/26 17:15:25 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ all: $(NAME)
 clean:
 		@echo "$(WHT)Removing o-files...$(EOC)"
 		@/bin/rm -f $(OBJ)
+		@/bin/rm -f .history
 		@${MAKE} -C libft clean
 		@echo "$(GREEN)Clean done.$(EOC)"
 

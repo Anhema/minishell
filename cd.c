@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/22 17:19:02 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:56:01 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,21 @@ char	*get_path(char *str)
 	return (path);
 }
 
-void	_cd(char *str, char *usr)
+t_data	_cd(char *str, char *usr, t_data data)
 {
 	char	*path;
+	char	*old_path;
 
 	path = get_path(str);
-	(void)env;
+	old_path = getcwd(NULL, 0);
 	if (!path)
 	{
 		path = ft_strjoin("/Users/", usr);
 		if (chdir(path) == 0)
 		{
-			free(path);
-			return ;
+			data.env = dict_add_back(data.env, dict_new("PWD", getcwd(NULL, 0)));
+			data.env = dict_add_back(data.env, dict_new("OLDPWD", old_path));
+			return (data);
 		}
 		else
 			printf("cd: no such file or directory: %s\n", path);
@@ -49,11 +51,12 @@ void	_cd(char *str, char *usr)
 	{
 		if (chdir(path) == 0)
 		{
-			free(path);
-			return ;
+			data.env = dict_add_back(data.env, dict_new("PWD", getcwd(NULL, 0)));
+			data.env = dict_add_back(data.env, dict_new("OLDPWD", old_path));
+			return (data);
 		}
 		else
 			printf("cd: %s: No such file or directory\n", path);
 	}
-	free(path);
+	return (data);
 }

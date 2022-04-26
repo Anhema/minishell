@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/22 19:27:18 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:53:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ft_history(str);
 		data.commands = ft_sort(ft_split(str, '|'));
-		//print_dict(data.commands);
 		if (data.commands)
 		{
 			if (ft_str_equals(str, "exit"))
@@ -78,7 +77,7 @@ int	main(int argc, char **argv, char **envp)
 			else if (ft_str_equals(str, "history"))
 				ft_read_file(".history", 0);
 			else if (ft_str_equals(data.commands->key, "cd"))
-				_cd(str, data.usr);
+				data = _cd(str, data.usr, data);
 			else if (ft_str_equals(data.commands->key, "export"))
 				data.env = ft_export(data.env, ft_split(str, ' '));
 			else if (ft_str_equals(data.commands->key, "unset"))

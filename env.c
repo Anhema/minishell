@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/22 19:26:38 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:02:25 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ void	print_dict(t_dict *env)
 				temp = env->next;
 				env = temp;
 			}
+			else
+			{
+				printf("%s=""\n", temp->key);
+				temp = env->next;
+				env = temp;
+			}
 		}
 	}
 }
@@ -72,6 +78,11 @@ t_dict	*ft_export(t_dict *env, char **str)
 				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
 				temp = temp->next;
 			}
+			else
+			{
+				printf("declare -x %s=\"\"\n", temp->key);
+				temp = temp->next;
+			}
 		}
 		return (env);
 	}
@@ -80,7 +91,7 @@ t_dict	*ft_export(t_dict *env, char **str)
 	{
 		if (!((str[i][0] >= 'a' && str[i][0] <= 'z') || (str[i][0] >= 'A' && str[i][0] <= 'Z')))
 		{
-			printf("export: '%s': not a valid identifier\n", str[i]);
+			printf("export: `%s': not a valid identifier\n", str[i]);
 			return (env);
 		}
 		key_value = ft_split(str[i], '=');

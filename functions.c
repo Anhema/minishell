@@ -6,13 +6,11 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/22 18:57:09 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/26 16:51:49 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 char	*space_front_to_back(char *c)
 {
