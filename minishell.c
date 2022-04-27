@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/26 16:53:48 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:37:20 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,16 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (ft_str_equals(str, "exit"))
 				ft_exit(str);
-			else if (quotation_open(str) == 0)
-				printf("Cierra las comillas: %s\n", str);
+			// else if (quotation_open(str) == 0)
+			// 	printf("Cierra las comillas: %s\n", str);
 			else if (ft_str_equals(data.commands->key, "pwd"))
 				ft_pwd();
-			else if (ft_str_equals(data.commands->key, "env") && !data.commands->value)
+			else if (ft_str_equals(data.commands->key, "echo"))
+				ft_echo(data);
+			else if (ft_str_equals(data.commands->key, "env")
+				&& ft_str_equals(data.commands->value, ""))
 				print_dict(data.env);
-			else if (ft_str_equals(str, "history"))
+			else if (ft_str_equals(data.commands->key, "history"))
 				ft_read_file(".history", 0);
 			else if (ft_str_equals(data.commands->key, "cd"))
 				data = _cd(str, data.usr, data);

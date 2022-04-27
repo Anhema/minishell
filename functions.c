@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/04/26 16:51:49 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:30:53 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,13 @@ t_dict	*ft_sort(char **c)
 	j = 0;
 	while (c[j])
 	{
-		str = NULL;
+		str = "";
 		temp = ft_split(space_front_to_back(c[j]), ' ');
 		i = 1;
 		while (temp[i])
 		{
 			str = ft_strjoin(str, temp[i]);
+			str = ft_strjoin(str, " ");
 			i++;
 		}
 		new = dict_new(temp[0], str);

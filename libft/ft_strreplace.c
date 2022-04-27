@@ -6,12 +6,13 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:03:29 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/19 18:15:45 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/27 18:27:41 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 static char	*ft_strreplace_aux(char	*result, char *orig, char *rep, char *with)
 {
@@ -26,7 +27,7 @@ static char	*ft_strreplace_aux(char	*result, char *orig, char *rep, char *with)
 	{
 		if (ft_strstr(orig, rep) == orig)
 		{
-			result = ft_strcpy(&result[i], with);
+			ft_strcpy(&result[i], with);
 			i += newwlen;
 			orig += oldwlen;
 		}

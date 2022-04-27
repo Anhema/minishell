@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/26 16:54:18 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/26 17:21:40 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_dict	*ft_export(t_dict *env, char **str);
 t_dict	*ft_unset(t_dict *env, char **str);
 t_data	_cd(char *str, char *usr, t_data data);
 void	ft_pwd(void);
+void	ft_echo(t_data data);
 
 t_dict	*ft_sort(char **c);
 char	*ft_history(char *str);

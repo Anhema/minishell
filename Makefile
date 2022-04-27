@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/04/26 17:15:25 by aherrero         ###   ########.fr        #
+#    Updated: 2022/04/26 17:22:13 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC = minishell.c \
 		errors.c \
 		env.c \
 		dict.c \
+		echo.c \
 		functions.c \
 		cd.c \
 
