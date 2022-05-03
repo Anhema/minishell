@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/26 16:56:01 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/04/28 19:01:32 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,27 +36,16 @@ t_data	_cd(char *str, char *usr, t_data data)
 	path = get_path(str);
 	old_path = getcwd(NULL, 0);
 	if (!path)
-	{
 		path = ft_strjoin("/Users/", usr);
-		if (chdir(path) == 0)
-		{
-			data.env = dict_add_back(data.env, dict_new("PWD", getcwd(NULL, 0)));
-			data.env = dict_add_back(data.env, dict_new("OLDPWD", old_path));
-			return (data);
-		}
-		else
-			printf("cd: no such file or directory: %s\n", path);
+	if (ft_str_equals(old_path, "/Users") && ft_str_equals(path, ".."))
+		path = "/";
+	if (chdir(path) == 0)
+	{
+		data.env = dict_add_back(data.env, dict_new("PWD", getcwd(NULL, 0)));
+		data.env = dict_add_back(data.env, dict_new("OLDPWD", old_path));
+		return (data);
 	}
 	else
-	{
-		if (chdir(path) == 0)
-		{
-			data.env = dict_add_back(data.env, dict_new("PWD", getcwd(NULL, 0)));
-			data.env = dict_add_back(data.env, dict_new("OLDPWD", old_path));
-			return (data);
-		}
-		else
-			printf("cd: %s: No such file or directory\n", path);
-	}
+		printf("cd: %s: No such file or directory\n", path);
 	return (data);
 }

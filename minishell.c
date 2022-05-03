@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/26 17:37:20 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:12:32 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ft_pwd(void)
 
 void	ft_exit(char *str)
 {
-	int fd;
+	int	fd;
 
-	fd  = open(".history", O_RDONLY);
+	fd = open(".history", O_RDONLY);
 	unlink(".history");
 	close (fd);
 	free(str);
@@ -63,13 +63,13 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		ft_history(str);
-		data.commands = ft_sort(ft_split(str, '|'));
+		//data.commands = ft_sort(ft_split(str, '|'));
+		data.commands = ft_pipe_parse(str);
+		print_dict(data.commands);
 		if (data.commands)
 		{
 			if (ft_str_equals(str, "exit"))
 				ft_exit(str);
-			// else if (quotation_open(str) == 0)
-			// 	printf("Cierra las comillas: %s\n", str);
 			else if (ft_str_equals(data.commands->key, "pwd"))
 				ft_pwd();
 			else if (ft_str_equals(data.commands->key, "echo"))

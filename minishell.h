@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/26 17:21:40 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/02 19:00:41 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft/libft.h"
 # include <unistd.h>
-#include <fcntl.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -25,18 +25,6 @@
 # include <time.h>
 # include <stdlib.h>
 # include <pthread.h>
-
-enum	e_builtins
-{
-	none = 0,
-	echo = 1,
-	cd = 2,
-	pwd = 3,
-	export = 4,
-	unset = 5,
-	env = 6,
-	e_exit = 7,
-}	builtins;
 
 typedef struct s_dict_t_struct
 {
@@ -72,6 +60,6 @@ void	ft_echo(t_data data);
 
 t_dict	*ft_sort(char **c);
 char	*ft_history(char *str);
-
+t_dict	*ft_pipe_parse(char *str);
 
 #endif
