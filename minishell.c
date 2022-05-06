@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/03 17:12:32 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/06 18:53:19 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_history(str);
 		//data.commands = ft_sort(ft_split(str, '|'));
 		data.commands = ft_pipe_parse(str);
-		print_dict(data.commands);
+		//print_dict(data.commands);
 		if (data.commands)
 		{
 			if (ft_str_equals(str, "exit"))
@@ -86,7 +86,8 @@ int	main(int argc, char **argv, char **envp)
 			else if (ft_str_equals(data.commands->key, "unset"))
 				data.env = ft_unset(data.env, ft_split(str, ' '));
 			else
-				printf("command not found: %s\n", str);
+				ft_execve(data);
+				//printf("command not found: %s\n", str);
 		}
 		str = readline(get_prompt(data.usr));
 	}

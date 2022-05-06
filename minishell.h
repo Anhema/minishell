@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/02 19:00:41 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:55:36 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ void	ft_echo(t_data data);
 t_dict	*ft_sort(char **c);
 char	*ft_history(char *str);
 t_dict	*ft_pipe_parse(char *str);
+void	ft_execve(t_data data);
 
 #endif

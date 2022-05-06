@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/05/03 20:44:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/06 19:23:57 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ char	*get_builting(char	*str)
 	c = 0;
 	i = 0;
 	n = 0;
+	if (!str)
+		return (NULL);
 	while (str[i])
 	{
 		if (n == 0)
@@ -247,7 +249,7 @@ char	*get_arguments(char	*str)
 		}
 		i++;
 	}
-	return (str);
+	return (NULL);
 }
 
 t_dict	*add_command(char *line, t_dict *command)
@@ -258,9 +260,12 @@ t_dict	*add_command(char *line, t_dict *command)
 
 	line = space_front_to_back(line);
 	built = get_builting(line);
+	if (!built)
+		return (NULL);
 	arguments = get_arguments(line);
 	built = remove_quotes(built);
-	arguments = remove_quotes(arguments);
+	if (arguments)
+		arguments = remove_quotes(arguments);
 	new = dict_new(built, arguments);
 	command = dict_add_back(command, new);
 	return (command);
