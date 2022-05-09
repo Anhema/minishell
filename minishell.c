@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/06 18:53:19 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:07:05 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 			else if (ft_str_equals(data.commands->key, "echo"))
 				ft_echo(data);
 			else if (ft_str_equals(data.commands->key, "env")
-				&& ft_str_equals(data.commands->value, ""))
+				&& !data.commands->value)
 				print_dict(data.env);
 			else if (ft_str_equals(data.commands->key, "history"))
 				ft_read_file(".history", 0);

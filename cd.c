@@ -6,13 +6,13 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/28 19:01:32 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:36:37 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_path(char *str)
+static char	*get_path(char *str)
 {
 	char	**command;
 	char	*path;

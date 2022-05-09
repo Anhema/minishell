@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/26 17:02:25 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/09 17:09:59 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	print_dict(t_dict *env)
 			}
 			else
 			{
-				printf("%s=""\n", temp->key);
+				//printf("%s=""\n", temp->key);
 				temp = env->next;
 				env = temp;
 			}
@@ -80,7 +80,7 @@ t_dict	*ft_export(t_dict *env, char **str)
 			}
 			else
 			{
-				printf("declare -x %s=\"\"\n", temp->key);
+				printf("declare -x %s\n", temp->key);
 				temp = temp->next;
 			}
 		}
