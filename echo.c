@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/09 18:32:04 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/10 18:47:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,44 @@ static char	*parse(t_data data)
 
 void	ft_echo(t_data data)
 {
-	char	**temp;
 	char	*str;
+	char	*str_temp;
 	int		i;
+	int		n;
 
-	temp = ft_split(data.commands->value, ' ');
-	if (ft_str_equals(temp[0], "-n"))
+
+	str = parse(data);
+	str = space_front_to_back(str);
+	if (str[0] == '-' && str[1] == 'n')
 	{
-		str = parse(data);
-		str = ft_strreplace(str, "-n ", "");
-		printf("%s", str);
+		i = 2;
+		n = 0;
+		while (str[i] != ' ')
+		{
+			if (str[i] != 'n')
+			{
+				n = 1;
+				break ;
+			}
+			i++;
+		}
+		if (n == 1)
+			printf("%s\n", str);
+		else
+		{
+			str_temp = malloc(sizeof(char) * (ft_strlen(str) - i));
+			i++;
+			n = 0;
+			while (str[i])
+			{
+				str_temp[n] = str[i];
+				n++;
+				i++;
+			}
+			str_temp[n] = '\0';
+			printf("%s", str_temp);
+		}
 	}
 	else
-	{
-		str = parse(data);
 		printf("%s\n", str);
-	}
 }

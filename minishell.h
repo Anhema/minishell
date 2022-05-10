@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/06 16:55:36 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/10 18:25:01 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_data
 	t_dict					*commands;
 	char					*usr;
 }	t_data;
+
+char	*space_front_to_back(char *c);
 
 t_dict	**dicta_alloc(void);
 void	dict_dealloc(t_dict **dict);
