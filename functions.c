@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/05/06 19:23:57 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/17 21:06:21 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,22 @@ char	*remove_quotes(char *str)
 		}
 		if (str[i] != c)
 		{
-			temp[j] = str[i];
+			if (str[i] == '>' && str[i + 1] != '>' && n == 0)
+				temp[j] = (unsigned char)128;
+			else if (str[i] == '<' && str[i + 1] != '<' && n == 0)
+				temp[j] = (unsigned char)129;
+			else if (str[i] == '<' && str[i + 1] == '<' && n == 0)
+			{
+				temp[j] = (unsigned char)130;
+				i++;
+			}
+			else if (str[i] == '>' && str[i + 1] == '>' && n == 0)
+			{
+				temp[j] = (unsigned char)131;
+				i++;
+			}
+			else
+				temp[j] = str[i];
 			j++;
 		}
 		i++;
@@ -275,6 +290,7 @@ t_dict	*ft_pipe_parse(char *str)
 {
 	int		i;
 	int		j;
+	int		jj;
 	int		last;
 	char	c;
 	int		n;
@@ -314,12 +330,14 @@ t_dict	*ft_pipe_parse(char *str)
 			{
 				j = last;
 				temp = malloc(sizeof(char) * (i - last) + 1);
+				jj = 0;
 				while (j < i)
 				{
-					temp[j] = str[j];
+					temp[jj] = str[j];
 					j++;
+					jj++;
 				}
-				temp[j] = '\0';
+				temp[jj] = '\0';
 				last = i + 1;
 				commands = add_command(temp, commands);
 			}

@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/05/06 16:45:00 by aherrero         ###   ########.fr        #
+#    Updated: 2022/05/17 20:52:08 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ SRC = minishell.c \
 		echo.c \
 		functions.c \
 		ft_execve.c \
+		signals.c \
 		cd.c \
+		redirections.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -33,14 +35,15 @@ HEADERS = includes/minishell.h
 LIBFT = libft/libft.a
 CC = gcc
 
-READLINE_DIR = ~/.brew/opt/readline/include
+READLINE_DIR = ${HOME}/.brew/opt/readline
 
 
 FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
-F_READLINE = -I $(READLINE_DIR) -L $(READLINE_DIR)/lib/ -lreadline 
+F_READLINE = -I$(READLINE_DIR)/include
+COMPILE = -lreadline -L$(READLINE_DIR)/lib
 
 .c.o: $(SRC)
-	@$(CC) $(FLAGS) -c -o $@ $<
+	@$(CC) $(FLAGS) $(F_READLINE) -c -o $@ $<
 
 
 $(NAME):$(OBJ)
@@ -48,7 +51,8 @@ $(NAME):$(OBJ)
 		@${MAKE} -C libft
 		@echo "$(GREEN)Libraries done.$(EOC)"
 		@echo "$(WHT)Compiling Minishell...$(EOC)"
-		@$(CC) $(FLAGS) -o $(NAME) $(F_READLINE) $(OBJ) $(LIBFT)
+#		@$(CC) $(FLAGS) -c $(NAME) $(F_READLINE) $(SRC) $(LIBFT) 
+		@$(CC) $(FLAGS) -o $(NAME) $(COMPILE) $(OBJ) $(LIBFT) 
 		@echo "$(GREEN)Minishell build completed.$(EOC)"
 
 all: $(NAME)

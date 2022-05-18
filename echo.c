@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/10 18:47:15 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/12 19:19:01 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*parse(t_data data)
 			var = NULL;
 			while (data.commands->value[j])
 			{
-				if (data.commands->value[j] == ' ' || data.commands->value[j] == '$')
+				if (data.commands->value[j] == ' ' || data.commands->value[j] == '$' || data.commands->value[j] == '\"')
 					break ;
 				j++;
 			}
@@ -65,7 +65,6 @@ void	ft_echo(t_data data)
 	char	*str_temp;
 	int		i;
 	int		n;
-
 
 	str = parse(data);
 	str = space_front_to_back(str);

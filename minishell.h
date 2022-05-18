@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/10 18:25:01 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/18 18:21:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <time.h>
 # include <stdlib.h>
 # include <pthread.h>
+# include <termios.h>
 
 typedef struct s_dict_t_struct
 {
@@ -38,6 +39,7 @@ typedef struct s_data
 	t_dict					*env;
 	t_dict					*commands;
 	char					*usr;
+	t_dict					**redirections;
 }	t_data;
 
 char	*space_front_to_back(char *c);
@@ -48,6 +50,7 @@ void	*get_item(t_dict *dict, char *key);
 void	del_item(t_dict **dict, char *key);
 t_dict	*dict_new(char *key, char *value);
 t_dict	*dict_add_back(t_dict *lst, t_dict *new);
+t_dict	*dict_add_back_repeat(t_dict *lst, t_dict *new);
 t_dict	*dict_add_front(t_dict *lst, t_dict *new);
 char	*get_dict_value(t_dict *dict, char	*key);
 t_dict	*del_one(t_dict *dict, char	*key);
@@ -64,5 +67,9 @@ t_dict	*ft_sort(char **c);
 char	*ft_history(char *str);
 t_dict	*ft_pipe_parse(char *str);
 void	ft_execve(t_data data);
+void	ft_signals(void);
+
+int		check_syntax(t_dict *commands);
+t_dict	**get_redirections(t_data data);
 
 #endif
