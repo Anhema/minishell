@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/12 19:19:01 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:17:36 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static char	*parse(t_data data)
 	int		j;
 	int		n;
 
+	if (!data.commands->value)
+		return (NULL);
 	str = data.commands->value;
 	i = 0;
 	while (data.commands->value[i])
@@ -67,6 +69,11 @@ void	ft_echo(t_data data)
 	int		n;
 
 	str = parse(data);
+	if (!str)
+	{
+		printf("\n");
+		return ;
+	}
 	str = space_front_to_back(str);
 	if (str[0] == '-' && str[1] == 'n')
 	{

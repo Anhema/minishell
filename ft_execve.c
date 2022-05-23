@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/11 16:24:11 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:40:25 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ft_execve(t_data data)
 	{
 		argv = malloc(sizeof(char *) * 2);
 		argv[0] = data.commands->key;
-		argv[1] = NULL;	
+		argv[1] = NULL;
 	}
 	else if (i > 1)
 	{
@@ -114,13 +114,13 @@ void	ft_execve(t_data data)
 			i++;
 			j++;
 		}
-		argv[i] = NULL;	
+		argv[i] = NULL;
 	}
 	else
 	{
 		argv = malloc(sizeof(char *) * 3);
 		argv[0] = data.commands->key;
-		argv[1] = data.commands->value;	
+		argv[1] = data.commands->value;
 		argv[2] = NULL;
 	}
 	env = join_env(data.env);
@@ -130,6 +130,7 @@ void	ft_execve(t_data data)
 		return ;
 	}
 	path = get_path(get_dict_value(data.env, "PATH"), data.commands->key);
+	argv[0] = path;
 	if ((pid = fork()) == -1)
 		perror("fork error");
 	else if (pid == 0) 

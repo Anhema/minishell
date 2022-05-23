@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/18 18:38:48 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/19 16:33:24 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	check_syntax(t_dict *commands)
 	while (temp)
 	{
 		str = ft_strjoin(temp->key, " ");
-		str = ft_strjoin(str, temp->value);
+		if (temp->value)
+			str = ft_strjoin(str, temp->value);
 		n = str[ft_strlen(str) - 1];
 		if (n == -128 || n == -125 || n == -127 || n == -126)
 		{
@@ -39,7 +40,7 @@ int	check_syntax(t_dict *commands)
 	return (0);
 }
 
-t_dict	**get_redirections(t_data data)
+t_data	get_redirections(t_data data)
 {
 	t_dict	*temp;
 	t_dict	*new;
@@ -61,7 +62,7 @@ t_dict	**get_redirections(t_data data)
 	}
 	result = (t_dict **)malloc(sizeof(t_dict *) * (i + 1));
 	if (!result)
-		return (NULL);
+		return (data);
 	ft_memset(result, 0, sizeof(t_dict *) * (i + 1));
 	result_count = 0;
 	temp = data.commands;
@@ -98,5 +99,6 @@ t_dict	**get_redirections(t_data data)
 		temp = temp->next;
 		result_count++;
 	}
-	return (result);
+	data.redirections = result;
+	return (data);
 }

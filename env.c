@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/11 18:18:27 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:49:05 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,18 @@ void	print_dict(t_dict *env)
 	}
 }
 
-t_dict	*ft_export(t_dict *env, char **str)
+t_dict	*ft_export(t_data data)
 {
 	char	**key_value;
+	char	**str;
 	t_dict	*new;
 	t_dict	*temp;
 	int		i;
 
-	if (!str[1])
+	str = ft_split(data.commands->value, ' ');
+	if (!data.commands->value)
 	{
-		temp = env;
+		temp = data.env;
 		while (temp != NULL)
 		{
 			if (temp->value)
@@ -84,7 +86,7 @@ t_dict	*ft_export(t_dict *env, char **str)
 				temp = temp->next;
 			}
 		}
-		return (env);
+		return (data.env);
 	}
 	i = 1;
 	while (str[i])
@@ -92,14 +94,14 @@ t_dict	*ft_export(t_dict *env, char **str)
 		if (!((str[i][0] >= 'a' && str[i][0] <= 'z') || (str[i][0] >= 'A' && str[i][0] <= 'Z')))
 		{
 			printf("export: `%s': not a valid identifier\n", str[i]);
-			return (env);
+			return (data.env);
 		}
 		key_value = ft_split(str[i], '=');
 		new = dict_new(key_value[0], key_value[1]);
-		env = dict_add_back(env, dict_new(key_value[0], key_value[1]));
+		data.env = dict_add_back(data.env, dict_new(key_value[0], key_value[1]));
 		i++;
 	}
-	return (env);
+	return (data.env);
 }
 
 t_dict	*ft_unset(t_dict *env, char **str)

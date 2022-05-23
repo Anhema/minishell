@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/18 18:21:15 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/19 17:52:44 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_data
 	t_dict					*commands;
 	char					*usr;
 	t_dict					**redirections;
+	int						fd_in;
+	int						fd_out;
 }	t_data;
 
 char	*space_front_to_back(char *c);
@@ -57,7 +59,7 @@ t_dict	*del_one(t_dict *dict, char	*key);
 char	*quotation_open(char *str);
 void	print_dict(t_dict *env);
 t_dict	*create_env(char **str);
-t_dict	*ft_export(t_dict *env, char **str);
+t_dict	*ft_export(t_data data);
 t_dict	*ft_unset(t_dict *env, char **str);
 t_data	_cd(char *str, char *usr, t_data data);
 void	ft_pwd(void);
@@ -70,6 +72,6 @@ void	ft_execve(t_data data);
 void	ft_signals(void);
 
 int		check_syntax(t_dict *commands);
-t_dict	**get_redirections(t_data data);
+t_data	get_redirections(t_data data);
 
 #endif
