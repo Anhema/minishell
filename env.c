@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/19 17:49:05 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:58:46 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	print_dict(t_dict *env)
 			}
 			else
 			{
-				//printf("%s=""\n", temp->key);
 				temp = env->next;
 				env = temp;
 			}
@@ -61,44 +60,59 @@ void	print_dict(t_dict *env)
 	}
 }
 
+t_dict	*print_export(char **str, int i, t_data data)
+{
+	t_dict	*new;
+	char	**key_value;
+
+	if (!((str[i][0] >= 'a' && str[i][0] <= 'z')
+		|| (str[i][0] >= 'A' && str[i][0] <= 'Z')))
+	{
+		printf("export: `%s': not a valid identifier\n", str[i]);
+		return (data.env);
+	}
+	key_value = ft_split(str[i], '=');
+	new = dict_new(key_value[0], key_value[1]);
+	data.env = dict_add_back
+		(data.env, dict_new(key_value[0], key_value[1]));
+	return (data.env);
+}
+
 t_dict	*ft_export(t_data data)
 {
-	char	**key_value;
 	char	**str;
-	t_dict	*new;
 	t_dict	*temp;
 	int		i;
+	t_dict	*new;
+	char	**key_value;
 
-	str = ft_split(data.commands->value, ' ');
 	if (!data.commands->value)
 	{
 		temp = data.env;
-		while (temp != NULL)
+		while (temp)
 		{
 			if (temp->value)
-			{
 				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
-				temp = temp->next;
-			}
 			else
-			{
 				printf("declare -x %s\n", temp->key);
-				temp = temp->next;
-			}
+			temp = temp->next;
 		}
 		return (data.env);
 	}
-	i = 1;
+	str = ft_split(data.commands->value, ' ');
+	i = 0;
 	while (str[i])
 	{
-		if (!((str[i][0] >= 'a' && str[i][0] <= 'z') || (str[i][0] >= 'A' && str[i][0] <= 'Z')))
+		if (!((str[i][0] >= 'a' && str[i][0] <= 'z')
+			|| (str[i][0] >= 'A' && str[i][0] <= 'Z')))
 		{
 			printf("export: `%s': not a valid identifier\n", str[i]);
 			return (data.env);
 		}
 		key_value = ft_split(str[i], '=');
 		new = dict_new(key_value[0], key_value[1]);
-		data.env = dict_add_back(data.env, dict_new(key_value[0], key_value[1]));
+		data.env = dict_add_back
+			(data.env, dict_new(key_value[0], key_value[1]));
 		i++;
 	}
 	return (data.env);

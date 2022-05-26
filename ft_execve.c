@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/19 17:40:25 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:04:27 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,13 @@ void	ft_execve(t_data data)
 	}
 	path = get_path(get_dict_value(data.env, "PATH"), data.commands->key);
 	argv[0] = path;
-	if ((pid = fork()) == -1)
+	pid = fork();
+	if ((pid) == -1)
 		perror("fork error");
-	else if (pid == 0) 
+	else if (pid == 0)
+	{
 		if (execve(path, argv, env) < 0)
 			print_error(data);
+	}
 	waitpid(pid, &status, 0);
 }

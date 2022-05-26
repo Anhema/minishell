@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 18:56:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/25 18:22:43 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/05/26 18:03:59 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 void	signal_handler(int signum)
 {
-	//printf ("%d signal2\n ", signum);
 	if (signum == SIGINT)
 	{
+		printf("\33[2K\r");
+		printf("\33[2K\r");
+		printf("\33[1A");
 		printf("^C\n");
-		//printf("\33[1F^C");
+		printf("\33[2K\r");
 		exit (0);
 	}
 	if (signum == SIGQUIT)
@@ -42,15 +44,10 @@ void	signal_catch(int signum)
 	{
 		write(1, "\n", 1);
 		rl_replace_line(" ", 1);
-		//rl_on_new_line();
 		rl_redisplay();
-		printf("\33[2K\r");
 	}
 	if (signum == SIGTERM)
 		exit (0);
-	else
-	{
-	}
 }
 
 void	ft_signals(void)

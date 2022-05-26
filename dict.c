@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/18 17:57:07 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:06:06 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,24 +106,4 @@ t_dict	*del_one(t_dict *dict, char	*key)
 		}
 	}
 	return (result);
-}
-
-char	*get_dict_value(t_dict *dict, char	*key)
-{
-	t_dict	*temp;
-
-	temp = dict;
-	if (!dict)
-		return (NULL);
-	else
-	{
-		while (dict != NULL)
-		{
-			if (ft_str_equals(temp->key, key) == 1)
-				return (temp->value);
-			temp = dict->next;
-			dict = temp;
-		}
-	}
-	return (NULL);
 }

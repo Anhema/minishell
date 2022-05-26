@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/19 16:33:24 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/24 20:24:19 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_data	get_redirections(t_data data)
 	int		k;
 	int		kk;
 	int		n;
-	int		result_count;;
+	int		result_count;
 	char	*value;
 
 	temp = data.commands;
@@ -60,44 +60,64 @@ t_data	get_redirections(t_data data)
 		i++;
 		temp = temp->next;
 	}
-	result = (t_dict **)malloc(sizeof(t_dict *) * (i + 1));
+	result = (t_dict **)malloc(sizeof(t_dict *) * (i));
 	if (!result)
 		return (data);
-	ft_memset(result, 0, sizeof(t_dict *) * (i + 1));
+	ft_memset(result, 0, sizeof(t_dict *) * (i));
 	result_count = 0;
 	temp = data.commands;
 	while (temp)
 	{
-		j = 0;
-		while (temp->value[j])
+		if (temp->value)
 		{
-			if (temp->value[j] == -128 || temp->value[j] == -125 || temp->value[j] == -126 || temp->value[j] == -127)
+			j = 0;
+			while (temp->value[j])
 			{
-				kk = j + 1;
-				while (temp->value[kk] == ' ')
-					kk++;
-				k = kk + 1;
-				while (temp->value[k] && temp->value[k] != ' ' && temp->value[k] != -128 && temp->value[k] != -125 && temp->value[k] != -126 && temp->value[k] != -127)
-					k++;
-				value = (char *)malloc(sizeof(char) * (k - kk) + 1);
-				i = (k - kk);
-				k = kk;
-				n = 0;
-				while (i > 0)
+				if (temp->value[j] == -128 || temp->value[j] == -125 || temp->value[j] == -126 || temp->value[j] == -127)
 				{
-					value[n] = temp->value[k];
-					n++;
-					k++;
-					i--;
+					kk = j + 1;
+					while (temp->value[kk] == ' ')
+						kk++;
+					k = kk + 1;
+					while (temp->value[k] != '\0' && temp->value[k] != ' ' && temp->value[k] != -128 && temp->value[k] != -125 && temp->value[k] != -126 && temp->value[k] != -127)
+						k++;
+					value = (char *)malloc(sizeof(char) * (k - kk) + 1);
+					i = (k - kk);
+					k = kk;
+					n = 0;
+					while (i > 0)
+					{
+						value[n] = temp->value[k];
+						n++;
+						k++;
+						i--;
+					}
+					value[n] = '\0';
+					new = dict_new(ft_itoa(temp->value[j]), value);
+					printf("Key--->%s\n", new->key);
+					printf("Value--->%s\n", new->value);
+					result[result_count] = dict_add_back_repeat(result[result_count], new);
+					value = malloc(sizeof(char) * ((k - j)));
+					kk = 0;
+					i = j;
+					while (kk < (k - j))
+					{
+						value[kk] = temp->value[i];
+						kk++;
+						i++;
+					}
+					value = ft_strreplace(temp->value, value, "");
+					// new = dict_new(temp->key, value);
+					// data.commands = dict_add_back(temp, new);
+					temp->value = value;
+					j--;
+					printf("--%d--\n", j);
 				}
-				value[n] = '\0';
-				new = dict_new(ft_itoa(temp->value[j]), value);
-				result[result_count] = dict_add_back_repeat(result[result_count], new);
+				j++;
 			}
-			j++;
 		}
-		temp = temp->next;
 		result_count++;
+		temp = temp->next;
 	}
 	data.redirections = result;
 	return (data);

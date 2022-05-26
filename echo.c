@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/19 17:17:36 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:19:38 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ static char	*parse(t_data data)
 			var = NULL;
 			while (data.commands->value[j])
 			{
-				if (data.commands->value[j] == ' ' || data.commands->value[j] == '$' || data.commands->value[j] == '\"')
+				if (data.commands->value[j] == ' '
+					|| data.commands->value[j] == '$'
+					|| data.commands->value[j] == '\"')
 					break ;
 				j++;
 			}
@@ -49,7 +51,8 @@ static char	*parse(t_data data)
 			}
 			var[n] = '\0';
 			if (get_dict_value(data.env, var))
-				str = ft_strreplace(str, ft_strjoin("$", var), get_dict_value(data.env, var));
+				str = ft_strreplace
+					(str, ft_strjoin("$", var), get_dict_value(data.env, var));
 			else
 				str = ft_strreplace(str, ft_strjoin("$", var), "");
 			if (!str)
