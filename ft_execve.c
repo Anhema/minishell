@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/25 18:04:27 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/02 19:57:02 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,14 @@ static void	print_error(t_data data)
 		str = ft_strreplace(str, ft_strjoin("$", env->key), env->value);
 		env = env->next;
 	}
-	printf("minishell: %s: command not found\n", str);
+	str = ft_strreplace(str, ft_itoa(-125), "<");
+	str = ft_strreplace(str, ft_itoa(-126), "<<");
+	str = ft_strreplace(str, ft_itoa(-127), ">");
+	str = ft_strreplace(str, ft_itoa(-128), ">>");
+	if (ft_strstr(data.commands->key, "/"))
+		printf("minishell: %s: No such file or directory\n", data.commands->key);
+	else
+		printf("minishell: %s: command not found\n", str);
 }
 
 void	ft_execve(t_data data)
@@ -88,7 +95,16 @@ void	ft_execve(t_data data)
 	char	**env;
 	int		status;
 	char	*path;
+	char	*key;
 
+	key = data.commands->key;
+	key = ft_strreplace(key, "/bin/", "");
+	if (key[0] == (char)128
+		|| key[0] == (char)129
+		|| key[0] == (char)130
+		|| key[0] == (char)131)
+		return ;
+	//printf ("--%s--\n", data.commands->key);
 	temp = ft_split(data.commands->value, ' ');
 	i = 0;
 	if (temp)
@@ -96,16 +112,16 @@ void	ft_execve(t_data data)
 		while (temp[i])
 			i++;
 	}
-	if (!temp)
+	if (!temp || ft_str_equals(data.commands->value, ""))
 	{
 		argv = malloc(sizeof(char *) * 2);
-		argv[0] = data.commands->key;
+		argv[0] = key;
 		argv[1] = NULL;
 	}
 	else if (i > 1)
 	{
 		argv = malloc(sizeof(char *) * (i + 2));
-		argv[0] = data.commands->key;
+		argv[0] = key;
 		i = 1;
 		j = 0;
 		while (temp[j])
@@ -119,7 +135,7 @@ void	ft_execve(t_data data)
 	else
 	{
 		argv = malloc(sizeof(char *) * 3);
-		argv[0] = data.commands->key;
+		argv[0] = key;
 		argv[1] = data.commands->value;
 		argv[2] = NULL;
 	}
@@ -129,7 +145,7 @@ void	ft_execve(t_data data)
 		printf("minishell: %s: No such file or directory\n", data.commands->key);
 		return ;
 	}
-	path = get_path(get_dict_value(data.env, "PATH"), data.commands->key);
+	path = get_path(get_dict_value(data.env, "PATH"), key);
 	argv[0] = path;
 	pid = fork();
 	if ((pid) == -1)

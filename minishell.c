@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/26 18:01:18 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:55:31 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ char	*get_prompt(t_data data)
 	char	*s;
 	int		i;
 
+	if (data.is_redir)
+	{
+		prompt = "> ";
+		return (prompt);
+	}
 	s = get_dict_value(data.env, "PWD");
 	i = 0;
 	s = ft_strreplace(s, ft_strjoin("/Users/", data.usr), "~");
@@ -84,10 +89,14 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data.env = create_env(envp);
 	data.usr = get_dict_value(data.env, "USER");
+	data.is_redir = 0;
+	data.status = 0;
 	str = ft_readline(data);
 	while (1)
 	{
 		ft_history(str);
+		str = remove_spaces(str);
+		str = expand(str, data);
 		data.commands = ft_pipe_parse(str);
 		if (!data.commands)
 		{
@@ -97,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 		str = cd_exit_syntax(data, str);
 		if (str)
 			continue ;
-		data = get_redirections(data);
+		data = get_redirections(data, str);
 		redirections(data, str);
 		str = ft_readline(data);
 	}

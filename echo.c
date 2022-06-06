@@ -6,63 +6,173 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/25 17:19:38 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/03 19:19:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*parse(t_data data)
+char	*expand(char *str, t_data data)
 {
-	char	*str;
 	char	*var;
+	char	*temp;
 	int		i;
+	int		ii;
 	int		j;
+	int		jj;
 	int		n;
+	int		q;
+	char	c;
 
-	if (!data.commands->value)
+	if (!str)
 		return (NULL);
-	str = data.commands->value;
 	i = 0;
-	while (data.commands->value[i])
+	q = 0;
+	while (str[i])
 	{
-		if (data.commands->value[i] == '$')
+		if (q == 0)
 		{
+			if (str[i] == '\"')
+			{
+				c = '\"';
+				q++;
+			}
+			if (str[i] == '\'')
+			{
+				c = '\'';
+				q++;
+			}
+		}
+		else if (c && str[i] == c)
+		{
+			if (q > 0)
+				q--;
+			else
+				q++;
+		}
+		if (str[i] == '$' && c != '\'')
+		{
+			temp = malloc(sizeof(char) * (i + 1));
+			ii = 0;
+			while (ii < i)
+			{
+				temp[ii] = str[ii];
+				ii++;
+			}
+			temp[ii] = '\0';
 			i++;
-			j = i + 1;
+			j = i;
 			n = j;
 			var = NULL;
-			while (data.commands->value[j])
+			while (str[j])
 			{
-				if (data.commands->value[j] == ' '
-					|| data.commands->value[j] == '$'
-					|| data.commands->value[j] == '\"')
+				if (str[j] == ' '
+					|| str[j] == '$'
+					|| str[j] == '@'
+					|| str[j] == '\''
+					|| str[j] == '\"')
 					break ;
 				j++;
 			}
 			var = malloc(sizeof(char) * ((j - i) + 1));
 			n = 0;
-			j = j - i;
-			while (n < j)
+			jj = j - i;
+			while (n < jj)
 			{
-				var[n] = data.commands->value[i];
+				var[n] = str[i];
 				i++;
 				n++;
 			}
 			var[n] = '\0';
 			if (get_dict_value(data.env, var))
-				str = ft_strreplace
-					(str, ft_strjoin("$", var), get_dict_value(data.env, var));
-			else
-				str = ft_strreplace(str, ft_strjoin("$", var), "");
-			if (!str)
-				str = data.commands->value;
-			i--;
+				temp = ft_strjoin(temp, get_dict_value(data.env, var));
+			else if (var[0] == '?')
+				temp = ft_strjoin(temp, ft_strjoin("$", var));
+			temp = ft_strreplace(temp, "$?", ft_itoa(data.status));
+			//printf("--%s--VAR = %s-- I = %d\n", temp, var, i);
+			j--;
+			while (str[j])
+				j++;
+			var = (char *)malloc(sizeof(char) * (j - i) + 1);
+			ft_memset(var, 0, sizeof(char *) * ((j - i) + 1));
+			jj = 0;
+			ii = i;
+			while (str[ii])
+			{
+				var[jj] = str[ii];
+				jj++;
+				ii++;
+			}
+			var[jj] = '\0';
+			if (var && !ft_str_equals(var, ""))
+				temp = ft_strjoin(temp, var);
+			//printf("--%s--VAR = %s-- I = %d\n", temp, var, i);
+			// if (get_dict_value(data.env, var))
+			// 	str = ft_strreplace
+			// 		(str, ft_strjoin("$", var), get_dict_value(data.env, var));
+			// else if (!(ft_strstr(var, "'") || ft_strstr(var, "\"")))
+			// 	str = ft_strreplace(str, ft_strjoin("$", var), "");
+			//str = ft_strreplace(str, ft_strjoin("$", var), "");
+			str = temp;
+			i = 0;
 		}
 		i++;
 	}
 	return (str);
 }
+
+// char	*expand(t_data data)
+// {
+// 	char	*str;
+// 	char	*var;
+// 	int		i;
+// 	int		j;
+// 	int		n;
+
+// 	if (!data.commands->value)
+// 		return (NULL);
+// 	str = data.commands->value;
+// 	i = 0;
+// 	while (data.commands->value[i])
+// 	{
+// 		if (data.commands->value[i] == '$')
+// 		{
+// 			i++;
+// 			j = i + 1;
+// 			n = j;
+// 			var = NULL;
+// 			while (data.commands->value[j])
+// 			{
+// 				if (data.commands->value[j] == ' '
+// 					|| data.commands->value[j] == '$'
+// 					|| data.commands->value[j] == '@'
+// 					|| data.commands->value[j] == '\"')
+// 					break ;
+// 				j++;
+// 			}
+// 			var = malloc(sizeof(char) * ((j - i) + 1));
+// 			n = 0;
+// 			j = j - i;
+// 			while (n < j)
+// 			{
+// 				var[n] = data.commands->value[i];
+// 				i++;
+// 				n++;
+// 			}
+// 			var[n] = '\0';
+// 			if (get_dict_value(data.env, var))
+// 				str = ft_strreplace
+// 					(str, ft_strjoin("$", var), get_dict_value(data.env, var));
+// 			else
+// 				str = ft_strreplace(str, ft_strjoin("$", var), "");
+// 			if (!str)
+// 				str = data.commands->value;
+// 			i--;
+// 		}
+// 		i++;
+// 	}
+// 	return (str);
+// }
 
 void	ft_echo(t_data data)
 {
@@ -71,13 +181,14 @@ void	ft_echo(t_data data)
 	int		i;
 	int		n;
 
-	str = parse(data);
+	str = data.commands->value;
+	//str = expand(data);
 	if (!str)
 	{
 		printf("\n");
 		return ;
 	}
-	str = space_front_to_back(str);
+	//str = space_front_to_back(str);
 	if (str[0] == '-' && str[1] == 'n')
 	{
 		i = 2;

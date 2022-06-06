@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/05/25 17:20:14 by aherrero         ###   ########.fr        #
+#    Updated: 2022/05/26 19:03:26 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,12 +34,12 @@ EOC = \033[1;0m
 
 HEADERS = includes/minishell.h
 LIBFT = libft/libft.a
-CC = gcc -std=c11 -ggdb3
+CC = gcc #-std=c11 -ggdb3
 
 READLINE_DIR = ${HOME}/.brew/opt/readline
 
 
-FLAGS = -Wall -Wextra -Werror  #-g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror  -g3 -fsanitize=address
 F_READLINE = -I$(READLINE_DIR)/include
 COMPILE = -lreadline -L$(READLINE_DIR)/lib
 

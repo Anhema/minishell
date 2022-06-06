@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/24 20:24:19 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/02 18:14:54 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	check_syntax(t_dict *commands)
 			if (temp->next)
 				printf("minishell: syntax error near unexpected token `|'\n");
 			else
-				printf("minishell: syntax error near unexpected token `newline'\n");
+				printf(
+					"minishell: syntax error near unexpected token `newline'\n");
 			free(str);
 			return (1);
 		}
@@ -40,7 +41,7 @@ int	check_syntax(t_dict *commands)
 	return (0);
 }
 
-t_data	get_redirections(t_data data)
+t_data	get_redirections(t_data data, char *str)
 {
 	t_dict	*temp;
 	t_dict	*new;
@@ -53,6 +54,7 @@ t_data	get_redirections(t_data data)
 	int		result_count;
 	char	*value;
 
+	(void)str;
 	temp = data.commands;
 	i = 0;
 	while (temp)
@@ -60,26 +62,57 @@ t_data	get_redirections(t_data data)
 		i++;
 		temp = temp->next;
 	}
-	result = (t_dict **)malloc(sizeof(t_dict *) * (i));
+	result = (t_dict **)malloc(sizeof(t_dict *) * (i + 1));
 	if (!result)
 		return (data);
-	ft_memset(result, 0, sizeof(t_dict *) * (i));
+	ft_memset(result, 0, sizeof(t_dict *) * (i + 1));
 	result_count = 0;
 	temp = data.commands;
 	while (temp)
 	{
+		if (temp->key[0] == -128 || temp->key[0] == -125
+			|| temp->key[0] == -126 || temp->key[0] == -127)
+		{
+			temp->value = space_front_to_back(temp->value);
+			k = 0;
+			while (temp->value[k] != '\0' && temp->value[k] != ' '
+				&& temp->value[k] != -128 && temp->value[k] != -125
+				&& temp->value[k] != -126 && temp->value[k] != -127)
+				k++;
+			value = (char *)malloc(sizeof(char) * (k));
+			i = k;
+			n = 0;
+			while (i > 0)
+			{
+				value[n] = temp->value[n];
+				n++;
+				i--;
+			}
+			value[n] = '\0';
+			printf("--%s--\n", value);
+			new = dict_new(ft_itoa(temp->key[0]), value);
+			result[result_count]
+				= dict_add_back_repeat(result[result_count], new);
+			value = ft_strstr(temp->value, value);
+			value = ft_strreplace(temp->value, value, "");
+			temp->value = value;
+			j = 0;
+		}
 		if (temp->value)
 		{
 			j = 0;
 			while (temp->value[j])
 			{
-				if (temp->value[j] == -128 || temp->value[j] == -125 || temp->value[j] == -126 || temp->value[j] == -127)
+				if (temp->value[j] == -128 || temp->value[j] == -125
+					|| temp->value[j] == -126 || temp->value[j] == -127)
 				{
 					kk = j + 1;
 					while (temp->value[kk] == ' ')
 						kk++;
 					k = kk + 1;
-					while (temp->value[k] != '\0' && temp->value[k] != ' ' && temp->value[k] != -128 && temp->value[k] != -125 && temp->value[k] != -126 && temp->value[k] != -127)
+					while (temp->value[k] != '\0' && temp->value[k] != ' '
+						&& temp->value[k] != -128 && temp->value[k] != -125
+						&& temp->value[k] != -126 && temp->value[k] != -127)
 						k++;
 					value = (char *)malloc(sizeof(char) * (k - kk) + 1);
 					i = (k - kk);
@@ -94,9 +127,8 @@ t_data	get_redirections(t_data data)
 					}
 					value[n] = '\0';
 					new = dict_new(ft_itoa(temp->value[j]), value);
-					printf("Key--->%s\n", new->key);
-					printf("Value--->%s\n", new->value);
-					result[result_count] = dict_add_back_repeat(result[result_count], new);
+					result[result_count]
+						= dict_add_back_repeat(result[result_count], new);
 					value = malloc(sizeof(char) * ((k - j)));
 					kk = 0;
 					i = j;
@@ -106,12 +138,10 @@ t_data	get_redirections(t_data data)
 						kk++;
 						i++;
 					}
+					value = ft_strstr(temp->value, value);
 					value = ft_strreplace(temp->value, value, "");
-					// new = dict_new(temp->key, value);
-					// data.commands = dict_add_back(temp, new);
 					temp->value = value;
 					j--;
-					printf("--%d--\n", j);
 				}
 				j++;
 			}

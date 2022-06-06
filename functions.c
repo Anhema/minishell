@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/05/17 21:06:21 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/06 17:15:20 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,6 +265,81 @@ char	*get_arguments(char	*str)
 		i++;
 	}
 	return (NULL);
+}
+
+char	*remove_spaces(char	*str)
+{
+	int		i;
+	int		j;
+	int		jj;
+	int		n;
+	char	c;
+	char	*temp;
+	char	*aux;
+
+	c = 0;
+	i = 0;
+	n = 0;
+	while (str[i])
+	{
+		if (n == 0)
+		{
+			if (str[i] == '\"')
+			{
+				c = '\"';
+				n++;
+			}
+			if (str[i] == '\'')
+			{
+				c = '\'';
+				n++;
+			}
+		}
+		else if (c && str[i] == c)
+		{
+			if (n > 0)
+				n--;
+			else
+				n++;
+		}
+		if (str[i] == ' ' && n == 0)
+		{
+			if (str[i + 1] == ' ')
+			{
+				j = i;
+				jj = 0;
+				while (str[j] == ' ')
+				{
+					j++;
+					jj++;
+				}
+				jj = i + jj;
+				temp = (char *)calloc(i + 1, sizeof(char));
+				temp = ft_memset(temp, 0, i + 1);
+				aux = (char *)calloc((int)ft_strlen(str) - jj, sizeof(char));
+				aux = ft_memset(aux, 0, (int)ft_strlen(str) - jj);
+				j = 0;
+				while (j < i)
+				{
+					temp[j] = str[j];
+					j++;
+				}
+				j = 0;
+				while (str[jj])
+				{
+					aux[j] = str[jj];
+					j++;
+					jj++;
+				}		
+				printf("--%s--\n", ft_strjoin(temp, aux));
+				str = ft_strjoin(temp, " ");
+				str = ft_strjoin(str, aux);
+				i = 0;
+			}
+		}
+		i++;
+	}
+	return (str);
 }
 
 t_dict	*add_command(char *line, t_dict *command)

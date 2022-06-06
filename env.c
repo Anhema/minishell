@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/26 17:58:46 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/02 20:07:07 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ t_dict	*ft_export(t_data data)
 	while (str[i])
 	{
 		if (!((str[i][0] >= 'a' && str[i][0] <= 'z')
-			|| (str[i][0] >= 'A' && str[i][0] <= 'Z')))
+			|| (str[i][0] >= 'A' && str[i][0] <= 'Z')
+			|| (str[i][0] >= '_')))
 		{
 			printf("export: `%s': not a valid identifier\n", str[i]);
 			return (data.env);
