@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/08 17:33:58 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:10:17 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ char	*check_infile(t_data *data)
 		}
 		n++;
 	}
-	free (str);
+	//free (str);
 	return (infile);
 }
 
@@ -252,7 +252,7 @@ static void	redirections_fd(t_data data, int fd_in, int temp_out)
 	close(fd_out);
 }
 
-t_data	*redirections(t_data *data, char *str)
+t_data	redirections(t_data *data, char *str)
 {
 	int		temp_in;
 	int		temp_out;
@@ -289,6 +289,6 @@ t_data	*redirections(t_data *data, char *str)
 	expand_execve(data, status);
 	if (open(".redir", O_RDONLY, 0000644) >= 0)
 		unlink(".redir");
-	free(infile);
-	return (data);
+	//free(infile);
+	return (*data);
 }

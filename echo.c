@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/08 17:37:04 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:54:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ void	ft_echo(t_data *data)
 			i++;
 		}
 		if (n == 1)
-			printf("", str);
+			printf("");
 		else
 		{
 			str_temp = malloc(sizeof(char) * (ft_strlen(str) - i));

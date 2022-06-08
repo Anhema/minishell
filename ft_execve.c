@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/07 19:16:53 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/08 18:01:17 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static char	*get_path(char *_path, char *command)
 	}
 	return (path);
 }
+
 int	g_stats;
 
 static void	print_error(t_data *data)
@@ -156,8 +157,8 @@ void	ft_execve(t_data *data)
 		perror("fork error");
 	else if (pid == 0)
 	{*/
-		if (execve(path, argv, env) < 0)
-			print_error(data);
+	if (execve(path, argv, env) < 0)
+		print_error(data);
 	//}
 	//waitpid(pid, &status, 0);
 	//expand_execve(data, status);

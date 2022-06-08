@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expantions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:55:58 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/07 19:53:48 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:56:52 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	g_stats;
 void	expand_execve(t_data *data, int status)
 {
 	(void)data;
-	printf("execve\n");
-	printf("despues del waitpid %d\n", g_stats);
+	// printf("execve\n");
+	// printf("despues del waitpid %d\n", g_stats);
 	if (WIFEXITED(status))
 		g_stats = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))
@@ -27,7 +27,7 @@ void	expand_execve(t_data *data, int status)
 			g_stats = 130;
 		else if ((WTERMSIG(status) == 3))
 			g_stats = 131;
-		printf("señales %d\n", g_stats);
+		// printf("señales %d\n", g_stats);
 	}
 }
 
@@ -55,6 +55,5 @@ void	print_expantions(void)
 {
 	g_stats = 127;
 	printf("%d: command not found\n", g_stats);
-	
 }
 
