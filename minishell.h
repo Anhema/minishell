@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/03 19:34:18 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:19:13 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <termios.h>
+
+
 
 typedef struct s_dict_t_struct
 {
@@ -60,29 +62,30 @@ t_dict	*del_one(t_dict *dict, char	*key);
 void	free_dict(t_dict *dict);
 
 char	*remove_spaces(char	*str);
-char	*expand(char *str, t_data data);
-char	*ft_readline(t_data data);
+char	*expand(char *str, t_data *data);
+char	*ft_readline(t_data *data);
 
 void	print_dict(t_dict *env);
 t_dict	*create_env(char **str);
-t_dict	*ft_export(t_data data);
+t_dict	*ft_export(t_data *data);
 t_dict	*ft_unset(t_dict *env, char **str);
-t_data	_cd(char *str, char *usr, t_data data);
+t_data	_cd(char *str, char *usr, t_data *data);
 void	ft_pwd(void);
-void	ft_echo(t_data data);
+void	ft_echo(t_data *data);
 
 t_dict	*ft_sort(char **c);
 char	*ft_history(char *str);
 t_dict	*ft_pipe_parse(char *str);
-void	ft_execve(t_data data);
+void	ft_execve(t_data *data);
 void	ft_signals(void);
 void	continue_signal(void);
 
 int		check_syntax(t_dict *commands);
-t_data	get_redirections(t_data data, char *str);
-void	redirections(t_data data, char *str);
-void	builtings(t_data data, char *str);
-void	ft_exit(char *str);
+t_data	get_redirections(t_data *data, char *str);
+void	redirections(t_data *data, char *str);
+void	builtings(t_data *data, char *str);
+void	ft_exit(char *str, t_data *data);
 char	*here_doc(t_data data, t_dict *temp);
+void	expand_execve(t_data *data, int status);
 
 #endif

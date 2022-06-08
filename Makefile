@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
+#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/05/26 19:03:26 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/06 20:34:27 by cbustama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = minishell.c \
 		cd.c \
 		builtings.c \
 		redirections.c \
+		expantions.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -34,7 +35,7 @@ EOC = \033[1;0m
 
 HEADERS = includes/minishell.h
 LIBFT = libft/libft.a
-CC = gcc #-std=c11 -ggdb3
+CC = gcc #-ggdb3
 
 READLINE_DIR = ${HOME}/.brew/opt/readline
 

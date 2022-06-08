@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 18:56:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/26 18:03:59 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:04:21 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_stats;
 
 void	signal_handler(int signum)
 {
@@ -21,12 +23,12 @@ void	signal_handler(int signum)
 		printf("\33[1A");
 		printf("^C\n");
 		printf("\33[2K\r");
-		exit (0);
+		//g_stats = 130;
 	}
 	if (signum == SIGQUIT)
 	{
 		printf ("^\\Quit: 3\n");
-		exit (0);
+		//g_stats = 131;
 	}
 }
 
@@ -43,16 +45,15 @@ void	signal_catch(int signum)
 	if (SIGINT == signum)
 	{
 		write(1, "\n", 1);
-		rl_replace_line(" ", 1);
+		rl_replace_line("", 1);
 		rl_redisplay();
+		g_stats = 1;
 	}
-	if (signum == SIGTERM)
-		exit (0);
 }
 
 void	ft_signals(void)
 {
 	signal(SIGINT, signal_catch);
-	signal(SIGTERM, signal_catch);
+	//signal(SIGTERM, signal_catch);
 	signal(SIGQUIT, SIG_IGN);
 }

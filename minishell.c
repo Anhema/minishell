@@ -3,77 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/06 15:55:31 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:03:11 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_prompt(t_data data)
+int	g_stats;
+
+char	*get_prompt(t_data *data)
 {
 	char	*prompt;
 	char	*s;
 	int		i;
 
-	if (data.is_redir)
+	if (data->is_redir)
 	{
 		prompt = "> ";
 		return (prompt);
 	}
-	s = get_dict_value(data.env, "PWD");
+	s = get_dict_value(data->env, "PWD");
 	i = 0;
-	s = ft_strreplace(s, ft_strjoin("/Users/", data.usr), "~");
-	prompt = ft_strjoin(data.usr, ": ");
+	s = ft_strreplace(s, ft_strjoin("/Users/", data->usr), "~");
+	prompt = ft_strjoin(data->usr, ": ");
 	prompt = ft_strjoin(prompt, s);
 	prompt = ft_strjoin(prompt, " % ");
 	free (s);
 	return (prompt);
 }
 
-char	*ft_readline(t_data data)
+char	*ft_readline(t_data *data)
 {
 	char			*str;
 	struct termios	term;
 	struct termios	term_old;
+	char			*count;
 
 	tcgetattr(STDIN_FILENO, &term_old);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	ft_signals();
+	
 	str = readline(get_prompt(data));
 	if (!str)
 	{
+		count = getcwd(NULL, 0);
 		printf("\033[1A");
-		printf("\033[40C");
+		printf("\033[%zuC", ft_strlen(count) - 2);
 		printf(" exit\n");
-		exit(-1);
+		free (count);
+		exit(0);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_old);
 	return (str);
 }
 
-char	*cd_exit_syntax(t_data data, char *str)
+char	*cd_exit_syntax(t_data *data, char *str)
 {
-	if (ft_str_equals(str, "exit"))
-		ft_exit(str);
-	if (ft_str_equals(data.commands->key, "cd") && !data.commands->next)
+	if (ft_str_equals(data->commands->key, "exit"))
+		ft_exit(str, data);
+	if (ft_str_equals(data->commands->key, "cd") && !data->commands->next)
 	{
-		data = _cd(data.commands->value, data.usr, data);
+		*data = _cd(data->commands->value, data->usr, data);
 		str = ft_readline(data);
 		return (str);
 	}
-	if (check_syntax(data.commands))
+	if (check_syntax(data->commands))
 	{
 		str = ft_readline(data);
 		return (str);
 	}
-	if (ft_str_equals(data.commands->key, "export") && !data.commands->next)
+	if (ft_str_equals(data->commands->key, "export") && !data->commands->next)
 	{
-		data.env = ft_export(data);
+		data->env = ft_export(data);
 		str = ft_readline(data);
 		return (str);
 	}
@@ -87,28 +93,29 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	g_stats = 0;
 	data.env = create_env(envp);
 	data.usr = get_dict_value(data.env, "USER");
 	data.is_redir = 0;
-	data.status = 0;
-	str = ft_readline(data);
+	//data.status = 0;
+	str = ft_readline(&data);
 	while (1)
 	{
 		ft_history(str);
 		str = remove_spaces(str);
-		str = expand(str, data);
+		str = expand(str, &data);
 		data.commands = ft_pipe_parse(str);
 		if (!data.commands)
 		{
-			str = ft_readline(data);
+			str = ft_readline(&data);
 			continue ;
 		}
-		str = cd_exit_syntax(data, str);
+		str = cd_exit_syntax(&data, str);
 		if (str)
 			continue ;
-		data = get_redirections(data, str);
-		redirections(data, str);
-		str = ft_readline(data);
+		data = get_redirections(&data, str);
+		redirections(&data, str);
+		str = ft_readline(&data);
 	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/02 20:07:07 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/07 21:38:40 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,14 @@ t_dict	*create_env(char **str)
 	return (env);
 }
 
+int g_stats;
+
 void	print_dict(t_dict *env)
 {
 	t_dict	*temp;
 
 	temp = env;
+	g_stats = 0;
 	if (!env)
 	{
 		printf("DICT NULL\n");
@@ -78,7 +81,7 @@ t_dict	*print_export(char **str, int i, t_data data)
 	return (data.env);
 }
 
-t_dict	*ft_export(t_data data)
+t_dict	*ft_export(t_data *data)
 {
 	char	**str;
 	t_dict	*temp;
@@ -86,9 +89,10 @@ t_dict	*ft_export(t_data data)
 	t_dict	*new;
 	char	**key_value;
 
-	if (!data.commands->value)
+	g_stats = 0;
+	if (!data->commands->value)
 	{
-		temp = data.env;
+		temp = data->env;
 		while (temp)
 		{
 			if (temp->value)
@@ -97,9 +101,9 @@ t_dict	*ft_export(t_data data)
 				printf("declare -x %s\n", temp->key);
 			temp = temp->next;
 		}
-		return (data.env);
+		return (data->env);
 	}
-	str = ft_split(data.commands->value, ' ');
+	str = ft_split(data->commands->value, ' ');
 	i = 0;
 	while (str[i])
 	{
@@ -107,16 +111,17 @@ t_dict	*ft_export(t_data data)
 			|| (str[i][0] >= 'A' && str[i][0] <= 'Z')
 			|| (str[i][0] >= '_')))
 		{
+			g_stats = 1;
 			printf("export: `%s': not a valid identifier\n", str[i]);
-			return (data.env);
+			return (data->env);
 		}
 		key_value = ft_split(str[i], '=');
 		new = dict_new(key_value[0], key_value[1]);
-		data.env = dict_add_back
-			(data.env, dict_new(key_value[0], key_value[1]));
+		data->env = dict_add_back
+			(data->env, dict_new(key_value[0], key_value[1]));
 		i++;
 	}
-	return (data.env);
+	return (data->env);
 }
 
 t_dict	*ft_unset(t_dict *env, char **str)
@@ -124,6 +129,7 @@ t_dict	*ft_unset(t_dict *env, char **str)
 	int		i;
 
 	i = 1;
+	g_stats = 0;
 	while (str[i])
 	{
 		env = del_one(env, str[i]);

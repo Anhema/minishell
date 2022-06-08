@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/02 19:57:02 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/07 19:16:53 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,15 @@ static char	*get_path(char *_path, char *command)
 	}
 	return (path);
 }
+int	g_stats;
 
-static void	print_error(t_data data)
+static void	print_error(t_data *data)
 {
 	t_dict	*env;
 	char	*str;
 
-	env = data.env;
-	str = data.commands->key;
+	env = data->env;
+	str = data->commands->key;
 	while (env)
 	{
 		str = ft_strreplace(str, ft_strjoin("$", env->key), env->value);
@@ -79,25 +80,28 @@ static void	print_error(t_data data)
 	str = ft_strreplace(str, ft_itoa(-126), "<<");
 	str = ft_strreplace(str, ft_itoa(-127), ">");
 	str = ft_strreplace(str, ft_itoa(-128), ">>");
-	if (ft_strstr(data.commands->key, "/"))
-		printf("minishell: %s: No such file or directory\n", data.commands->key);
+	if (ft_strstr(data->commands->key, "/"))
+		printf("minishell: %s: No such file or directory\n", data->commands->key);
 	else
+	{
+		g_stats = 127;
 		printf("minishell: %s: command not found\n", str);
+	}
 }
 
-void	ft_execve(t_data data)
+void	ft_execve(t_data *data)
 {
-	pid_t	pid;
+	//pid_t	pid;
 	int		i;
 	int		j;
 	char	**temp;
 	char	**argv;
 	char	**env;
-	int		status;
+	//int		status;
 	char	*path;
 	char	*key;
 
-	key = data.commands->key;
+	key = data->commands->key;
 	key = ft_strreplace(key, "/bin/", "");
 	if (key[0] == (char)128
 		|| key[0] == (char)129
@@ -105,14 +109,14 @@ void	ft_execve(t_data data)
 		|| key[0] == (char)131)
 		return ;
 	//printf ("--%s--\n", data.commands->key);
-	temp = ft_split(data.commands->value, ' ');
+	temp = ft_split(data->commands->value, ' ');
 	i = 0;
 	if (temp)
 	{
 		while (temp[i])
 			i++;
 	}
-	if (!temp || ft_str_equals(data.commands->value, ""))
+	if (!temp || ft_str_equals(data->commands->value, ""))
 	{
 		argv = malloc(sizeof(char *) * 2);
 		argv[0] = key;
@@ -136,24 +140,26 @@ void	ft_execve(t_data data)
 	{
 		argv = malloc(sizeof(char *) * 3);
 		argv[0] = key;
-		argv[1] = data.commands->value;
+		argv[1] = data->commands->value;
 		argv[2] = NULL;
 	}
-	env = join_env(data.env);
-	if (!get_dict_value(data.env, "PATH"))
+	env = join_env(data->env);
+	if (!get_dict_value(data->env, "PATH"))
 	{
-		printf("minishell: %s: No such file or directory\n", data.commands->key);
+		printf("minishell: %s: No such file or directory\n", data->commands->key);
 		return ;
 	}
-	path = get_path(get_dict_value(data.env, "PATH"), key);
+	path = get_path(get_dict_value(data->env, "PATH"), key);
 	argv[0] = path;
-	pid = fork();
+	/*pid = fork();
 	if ((pid) == -1)
 		perror("fork error");
 	else if (pid == 0)
-	{
+	{*/
 		if (execve(path, argv, env) < 0)
 			print_error(data);
-	}
-	waitpid(pid, &status, 0);
+	//}
+	//waitpid(pid, &status, 0);
+	//expand_execve(data, status);
+
 }

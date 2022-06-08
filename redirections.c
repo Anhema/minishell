@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/02 18:14:54 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:27:16 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_syntax(t_dict *commands)
 	return (0);
 }
 
-t_data	get_redirections(t_data data, char *str)
+t_data	get_redirections(t_data *data, char *str)
 {
 	t_dict	*temp;
 	t_dict	*new;
@@ -55,7 +55,7 @@ t_data	get_redirections(t_data data, char *str)
 	char	*value;
 
 	(void)str;
-	temp = data.commands;
+	temp = data->commands;
 	i = 0;
 	while (temp)
 	{
@@ -64,10 +64,10 @@ t_data	get_redirections(t_data data, char *str)
 	}
 	result = (t_dict **)malloc(sizeof(t_dict *) * (i + 1));
 	if (!result)
-		return (data);
+		return (*data);
 	ft_memset(result, 0, sizeof(t_dict *) * (i + 1));
 	result_count = 0;
-	temp = data.commands;
+	temp = data->commands;
 	while (temp)
 	{
 		if (temp->key[0] == -128 || temp->key[0] == -125
@@ -149,6 +149,6 @@ t_data	get_redirections(t_data data, char *str)
 		result_count++;
 		temp = temp->next;
 	}
-	data.redirections = result;
-	return (data);
+	data->redirections = result;
+	return (*data);
 }

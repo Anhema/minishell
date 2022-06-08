@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/03 19:19:15 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/07 20:06:47 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+int	g_stats;
 
-char	*expand(char *str, t_data data)
+char	*expand(char *str, t_data *data)
 {
 	char	*var;
 	char	*temp;
@@ -52,6 +53,11 @@ char	*expand(char *str, t_data data)
 		}
 		if (str[i] == '$' && c != '\'')
 		{
+			if (str[i + 1] == ' ')
+			{
+				i++;
+				continue ;
+			}
 			temp = malloc(sizeof(char) * (i + 1));
 			ii = 0;
 			while (ii < i)
@@ -84,11 +90,11 @@ char	*expand(char *str, t_data data)
 				n++;
 			}
 			var[n] = '\0';
-			if (get_dict_value(data.env, var))
-				temp = ft_strjoin(temp, get_dict_value(data.env, var));
+			if (get_dict_value(data->env, var))
+				temp = ft_strjoin(temp, get_dict_value(data->env, var));
 			else if (var[0] == '?')
 				temp = ft_strjoin(temp, ft_strjoin("$", var));
-			temp = ft_strreplace(temp, "$?", ft_itoa(data.status));
+			temp = ft_strreplace(temp, "$?", ft_itoa(g_stats));
 			//printf("--%s--VAR = %s-- I = %d\n", temp, var, i);
 			j--;
 			while (str[j])
@@ -174,14 +180,15 @@ char	*expand(char *str, t_data data)
 // 	return (str);
 // }
 
-void	ft_echo(t_data data)
+void	ft_echo(t_data *data)
 {
 	char	*str;
 	char	*str_temp;
 	int		i;
 	int		n;
 
-	str = data.commands->value;
+	str = data->commands->value;
+	g_stats = 0;
 	//str = expand(data);
 	if (!str)
 	{
