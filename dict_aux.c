@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/05/25 17:05:16 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:35:39 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,9 @@ char	*get_dict_value(t_dict *dict, char	*key)
 	return (NULL);
 }
 
-void	free_dict(t_dict *dict)
+void	delete_all(t_dict *dict)
 {
-	if (!dict)
-		return ;
-	while (dict)
-	{
-		free(dict->key);
-		free(dict->value);
-		free(dict);
-		dict = dict->next;
-	}
+	if (!dict->next)
+		delete_all(dict->next);
 	free(dict);
 }

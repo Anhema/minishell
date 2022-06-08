@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/07 18:10:02 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:39:19 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,7 +331,6 @@ char	*remove_spaces(char	*str)
 					j++;
 					jj++;
 				}		
-				printf("--%s--\n", ft_strjoin(temp, aux));
 				str = ft_strjoin(temp, " ");
 				str = ft_strjoin(str, aux);
 				i = 0;

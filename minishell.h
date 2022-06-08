@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/07 17:19:13 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:45:16 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ typedef struct s_data
 	t_dict					*env;
 	t_dict					*commands;
 	char					*usr;
+	char					*str;
 	t_dict					**redirections;
-	char					*infile;
-	int						status;
 	int						is_redir;
 }	t_data;
 
@@ -59,11 +58,13 @@ t_dict	*dict_add_back_repeat(t_dict *lst, t_dict *new);
 t_dict	*dict_add_front(t_dict *lst, t_dict *new);
 char	*get_dict_value(t_dict *dict, char	*key);
 t_dict	*del_one(t_dict *dict, char	*key);
-void	free_dict(t_dict *dict);
+void	delete_all(t_dict *dict);
 
 char	*remove_spaces(char	*str);
 char	*expand(char *str, t_data *data);
 char	*ft_readline(t_data *data);
+char	*replace_redirections(char *str);
+char	*delete_redirections(char *str);
 
 void	print_dict(t_dict *env);
 t_dict	*create_env(char **str);
@@ -82,10 +83,12 @@ void	continue_signal(void);
 
 int		check_syntax(t_dict *commands);
 t_data	get_redirections(t_data *data, char *str);
-void	redirections(t_data *data, char *str);
-void	builtings(t_data *data, char *str);
+t_data	*redirections(t_data *data, char *str);
+t_data	*builtings(t_data *data, char *str);
 void	ft_exit(char *str, t_data *data);
 char	*here_doc(t_data data, t_dict *temp);
 void	expand_execve(t_data *data, int status);
+
+void   free_mem(t_data data, char *str);
 
 #endif

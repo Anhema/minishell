@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtings.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/07 21:30:20 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:33:58 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 int	g_stats;
 
 void	ft_pwd(void)
@@ -37,6 +38,11 @@ int	ft_magic_nbr(int n, t_data *data)
 	return (n);
 }
 
+// void	free_mem(t_data *data, char *str)
+// {
+	
+// }
+
 void	ft_exit(char *str, t_data *data)
 {
 	int	n;
@@ -60,12 +66,6 @@ void	ft_exit(char *str, t_data *data)
 			}
 		}
 		n = ft_magic_nbr(n, data);
-		/*if (n > 256)
-			n = n - 256 ;
-		if (n < 0)
-			n = 256 + n;
-		else if (n == 256)
-			n = 0;*/
 		free(str);
 		printf("esto es n  ==== %d\n", n);
 		g_stats = n;
@@ -77,8 +77,9 @@ void	ft_exit(char *str, t_data *data)
 	exit(0);
 }
 
-void	builtings(t_data *data, char *str)
+t_data	*builtings(t_data *data, char *str)
 {
+	(void)str;
 	if (ft_str_equals(data->commands->key, "pwd"))
 		ft_pwd();
 	else if (ft_str_equals(data->commands->key, "echo"))
@@ -93,12 +94,13 @@ void	builtings(t_data *data, char *str)
 	else if (ft_str_equals(data->commands->key, "export"))
 		data->env = ft_export(data);
 	else if (ft_str_equals(data->commands->key, "unset"))
-		data->env = ft_unset(data->env, ft_split(str, ' '));
+		data->env = ft_unset(data->env, ft_split(data->commands->value, ' '));
 	else
 	{
 		continue_signal();
 		ft_execve(data);
 	}
+	return (data);
 }
 
 char	*check_infile(t_data *data)
@@ -135,7 +137,7 @@ char	*check_infile(t_data *data)
 				else
 					infile = temp->value;
 			}
-			if (ft_atoi(temp->key) == -126 || data->commands->key[0] == (char)130)
+			if (ft_atoi(temp->key) == -126)
 			{
 				data->is_redir = 1;
 				str = ft_readline(data);
@@ -146,7 +148,7 @@ char	*check_infile(t_data *data)
 						break ;
 					if (in < 0)
 					{
-						perror("minishell: No such file or directory\n");
+						perror("minishell:");
 						break ;
 					}
 					else
@@ -164,6 +166,7 @@ char	*check_infile(t_data *data)
 		}
 		n++;
 	}
+	free (str);
 	return (infile);
 }
 
@@ -192,7 +195,7 @@ int	check_outfile(t_data data)
 				outfile = open(temp->value, O_WRONLY | O_CREAT, 0000644);
 				if (outfile < 0)
 				{
-					perror("minishell: No such file or directory\n");
+					perror("minishell:");
 					outfile = -1;
 					break ;
 				}
@@ -202,7 +205,7 @@ int	check_outfile(t_data data)
 				outfile = open(temp->value, O_WRONLY | O_APPEND | O_CREAT, 0000644);
 				if (outfile < 0)
 				{
-					perror("minishell: No such file or directory\n");
+					perror("minishell:");
 					outfile = -1;
 					break ;
 				}
@@ -222,6 +225,15 @@ static void	redirections_fd(t_data data, int fd_in, int temp_out)
 
 	dup2(fd_in, 0);
 	close(fd_in);
+	if (!data.commands)
+	{
+		outfile = check_outfile(data);
+		if (outfile >= 0)
+			fd_out = outfile;
+		else
+			fd_out = dup(temp_out);
+		return ;
+	}
 	if (!data.commands->next)
 	{
 		outfile = check_outfile(data);
@@ -240,7 +252,7 @@ static void	redirections_fd(t_data data, int fd_in, int temp_out)
 	close(fd_out);
 }
 
-void	redirections(t_data *data, char *str)
+t_data	*redirections(t_data *data, char *str)
 {
 	int		temp_in;
 	int		temp_out;
@@ -256,13 +268,15 @@ void	redirections(t_data *data, char *str)
 		fd_in = open(infile, O_RDONLY, 0000644);
 	else
 		fd_in = dup(temp_in);
+	if (!data->commands)
+		redirections_fd(*data, fd_in, temp_in);
 	while (data->commands)
 	{
 		redirections_fd(*data, fd_in, temp_out);
 		pid = fork();
 		if (pid == 0)
 		{
-			builtings(data, str);
+			data = builtings(data, str);
 			exit (g_stats);
 		}
 		data->commands = data->commands->next;
@@ -275,4 +289,6 @@ void	redirections(t_data *data, char *str)
 	expand_execve(data, status);
 	if (open(".redir", O_RDONLY, 0000644) >= 0)
 		unlink(".redir");
+	free(infile);
+	return (data);
 }

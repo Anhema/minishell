@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/07 21:38:40 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:38:49 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,10 @@ t_dict	*ft_unset(t_dict *env, char **str)
 {
 	int		i;
 
-	i = 1;
+	i = 0;
 	g_stats = 0;
+	if (!str)
+		return (env);
 	while (str[i])
 	{
 		env = del_one(env, str[i]);

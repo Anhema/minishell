@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/07 20:03:11 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/08 17:43:45 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ char	*get_prompt(t_data *data)
 	prompt = ft_strjoin(prompt, " % ");
 	free (s);
 	return (prompt);
+}
+
+void	free_mem(t_data data, char *str)
+{
+	int	i;
+
+	i = 0;
+	free (str);
+	if (data.str)
+		free (data.str);
+	free (data.usr);
+	//if (data.commands)
+	//      delete_all(data.commands);
+	delete_all(data.env);
+	// while (data.redirections[i])
+	// {
+	//      delete_all(data.redirections[i]);
+	//      i++;
+	// }
 }
 
 char	*ft_readline(t_data *data)
@@ -83,6 +102,12 @@ char	*cd_exit_syntax(t_data *data, char *str)
 		str = ft_readline(data);
 		return (str);
 	}
+	if (ft_str_equals(data->commands->key, "unset") && !data->commands->next)
+	{
+		data->env = ft_unset(data->env, ft_split(data->commands->value, ' '));
+		str = ft_readline(data);
+		return (str);
+	}
 	return (NULL);
 }
 
@@ -97,13 +122,13 @@ int	main(int argc, char **argv, char **envp)
 	data.env = create_env(envp);
 	data.usr = get_dict_value(data.env, "USER");
 	data.is_redir = 0;
-	//data.status = 0;
+	data.str = NULL;
 	str = ft_readline(&data);
 	while (1)
 	{
 		ft_history(str);
 		str = remove_spaces(str);
-		str = expand(str, &data);
+		str = repla(str, &data);
 		data.commands = ft_pipe_parse(str);
 		if (!data.commands)
 		{
