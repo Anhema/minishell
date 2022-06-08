@@ -11,3 +11,5 @@ log_error/
 obj/
 *.o
 *.a
+.history
+minishell
