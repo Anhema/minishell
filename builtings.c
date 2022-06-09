@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 17:47:35 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:55:40 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,10 @@ t_data	*builtings(t_data *data, char *str)
 		ft_read_file(".history", 0);
 	else if (ft_str_equals(data->commands->key, "cd"))
 		printf("");
-	else if (ft_str_equals(data->commands->key, "export") && !data->commands->next)
-		data->env = ft_export(data);
-	else if (ft_str_equals(data->commands->key, "unset"))
-		data->env = ft_unset(data->env, ft_split(data->commands->value, ' '));
+	// else if (ft_str_equals(data->commands->key, "export") && !data->commands->next)
+	// 	data->env = ft_export(data);
+	// else if (ft_str_equals(data->commands->key, "unset"))
+	// 	data->env = ft_unset(data->env, ft_split(data->commands->value, ' '));
 	else
 	{
 		continue_signal();

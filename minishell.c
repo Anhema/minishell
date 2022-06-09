@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 17:50:27 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:04:02 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ char	*ft_readline(t_data *data)
 
 char	*cd_exit_syntax(t_data *data, char *str)
 {
-	if (ft_str_equals(data->commands->key, "exit"))
+	if (check_syntax(data->commands))
+	{
+		str = ft_readline(data);
+		return (str);
+	}
+	if (ft_str_equals(data->commands->key, "exit") && !data->commands->next)
 		ft_exit(str, data);
 	if (ft_str_equals(data->commands->key, "cd") && !data->commands->next)
 	{
 		*data = _cd(data->commands->value, data->usr, data);
-		str = ft_readline(data);
-		return (str);
-	}
-	if (check_syntax(data->commands))
-	{
 		str = ft_readline(data);
 		return (str);
 	}
@@ -97,7 +97,7 @@ char	*cd_exit_syntax(t_data *data, char *str)
 		str = ft_readline(data);
 		return (str);
 	}
-	return (str);
+	return (NULL);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -131,7 +131,8 @@ int	main(int argc, char **argv, char **envp)
 		if (!data->commands->next)
 		{
 			str = cd_exit_syntax(data, str);
-			continue ;
+			if (str)
+				continue ;
 		}
 		data = redirections(data, str);
 		str = ft_readline(data);
