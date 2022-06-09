@@ -6,12 +6,11 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 17:16:11 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:42:25 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static t_dict	*cd_aux(t_dict *temp, char *old_path)
 {

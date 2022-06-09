@@ -6,11 +6,39 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 17:15:38 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:33:42 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	aux(char p, int n)
+{
+	char	c;
+
+	c = 0;
+	if (n == 0)
+	{
+		if (p == '\"')
+		{
+			c = '\"';
+			n++;
+		}
+		if (p == '\'')
+		{
+			c = '\'';
+			n++;
+		}
+	}
+	else if (c && p == c)
+	{
+		if (n > 0)
+			n--;
+		else
+			n++;
+	}
+	return (n);
+}
 
 int	check_syntax(t_dict *commands)
 {
@@ -47,33 +75,13 @@ t_dict	**get_n_commands(char *str)
 	int		j;
 	int		n;
 	t_dict	**result;
-	char	c;
 
 	j = 1;
 	n = 0;
 	i = 0;
 	while (i < (int)ft_strlen(str))
 	{
-		if (n == 0)
-		{
-			if (str[i] == '\"')
-			{
-				c = '\"';
-				n++;
-			}
-			if (str[i] == '\'')
-			{
-				c = '\'';
-				n++;
-			}
-		}
-		else if (c && str[i] == c)
-		{
-			if (n > 0)
-				n--;
-			else
-				n++;
-		}
+		n = aux(str[i], n);
 		if (str[i] == '|')
 		{
 			if (n == 0)
@@ -92,7 +100,6 @@ char	*replace_redirections(char *str)
 	int		i;
 	int		j;
 	int		n;
-	char	c;
 
 	i = 0;
 	j = 0;
@@ -101,26 +108,7 @@ char	*replace_redirections(char *str)
 	ft_memset(temp, 0, sizeof(char) * (ft_strlen(str) + 1));
 	while (str[i])
 	{
-		if (n == 0)
-		{
-			if (str[i] == '\"')
-			{
-				c = '\"';
-				n++;
-			}
-			if (str[i] == '\'')
-			{
-				c = '\'';
-				n++;
-			}
-		}
-		else if (c && str[i] == c)
-		{
-			if (n > 0)
-				n--;
-			else
-				n++;
-		}
+		n = aux(str[i], n);
 		if (n == 0)
 		{
 			if (str[i] == '>' && str[i + 1] == '<' && n == 0)
@@ -156,6 +144,7 @@ char	*replace_redirections(char *str)
 	return (temp);
 }
 
+
 t_data	get_redirections(t_data data, char *str)
 {
 	t_dict	*new;
@@ -164,41 +153,19 @@ t_data	get_redirections(t_data data, char *str)
 	int		j;
 	int		k;
 	int		kk;
-	int		closed;
 	int		n;
 	int		result_count;
 	char	*value;
 	char	*value_aux;
-	char	c;
 
 	result = get_n_commands(str);
 	j = 0;
 	i = 0;
-	closed = 0;
 	n = 0;
 	result_count = 0;
 	while (str[j])
 	{
-		if (closed == 0)
-		{
-			if (str[j] == '\"')
-			{
-				c = '\"';
-				n++;
-			}
-			if (str[j] == '\'')
-			{
-				c = '\'';
-				n++;
-			}
-		}
-		else if (c && str[i] == c)
-		{
-			if (closed > 0)
-				closed--;
-			else
-				closed++;
-		}
+		n = aux(str[j], n);
 		if (n == 0 && str[j] == '|')
 			result_count++;
 		if (str[j] == -128 || str[j] == -125
@@ -234,8 +201,10 @@ t_data	get_redirections(t_data data, char *str)
 					str = "";
 					break ;
 				}
-				value_aux = malloc(sizeof(char) * ((int)ft_strlen(str) - k) + 1);
-				ft_memset(value_aux, 0, sizeof(char) * ((int)ft_strlen(str) - k) + 1);
+				value_aux = malloc
+					(sizeof(char) * ((int)ft_strlen(str) - k) + 1);
+				ft_memset(value_aux, 0,
+					sizeof(char) * ((int)ft_strlen(str) - k) + 1);
 				kk = 0;
 				while (str[k])
 				{
@@ -256,8 +225,10 @@ t_data	get_redirections(t_data data, char *str)
 					value[kk] = str[kk];
 					kk++;
 				}
-				value_aux = malloc(sizeof(char) * ((int)ft_strlen(str) - k) + 1);
-				ft_memset(value_aux, 0, sizeof(char) * ((int)ft_strlen(str) - k) + 1);
+				value_aux = malloc
+					(sizeof(char) * ((int)ft_strlen(str) - k) + 1);
+				ft_memset(value_aux, 0,
+					sizeof(char) * ((int)ft_strlen(str) - k) + 1);
 				kk = 0;
 				while (str[k])
 				{

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 18:04:02 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:26:58 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_history(str);
 		str = remove_spaces(str);
 		str = replace_redirections(str);
-		if (!str)
+		if (!str || ft_str_equals(str, ""))
 		{
 			str = ft_readline(data);
 			continue ;
@@ -128,7 +128,7 @@ int	main(int argc, char **argv, char **envp)
 		*data = get_redirections(*data, str);
 		str = data->str;
 		data->commands = ft_pipe_parse(str);
-		if (!data->commands->next)
+		if (data->commands)
 		{
 			str = cd_exit_syntax(data, str);
 			if (str)

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 18:56:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 17:12:45 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:58:33 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,9 @@ void	signal_handler(int signum)
 	extern int	g_stats;
 
 	if (signum == SIGINT)
-	{
-		printf("\33[2K\r");
-		printf("\33[2K\r");
-		printf("\33[1A");
 		printf("^C\n");
-		printf("\33[2K\r");
-	}
 	if (signum == SIGQUIT)
-	{
 		printf ("^\\Quit: 3\n");
-	}
 }
 
 void	continue_signal(void)

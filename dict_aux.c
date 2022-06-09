@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/08 17:35:39 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 18:48:11 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,31 @@ void	delete_all(t_dict *dict)
 	if (!dict->next)
 		delete_all(dict->next);
 	free(dict);
+}
+
+void	print_dict(t_dict *env)
+{
+	t_dict	*temp;
+
+	temp = env;
+	g_stats = 0;
+	if (!env)
+	{
+		printf("DICT NULL\n");
+		return ;
+	}
+	else
+	{
+		while (env)
+		{
+			if (temp->value)
+			{
+				printf("%s=%s\n", temp->key, temp->value);
+				temp = env->next;
+			}
+			else
+				temp = env->next;
+			env = temp;
+		}
+	}
 }
