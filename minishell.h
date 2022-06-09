@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/08 17:56:10 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:40:02 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # include <pthread.h>
 # include <termios.h>
 
-
-
 typedef struct s_dict_t_struct
 {
 	char					*key;
@@ -46,6 +44,7 @@ typedef struct s_data
 	int						is_redir;
 }	t_data;
 
+int		g_stats;
 char	*space_front_to_back(char *c);
 
 t_dict	**dicta_alloc(void);
@@ -83,7 +82,7 @@ void	continue_signal(void);
 
 int		check_syntax(t_dict *commands);
 t_data	get_redirections(t_data data, char *str);
-t_data	redirections(t_data *data, char *str);
+t_data	*redirections(t_data *data, char *str);
 t_data	*builtings(t_data *data, char *str);
 void	ft_exit(char *str, t_data *data);
 char	*here_doc(t_data data, t_dict *temp);

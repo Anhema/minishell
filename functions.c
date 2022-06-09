@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/08 17:39:19 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:18:52 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ t_dict	*ft_sort(char **c)
 	}
 	return (command);
 }
-int	g_stats;
+
 char	*ft_history(char *str)
 {
-	int		i;
-	int		fd;
-	char	*dst;
+	int			i;
+	int			fd;
+	char		*dst;
+	extern int	g_stats;
 
 	i = -1;
 	if (str)

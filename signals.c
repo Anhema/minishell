@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 18:56:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/07 20:04:21 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:12:45 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_stats;
-
 void	signal_handler(int signum)
 {
+	extern int	g_stats;
+
 	if (signum == SIGINT)
 	{
 		printf("\33[2K\r");
@@ -23,12 +23,10 @@ void	signal_handler(int signum)
 		printf("\33[1A");
 		printf("^C\n");
 		printf("\33[2K\r");
-		//g_stats = 130;
 	}
 	if (signum == SIGQUIT)
 	{
 		printf ("^\\Quit: 3\n");
-		//g_stats = 131;
 	}
 }
 
@@ -54,6 +52,5 @@ void	signal_catch(int signum)
 void	ft_signals(void)
 {
 	signal(SIGINT, signal_catch);
-	//signal(SIGTERM, signal_catch);
 	signal(SIGQUIT, SIG_IGN);
 }

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/07 20:10:11 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:16:11 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_stats;
 
 static t_dict	*cd_aux(t_dict *temp, char *old_path)
 {
@@ -29,9 +28,10 @@ static t_dict	*cd_aux(t_dict *temp, char *old_path)
 
 t_data	_cd(char *str, char *usr, t_data *data)
 {
-	char	*path;
-	char	*old_path;
-	t_dict	*temp;
+	extern int	g_stats;
+	char		*path;
+	char		*old_path;
+	t_dict		*temp;
 
 	path = str;
 	old_path = getcwd(NULL, 0);
@@ -47,7 +47,7 @@ t_data	_cd(char *str, char *usr, t_data *data)
 	}
 	else
 	{
-		 g_stats = 1;
+		g_stats = 1;
 		printf("minishell: cd: %s: No such file or directory\n", path);
 	}
 	g_stats = 0;

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/08 17:38:49 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:34:58 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ t_dict	*create_env(char **str)
 	return (env);
 }
 
-int g_stats;
-
 void	print_dict(t_dict *env)
 {
 	t_dict	*temp;
@@ -52,21 +50,19 @@ void	print_dict(t_dict *env)
 			{
 				printf("%s=%s\n", temp->key, temp->value);
 				temp = env->next;
-				env = temp;
 			}
 			else
-			{
 				temp = env->next;
-				env = temp;
-			}
+			env = temp;
 		}
 	}
 }
 
 t_dict	*print_export(char **str, int i, t_data data)
 {
-	t_dict	*new;
-	char	**key_value;
+	t_dict		*new;
+	char		**key_value;
+	extern int	g_stats;
 
 	if (!((str[i][0] >= 'a' && str[i][0] <= 'z')
 		|| (str[i][0] >= 'A' && str[i][0] <= 'Z')))
@@ -134,7 +130,8 @@ t_dict	*ft_unset(t_dict *env, char **str)
 		return (env);
 	while (str[i])
 	{
-		env = del_one(env, str[i]);
+		if (str[i])
+			env = del_one(env, str[i]);
 		i++;
 	}
 	return (env);

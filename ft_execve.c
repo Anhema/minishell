@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/08 18:01:17 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:07:33 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,11 @@ static char	*get_path(char *_path, char *command)
 	return (path);
 }
 
-int	g_stats;
-
 static void	print_error(t_data *data)
 {
-	t_dict	*env;
-	char	*str;
+	t_dict		*env;
+	char		*str;
+	extern int	g_stats;
 
 	env = data->env;
 	str = data->commands->key;
@@ -92,13 +91,11 @@ static void	print_error(t_data *data)
 
 void	ft_execve(t_data *data)
 {
-	//pid_t	pid;
 	int		i;
 	int		j;
 	char	**temp;
 	char	**argv;
 	char	**env;
-	//int		status;
 	char	*path;
 	char	*key;
 
@@ -109,7 +106,6 @@ void	ft_execve(t_data *data)
 		|| key[0] == (char)130
 		|| key[0] == (char)131)
 		return ;
-	//printf ("--%s--\n", data.commands->key);
 	temp = ft_split(data->commands->value, ' ');
 	i = 0;
 	if (temp)
@@ -152,15 +148,6 @@ void	ft_execve(t_data *data)
 	}
 	path = get_path(get_dict_value(data->env, "PATH"), key);
 	argv[0] = path;
-	/*pid = fork();
-	if ((pid) == -1)
-		perror("fork error");
-	else if (pid == 0)
-	{*/
 	if (execve(path, argv, env) < 0)
 		print_error(data);
-	//}
-	//waitpid(pid, &status, 0);
-	//expand_execve(data, status);
-
 }

@@ -6,17 +6,16 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/08 18:10:17 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/09 17:47:35 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_stats;
-
 void	ft_pwd(void)
 {
-	char	*s;
+	extern int	g_stats;
+	char		*s;
 
 	s = getcwd(NULL, 0);
 	printf("%s\n", s);
@@ -37,11 +36,6 @@ int	ft_magic_nbr(int n, t_data *data)
 		n = 0;
 	return (n);
 }
-
-// void	free_mem(t_data *data, char *str)
-// {
-	
-// }
 
 void	ft_exit(char *str, t_data *data)
 {
@@ -67,10 +61,8 @@ void	ft_exit(char *str, t_data *data)
 		}
 		n = ft_magic_nbr(n, data);
 		free(str);
-		printf("esto es n  ==== %d\n", n);
 		g_stats = n;
 		exit (n);
-
 	}
 	g_stats = 0;
 	free(str);
@@ -91,7 +83,7 @@ t_data	*builtings(t_data *data, char *str)
 		ft_read_file(".history", 0);
 	else if (ft_str_equals(data->commands->key, "cd"))
 		printf("");
-	else if (ft_str_equals(data->commands->key, "export"))
+	else if (ft_str_equals(data->commands->key, "export") && !data->commands->next)
 		data->env = ft_export(data);
 	else if (ft_str_equals(data->commands->key, "unset"))
 		data->env = ft_unset(data->env, ft_split(data->commands->value, ' '));
@@ -252,7 +244,7 @@ static void	redirections_fd(t_data data, int fd_in, int temp_out)
 	close(fd_out);
 }
 
-t_data	redirections(t_data *data, char *str)
+t_data	*redirections(t_data *data, char *str)
 {
 	int		temp_in;
 	int		temp_out;
@@ -290,5 +282,5 @@ t_data	redirections(t_data *data, char *str)
 	if (open(".redir", O_RDONLY, 0000644) >= 0)
 		unlink(".redir");
 	//free(infile);
-	return (*data);
+	return (data);
 }
