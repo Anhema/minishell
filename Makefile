@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/08 18:06:33 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/13 17:00:53 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,12 @@ SRC = minishell.c \
 		ft_execve.c \
 		signals.c \
 		cd.c \
+		fd.c \
 		builtings.c \
+		builtings_aux.c \
 		redirections.c \
 		expantions.c\
+		readline.c\
 
 OBJ = $(SRC:.c=.o)
 
