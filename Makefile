@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
+#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/13 17:00:53 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/14 16:40:34 by cbustama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRC = minishell.c \
 		redirections.c \
 		expantions.c\
 		readline.c\
+		continue_execve.c\
+		expand.c\
 
 OBJ = $(SRC:.c=.o)
 

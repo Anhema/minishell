@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/13 17:01:28 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/14 17:14:11 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,15 @@ int		redirections_fd_aux(t_data data, int temp_out);
 char	*heredoc(t_data *data, t_dict *temp);
 void	redirections_aux(t_data *data, int fd_in, int temp_in, int temp_out);
 void	redirections_fd(t_data data, int fd_in, int temp_out);
+
+void	continue_execve(t_data *data, char *key, char **temp);
+char	**join_env(t_dict *d_env);
+
+/*  Expand functions*/
+
+char	*continue_expand_three(char *str, char *tmp, t_data *data, int i);
+char	*continue_expand_two(char *str, int i, char *tmp, t_data *data);
+char	*continue_expand_for(char *str, int i, char *tmp, char *var);
+char	continue_expand(char c, int i, char *str);
 
 #endif
