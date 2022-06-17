@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/14 19:11:54 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:00:39 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ void	print_error(t_data *data)
 {
 	t_dict		*env;
 	char		*str;
+	char		*temp;
 	extern int	g_stats;
 
 	env = data->env;
 	str = data->commands->key;
 	while (env)
 	{
-		str = ft_strreplace(str, ft_strjoin("$", env->key), env->value);
+		temp = ft_strjoin("$", env->key);
+		str = ft_strreplace(str, temp, env->value);
 		env = env->next;
 	}
 	str = ft_strreplace(str, ft_itoa(-125), "<");

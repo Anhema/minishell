@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/14 19:10:19 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:59:35 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_execve(t_data *data)
 	char	*key;
 
 	argv = NULL;
-	key = data->commands->key;
+	key = ft_strreplace(data->commands->key, "/bin/", "");
 	temp = ft_split(data->commands->value, ' ');
 	if (!temp)
 	{
@@ -63,6 +63,6 @@ void	ft_execve(t_data *data)
 	_execve_print(data);
 	path = get_path(get_dict_value(data->env, "PATH"), key);
 	argv[0] = path;
-	if (execve(path, argv, env) < 0)
+	if (execve(path, argv, NULL) < 0)
 		print_error(data);
 }

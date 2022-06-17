@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/16 22:42:34 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:59:52 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	main(int argc, char **argv, char **envp)
 	data->str = NULL;
 	str = ft_readline(data);
 	while (1)
-	{
 		str = minishell_loop(data, str);
-	}
 	return (0);
 }

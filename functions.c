@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/16 22:36:55 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:14:12 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,27 +66,12 @@ t_dict	*ft_sort(char **c)
 	return (command);
 }
 
-char	*ft_history(char *str)
+void	ft_history(char *str)
 {
-	int			i;
-	int			fd;
-	char		*dst;
 	extern int	g_stats;
 
-	i = -1;
 	if (str)
 		add_history(str);
-	dst = (char *)malloc(sizeof(char) * (ft_strlen(str) + 2));
-	if (!dst)
-		return (NULL);
-	while (str[++i])
-		dst[i] = str[i];
-	dst[i] = '\n';
-	dst[++i] = '\0';
-	fd = open(".history", O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
-	write(fd, dst, ft_strlen(dst));
-	close (fd);
-	return (dst);
 }
 
 char	*get_builting(char	*str)

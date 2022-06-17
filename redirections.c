@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/16 23:17:57 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 16:12:55 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	check_syntax(t_dict *commands)
 			else
 				printf(
 					"minishell: syntax error near unexpected token `newline'\n");
-			free(str);
 			return (1);
 		}
 		temp = temp->next;

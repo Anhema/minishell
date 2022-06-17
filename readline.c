@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:01:00 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 19:06:12 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 17:00:09 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,45 @@
 char	*get_prompt(t_data *data)
 {
 	char	*prompt;
+	char	*_prompt;
+	char	*_oldprompt;
 	char	*s;
-	int		i;
+	char	*_str;
 
 	if (data->is_redir)
 	{
 		prompt = "> ";
 		return (prompt);
 	}
-	s = get_dict_value(data->env, "PWD");
-	i = 0;
-	s = ft_strreplace(s, ft_strjoin("/Users/", data->usr), "~");
-	prompt = ft_strjoin(data->usr, ": ");
-	prompt = ft_strjoin(prompt, s);
-	prompt = ft_strjoin(prompt, " % ");
-	free (s);
-	return (prompt);
+	s = ft_strjoin("/Users/", data->usr);
+	_str = ft_strreplace(get_dict_value(data->env, "PWD"), s, "~");
+	_prompt = ft_strjoin(data->usr, ": ");
+	_oldprompt = ft_strjoin(_prompt, _str);
+	prompt = ft_strjoin(_oldprompt, " % ");
+	data->prompt = ft_strdup(prompt);
+	free(_str);
+	free(s);
+	free(prompt);
+	free(_prompt);
+	free(_oldprompt);
+	return (data->prompt);
 }
 
-void	free_mem(t_data data, char *str)
+void	free_mem(t_data *data, char *str)
 {
 	int	i;
 
-	i = 0;
-	free (str);
-	if (data.str)
-		free (data.str);
-	free (data.usr);
-	delete_all(data.env);
+	i = -1;
+	if (str)
+		free(str);
+	if (data->str)
+		free (data->str);
+	delete_all(data->env);
+	free(data->prompt);
+	delete_all(data->commands);
+	free(data);
+	data = NULL;
+	str = NULL;
 }
 
 char	*ft_readline(t_data *data)
@@ -52,6 +63,8 @@ char	*ft_readline(t_data *data)
 	struct termios	term_old;
 	char			*count;
 
+	free(data->prompt);
+	delete_all(data->commands);
 	tcgetattr(STDIN_FILENO, &term_old);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL | ICANON);
@@ -64,6 +77,7 @@ char	*ft_readline(t_data *data)
 		printf("\033[1A");
 		printf("\033[%zuC", ft_strlen(count) - 2);
 		printf(" exit\n");
+		free_mem(data, str);
 		free (count);
 		exit(0);
 	}
