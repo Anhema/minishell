@@ -6,7 +6,7 @@
 /*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/09 20:17:01 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:49:13 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ static char	*get_path(char *_path, char *command)
 	while (paths[i])
 	{
 		if (access(paths[i], F_OK) == 0)
+		{
 			path = paths[i];
+		}
 		i++;
 	}
 	return (path);
@@ -40,13 +42,15 @@ static void	print_error(t_data *data)
 {
 	t_dict		*env;
 	char		*str;
+	char		*temp;
 	extern int	g_stats;
 
 	env = data->env;
 	str = data->commands->key;
 	while (env)
 	{
-		str = ft_strreplace(str, ft_strjoin("$", env->key), env->value);
+		temp = ft_strjoin("$", env->key);
+		str = ft_strreplace(str, temp, env->value);
 		env = env->next;
 	}
 	str = ft_strreplace(str, ft_itoa(-125), "<");

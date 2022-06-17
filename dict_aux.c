@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dict_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 18:48:11 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:49:32 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,17 @@ char	*get_dict_value(t_dict *dict, char	*key)
 
 void	delete_all(t_dict *dict)
 {
-	if (!dict->next)
-		delete_all(dict->next);
-	free(dict);
+	t_dict	*temp;
+
+	while (dict)
+	{
+		temp = dict->next;
+		free (dict->key);
+		free (dict->value);
+		free(dict);
+		dict = temp;
+	}
+	dict = NULL;
 }
 
 void	print_dict(t_dict *env)

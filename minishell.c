@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 20:53:55 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/16 22:01:54 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ char	*minishell_loop(t_data *data, char *str)
 			return (str);
 	}
 	data = redirections(data, str);
+	free(data->prompt);
+	delete_all(data->commands);
+	free(data->str);
+	free(str);
 	str = ft_readline(data);
 	return (str);
 }
@@ -82,8 +86,6 @@ int	main(int argc, char **argv, char **envp)
 	data->str = NULL;
 	str = ft_readline(data);
 	while (1)
-	{
 		str = minishell_loop(data, str);
-	}
 	return (0);
 }

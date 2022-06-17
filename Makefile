@@ -6,7 +6,7 @@
 #    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/14 16:40:34 by cbustama         ###   ########.fr        #
+#    Updated: 2022/06/16 20:34:06 by cbustama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC = minishell.c \
 		readline.c\
 		continue_execve.c\
 		expand.c\
+		free.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -45,7 +46,7 @@ CC = gcc -ggdb3
 READLINE_DIR = ${HOME}/.brew/opt/readline
 
 
-FLAGS = -Wall -Wextra -Werror  -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror  #-g3 -fsanitize=address
 F_READLINE = -I$(READLINE_DIR)/include
 COMPILE = -lreadline -L$(READLINE_DIR)/lib
 

@@ -6,7 +6,7 @@
 /*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/09 20:52:46 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/16 21:54:59 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*space_front_to_back(char *c)
 	int		fill;
 
 	if (!c)
-		return (NULL);
+		return (c);
 	i = 0;
 	while (c[i] == 32)
 		i++;
@@ -73,30 +73,17 @@ t_dict	*ft_sort(char **c)
 		command = dict_add_back(command, new);
 		j++;
 	}
+	//free_split_double(temp);
+	//free(str);
 	return (command);
 }
 
-char	*ft_history(char *str)
+void	ft_history(char *str)
 {
-	int			i;
-	int			fd;
-	char		*dst;
 	extern int	g_stats;
 
-	i = -1;
 	if (str)
 		add_history(str);
-	dst = (char *)malloc(sizeof(char) * (ft_strlen(str) + 2));
-	if (!dst)
-		return (NULL);
-	while (str[++i])
-		dst[i] = str[i];
-	dst[i] = '\n';
-	dst[++i] = '\0';
-	fd = open(".history", O_CREAT | O_RDWR | O_APPEND, S_IRWXU);
-	write(fd, dst, ft_strlen(dst));
-	close (fd);
-	return (dst);
 }
 
 char	*get_builting(char	*str)
@@ -351,13 +338,17 @@ t_dict	*add_command(char *line, t_dict *command)
 	line = space_front_to_back(line);
 	built = get_builting(line);
 	if (!built)
+	{
+		free(line);
 		return (NULL);
+	}
 	arguments = get_arguments(line);
 	built = remove_quotes(built);
 	if (arguments)
 		arguments = remove_quotes(arguments);
 	new = dict_new(built, arguments);
 	command = dict_add_back(command, new);
+	free(line);
 	return (command);
 }
 
@@ -415,6 +406,7 @@ t_dict	*ft_pipe_parse(char *str)
 				temp[jj] = '\0';
 				last = i + 1;
 				commands = add_command(temp, commands);
+				free (temp);
 			}
 		}
 		i++;
@@ -430,10 +422,13 @@ t_dict	*ft_pipe_parse(char *str)
 		}
 		temp[j] = '\0';
 		commands = add_command(temp, commands);
+		free(temp);
 	}
 	else
 	{
 		printf("minishell: syntax error unclosed quotes\n");
+		free(temp);
+		delete_all(commands);
 		commands = NULL;
 	}
 	return (commands);

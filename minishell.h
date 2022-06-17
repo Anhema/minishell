@@ -6,7 +6,7 @@
 /*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/14 17:14:11 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:17:56 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_data
 	t_dict					*commands;
 	char					*usr;
 	char					*str;
+	char					*prompt;
 	t_dict					**redirections;
 	int						is_redir;
 }	t_data;
@@ -74,7 +75,7 @@ void	ft_pwd(void);
 void	ft_echo(t_data *data);
 
 t_dict	*ft_sort(char **c);
-char	*ft_history(char *str);
+void	ft_history(char *str);
 t_dict	*ft_pipe_parse(char *str);
 void	ft_execve(t_data *data);
 void	ft_signals(void);
@@ -88,7 +89,7 @@ void	ft_exit(char *str, t_data *data);
 char	*here_doc(t_data data, t_dict *temp);
 void	expand_execve(t_data *data, int status);
 
-void	free_mem(t_data data, char *str);
+void	free_mem(t_data *data, char *str);
 
 int		check_outfile(t_data data);
 char	*check_infile(t_data *data);
@@ -106,5 +107,8 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i);
 char	*continue_expand_two(char *str, int i, char *tmp, t_data *data);
 char	*continue_expand_for(char *str, int i, char *tmp, char *var);
 char	continue_expand(char c, int i, char *str);
+
+void	free_split(char *temp);
+void	free_split_double(char **temp);
 
 #endif

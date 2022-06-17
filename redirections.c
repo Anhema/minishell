@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 18:33:42 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/16 17:58:43 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	check_syntax(t_dict *commands)
 			else
 				printf(
 					"minishell: syntax error near unexpected token `newline'\n");
-			free(str);
 			return (1);
 		}
 		temp = temp->next;
