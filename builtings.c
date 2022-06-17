@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/13 17:00:46 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:16:14 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,23 +88,26 @@ t_data	*redirections(t_data *data, char *str)
 {
 	int		temp_in;
 	int		temp_out;
-	int		fd_in;
-	char	*infile;
+	int		i;
+	t_dict	*temp;
 
 	(void)str;
 	temp_in = dup(0);
 	temp_out = dup(1);
-	infile = check_infile(data);
-	if (infile)
+	i = -1;
+	while (data->redirections[++i])
 	{
-		if (ft_str_equals(infile, "1_"))
-			return (data);
-		else
-			fd_in = open(infile, O_RDONLY, 0000644);
+		temp = data->redirections[i];
+		while (temp)
+		{
+			if (ft_str_equals(temp->value, "") || !temp->value)
+			{
+				printf("minishell: syntax error near unexpected token\n");
+				return (data);
+			}
+			temp = temp->next;
+		}
 	}
-	else
-		fd_in = dup(temp_in);
-	printf("");
-	redirections_aux(data, fd_in, temp_in, temp_out);
+	redirections_aux(data, 0, temp_in, temp_out);
 	return (data);
 }

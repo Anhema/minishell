@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
+#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/14 16:40:34 by cbustama         ###   ########.fr        #
+#    Updated: 2022/06/16 22:37:41 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,9 @@ SRC = minishell.c \
 		dict_aux.c \
 		echo.c \
 		functions.c \
+		functions_aux.c \
+		functions_part_one.c \
+		functions_part_two.c \
 		ft_execve.c \
 		signals.c \
 		cd.c \
@@ -25,6 +28,9 @@ SRC = minishell.c \
 		builtings.c \
 		builtings_aux.c \
 		redirections.c \
+		redirections_syntax.c \
+		redirections_aux.c \
+		redirections_continue.c \
 		expantions.c\
 		readline.c\
 		continue_execve.c\

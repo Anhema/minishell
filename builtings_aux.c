@@ -6,20 +6,20 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:54:19 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/13 16:57:47 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/16 23:05:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	redirections_fd_aux(t_data data, int temp_out)
+int	redirections_fd_aux(t_data *data, int temp_out)
 {
 	int		fd_out;
 	int		outfile;
 
-	if (!data.commands)
+	if (!data->commands)
 	{
-		outfile = check_outfile(data);
+		outfile = check_outfile(data, 0);
 		if (outfile >= 0)
 			fd_out = outfile;
 		else
@@ -39,6 +39,8 @@ char	*check_infile_aux(t_data *data, t_dict *temp, char *infile)
 		{
 			if (open(temp->value, O_RDONLY, 0000644) < 0)
 			{
+				if (temp->next)
+					return (temp->next->value);
 				str = ft_strjoin("minishell: ", temp->value);
 				perror(str);
 				return ("1_");
@@ -53,28 +55,14 @@ char	*check_infile_aux(t_data *data, t_dict *temp, char *infile)
 	return (infile);
 }
 
-char	*check_infile(t_data *data)
+char	*check_infile(t_data *data, int j)
 {
-	int		i;
-	int		n;
 	char	*infile;
-	t_dict	*temp;
 	t_dict	**redirection;
 
-	if (!data->redirections[0])
-		return (NULL);
 	redirection = data->redirections;
-	i = 0;
-	while (redirection[i])
-		i++;
-	n = 0;
-	infile = "";
-	while (n <= i)
-	{
-		temp = redirection[n];
-		infile = check_infile_aux(data, temp, infile);
-		n++;
-	}
+	infile = NULL;
+	infile = check_infile_aux(data, redirection[j], infile);
 	return (infile);
 }
 
@@ -107,26 +95,24 @@ int	check_outfile_aux(t_dict *temp, int outfile)
 	return (outfile);
 }
 
-int	check_outfile(t_data data)
+int	check_outfile(t_data *data, int j)
 {
-	int		i;
-	int		n;
 	int		outfile;
-	t_dict	*temp;
 	t_dict	**redirection;
+	t_dict	*temp;
 
-	if (!data.redirections[0])
-		return (-1);
-	redirection = data.redirections;
-	i = 0;
-	while (redirection[i])
-		i++;
-	n = 0;
-	while (n <= i)
+	redirection = data->redirections;
+	temp = redirection[j];
+	while (temp)
 	{
-		temp = redirection[n];
-		outfile = check_outfile_aux(temp, outfile);
-		n++;
+		if (ft_str_equals(temp->value, "") | !temp->value)
+		{
+			perror("minishell:");
+			break ;
+		}
+		temp = temp->next;
 	}
+	outfile = 1;
+	outfile = check_outfile_aux(redirection[j], outfile);
 	return (outfile);
 }

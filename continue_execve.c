@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   continue_execve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/09 20:17:01 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:11:54 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"minishell.h"
 
-static char	*get_path(char *_path, char *command)
+char	*get_path(char *_path, char *command)
 {
 	char	**paths;
 	int		i;
@@ -36,7 +36,7 @@ static char	*get_path(char *_path, char *command)
 	return (path);
 }
 
-static void	print_error(t_data *data)
+void	print_error(t_data *data)
 {
 	t_dict		*env;
 	char		*str;
@@ -73,58 +73,28 @@ void	_execve_print(t_data *data)
 	}
 }
 
-void	continue_execve_two(t_data *data, char **temp, char **argv, char *key)
+char	**continue_execve(t_data *data,
+	char **temp, char **argv, char *key)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	if (!temp || ft_str_equals(data->commands->value, ""))
-	{
-		argv = malloc(sizeof(char *) * 2);
-		argv[0] = key;
-		argv[1] = NULL;
-	}
-	else if (i > 1)
+	(void)data;
+	while (temp[i])
+		i++;
+	if (i >= 1)
 	{
 		argv = malloc(sizeof(char *) * (i + 2));
 		argv[0] = key;
 		i = 1;
-		j = 0;
-		while (temp[j])
+		j = -1;
+		while (temp[++j])
 		{
 			argv[i] = temp[j];
 			i++;
-			j++;
 		}
 		argv[i] = NULL;
 	}
-}
-
-void	ft_execve(t_data *data)
-{
-	char	**temp;
-	char	**argv ;
-	char	**env;
-	char	*path;
-	char	*key;
-
-	argv = NULL;
-	temp = NULL;
-	key = data->commands->key;
-	continue_execve(data, key, temp);
-	continue_execve_two(data, temp, argv, key);
-	if (!temp)
-	{
-		argv = malloc(sizeof(char *) * 3);
-		argv[0] = key;
-		argv[1] = data->commands->value;
-		argv[2] = NULL;
-	}
-	env = join_env(data->env);
-	_execve_print(data);
-	path = get_path(get_dict_value(data->env, "PATH"), key);
-	argv[0] = path;
-	if (execve(path, argv, env) < 0)
-		print_error(data);
+	return (argv);
 }

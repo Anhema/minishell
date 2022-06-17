@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 20:05:36 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:10:19 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,30 @@ char	**join_env(t_dict *d_env)
 	return (env);
 }
 
-void	continue_execve(t_data *data, char *key, char **temp)
+void	ft_execve(t_data *data)
 {
-	int	i;
+	char	**temp;
+	char	**argv;
+	char	**env;
+	char	*path;
+	char	*key;
 
-	i = 0;
-	key = ft_strreplace(key, "/bin/", "");
-	if (key[0] == (char)128
-		|| key[0] == (char)129
-		|| key[0] == (char)130
-		|| key[0] == (char)131)
-		return ;
+	argv = NULL;
+	key = data->commands->key;
 	temp = ft_split(data->commands->value, ' ');
-	i = 0;
-	if (temp)
+	if (!temp)
 	{
-		while (temp[i])
-			i++;
+		argv = malloc(sizeof(char *) * 3);
+		argv[0] = key;
+		argv[1] = data->commands->value;
+		argv[2] = NULL;
 	}
+	else
+		argv = continue_execve(data, temp, argv, key);
+	env = join_env(data->env);
+	_execve_print(data);
+	path = get_path(get_dict_value(data->env, "PATH"), key);
+	argv[0] = path;
+	if (execve(path, argv, env) < 0)
+		print_error(data);
 }
