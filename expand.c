@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:58:19 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/14 17:13:41 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:07:33 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
 	var = (char *)malloc(sizeof(char) * (j - i) + 1);
 	ft_memset(var, 0, sizeof(char *) * ((j - i) + 1));
 	tmp = continue_expand_for(str, i, tmp, var);
+	free (var);
 	return (tmp);
 }
 

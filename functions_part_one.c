@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:29:25 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/16 22:32:39 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:36:18 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,9 @@ t_dict	*ft_pipe_parse_add(char *str, int *last, t_dict *commands, int i)
 		jj++;
 	}
 	temp[jj] = '\0';
-	commands = add_command(temp, commands);
+	commands = add_command(ft_strdup(temp), commands);
 	*last = i + 1;
+	free(temp);
 	return (commands);
 }
 
@@ -98,6 +99,7 @@ t_dict	*ft_pipe_parse_end(char *str, int last, t_dict *commands, int i)
 {
 	int		j;
 	char	*temp;
+	char	*temp_temp;
 
 	j = 0;
 	temp = malloc(sizeof(char) * (i - last) + 1);
@@ -107,6 +109,8 @@ t_dict	*ft_pipe_parse_end(char *str, int last, t_dict *commands, int i)
 		j++;
 	}
 	temp[j] = '\0';
-	commands = add_command(temp, commands);
+	temp_temp = ft_strdup(temp);
+	commands = add_command(temp_temp, commands);
+	free(temp);
 	return (commands);
 }

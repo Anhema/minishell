@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 18:42:25 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:01:36 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ t_data	_cd(char *str, char *usr, t_data *data)
 		printf("minishell: cd: %s: No such file or directory\n", path);
 	}
 	g_stats = 0;
+	free (path);
+	free (old_path);
 	return (*data);
 }

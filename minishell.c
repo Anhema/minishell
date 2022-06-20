@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 16:59:52 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:35:21 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 char	*cd_exit_syntax(t_data *data, char *str)
 {
-	if (check_syntax(data->commands))
-	{
-		str = ft_readline(data);
-		return (str);
-	}
 	if (ft_str_equals(data->commands->key, "exit") && !data->commands->next)
 		ft_exit(str, data);
 	if (ft_str_equals(data->commands->key, "cd") && !data->commands->next)
@@ -83,7 +78,12 @@ int	main(int argc, char **argv, char **envp)
 	data->env = create_env(envp);
 	data->usr = get_dict_value(data->env, "USER");
 	data->is_redir = 0;
+	data->commands = NULL;
+	data->prompt = NULL;
+	data->redirections = NULL;
 	data->str = NULL;
+	data->fd[0] = 0;
+	data->fd[1] = 1;
 	str = ft_readline(data);
 	while (1)
 		str = minishell_loop(data, str);

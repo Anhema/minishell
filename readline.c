@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:01:00 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 17:00:09 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:25:18 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,10 @@ void	free_mem(t_data *data, char *str)
 	i = -1;
 	if (str)
 		free(str);
-	if (data->str)
-		free (data->str);
-	delete_all(data->env);
-	free(data->prompt);
-	delete_all(data->commands);
+	if (data->env)
+		delete_all(data->env);
+	// if (data->prompt)
+	// 	free(data->prompt);
 	free(data);
 	data = NULL;
 	str = NULL;
@@ -62,14 +61,29 @@ char	*ft_readline(t_data *data)
 	struct termios	term;
 	struct termios	term_old;
 	char			*count;
+	int				i;
 
-	free(data->prompt);
-	delete_all(data->commands);
 	tcgetattr(STDIN_FILENO, &term_old);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	ft_signals();
+	if (data->prompt)
+		free(data->prompt);
+	if (data->commands)
+		delete_all(data->commands);
+	if (data->redirections)
+	{
+		i = 0;
+		while (data->redirections[i])
+		{
+			delete_all(data->redirections[i]);
+			i++;
+		}
+		free(data->redirections);
+	}
+	if (data->str)
+		free(data->str);
 	str = readline(get_prompt(data));
 	if (!str)
 	{
@@ -81,6 +95,11 @@ char	*ft_readline(t_data *data)
 		free (count);
 		exit(0);
 	}
+	data->commands = NULL;
+	data->redirections = NULL;
+	data->str = NULL;
+	data->fd[0] = 0;
+	data->fd[1] = 1;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_old);
 	return (str);
 }

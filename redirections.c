@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 16:12:55 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:40:49 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,16 @@ char	aux(char p, int n)
 int	check_syntax(t_dict *commands)
 {
 	char	*str;
+	char	*str_temp;
 	t_dict	*temp;
 	int		n;
 
 	temp = commands;
 	while (temp)
 	{
-		str = ft_strjoin(temp->key, " ");
+		str_temp = ft_strjoin(temp->key, " ");
 		if (temp->value)
-			str = ft_strjoin(str, temp->value);
+			str = ft_strjoin(str_temp, temp->value);
 		n = str[ft_strlen(str) - 1];
 		if (n == -128 || n == -125 || n == -127 || n == -126)
 		{
@@ -58,11 +59,16 @@ int	check_syntax(t_dict *commands)
 			else
 				printf(
 					"minishell: syntax error near unexpected token `newline'\n");
+			// free (str);
+			// free (str_temp);
 			return (1);
 		}
 		temp = temp->next;
 	}
-	free (str);
+	// if (str)
+	// 	free (str);
+	// if (str_temp)
+	// 	free (str_temp);
 	return (0);
 }
 
@@ -81,9 +87,7 @@ t_dict	**get_n_commands(char *str)
 	while (i < (int)ft_strlen(str))
 	{
 		if (str[i] == '|')
-		{
 			j++;
-		}
 		i++;
 	}
 	result = (t_dict **)malloc(sizeof(t_dict *) * (j + 1));
@@ -114,7 +118,8 @@ t_dict	**add_to_dict(t_dict **result, int j, int count, char *str)
 		value[n++] = str[k++];
 	value[n] = '\0';
 	result[count] = dict_add_back_repeat
-		(result[count], dict_new(ft_itoa(str[j]), value));
+		(result[count], dict_new(ft_itoa(str[j]), ft_strdup(value)));
+	free(value);
 	return (result);
 }
 
@@ -142,6 +147,7 @@ t_data	*get_redirections(t_data *data, char *str)
 			j = 0;
 		}
 	}
-	data->str = str;
+	data->str = ft_strdup(str);
+	free(str);
 	return (data);
 }

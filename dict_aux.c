@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 16:01:33 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:38:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,14 @@ void	delete_all(t_dict *dict)
 	while (dict)
 	{
 		temp = dict->next;
-		free (dict->key);
-		free (dict->value);
+		if (dict->key)
+			free (dict->key);
+		if (dict->value)
+			free (dict->value);
 		free(dict);
 		dict = temp;
 	}
+	free(dict);
 	dict = NULL;
 }
 

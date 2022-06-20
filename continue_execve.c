@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/17 16:00:39 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:05:50 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@ char	*get_path(char *_path, char *command)
 	while (paths[i])
 	{
 		if (access(paths[i], F_OK) == 0)
-			path = paths[i];
+			path = ft_strdup(paths[i]);
 		i++;
 	}
+	free_split_double(paths);
 	return (path);
 }
 
@@ -63,6 +64,8 @@ void	print_error(t_data *data)
 		g_stats = 127;
 		printf("minishell: %s: command not found\n", str);
 	}
+	free(temp);
+	free(str);
 }
 
 void	_execve_print(t_data *data)

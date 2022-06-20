@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 16:11:41 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:05:17 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i);
 char	*continue_expand_two(char *str, int i, char *tmp, t_data *data);
 char	*continue_expand_for(char *str, int i, char *tmp, char *var);
 char	continue_expand(char c, int i, char *str);
-
 char	*space_front_to_back_aux(char *c, int i, int j, int fill);
 char	remove_quotes_aux(char *str, char *temp, int *i, int j);
 char	remove_quotes_get_c(char *str, int *n, char c, int i);

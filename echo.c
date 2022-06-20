@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/14 17:09:55 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:06:31 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	continue_echo(char *str, char *str_temp, int n, int i)
 		}
 		str_temp[n] = '\0';
 		printf("%s", str_temp);
-	}	
+	}
 }
 
 void	ft_echo(t_data *data)
@@ -93,4 +93,7 @@ void	ft_echo(t_data *data)
 	}
 	else
 		printf("%s\n", str);
+	if (str_temp)
+		free (str_temp);
+	free (str);
 }

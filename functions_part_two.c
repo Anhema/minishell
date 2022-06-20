@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:33:04 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/16 22:37:04 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:43:17 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,27 @@
 
 t_dict	*add_command(char *line, t_dict *command)
 {
-	char	*built;
+	//char	*built;
 	char	*arguments;
-	t_dict	*new;
 
 	line = space_front_to_back(line);
-	built = get_builting(line);
-	if (!built)
-		return (NULL);
+	//built = get_builting(line);
 	arguments = get_arguments(line);
-	built = remove_quotes(built);
-	if (arguments)
-		arguments = remove_quotes(arguments);
-	new = dict_new(built, arguments);
-	command = dict_add_back(command, new);
+	//built = remove_quotes(built);
+	arguments = remove_quotes(arguments);
+	if (!arguments)
+		command = dict_add_back(command, dict_new(ft_strdup(remove_quotes(get_builting(line))), NULL));
+	else
+		command = dict_add_back
+			(command, dict_new(remove_quotes(get_builting(line)), ft_strdup(arguments)));
+	// if (built)
+	// 	free(built);
+	// if (arguments)
+	// 	free(arguments);
+	// printf("--%s--\n", built);
+	// printf("--%s--\n", arguments);
+	if (line)
+		free (line);
 	return (command);
 }
 

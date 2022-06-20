@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/17 16:50:50 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/20 17:01:59 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ EOC = \033[1;0m
 
 HEADERS = includes/minishell.h
 LIBFT = libft/libft.a
-CC = gcc -ggdb3
+CC = gcc -g3
 
 READLINE_DIR = ${HOME}/.brew/opt/readline
 

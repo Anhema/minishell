@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/17 16:14:12 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:14:58 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ t_dict	*ft_sort(char **c)
 			str = ft_strjoin(str, " ");
 			i++;
 		}
-		command = dict_add_back(command, dict_new(temp[0], str));
+		command = dict_add_back(command, dict_new(temp[0], ft_strdup(str)));
 		j++;
 	}
+	free (str);
 	return (command);
 }
 
@@ -84,6 +85,7 @@ char	*get_builting(char	*str)
 
 	i = -1;
 	n = 0;
+	temp = NULL;
 	if (!str)
 		return (NULL);
 	while (str[++i])
@@ -113,7 +115,19 @@ char	*remove_quotes(char *str)
 	i = -1;
 	n = 0;
 	j = 0;
-	temp = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	c = 0;
+	if (!str)
+		return (NULL);
+	while (str[++i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			n++;
+	}
+	if (n == 0)
+		return (str);
+	temp = malloc(sizeof(char) * (ft_strlen(str) - n) + 1);
+	n = 0;
+	i = -1;
 	while (str[++i])
 	{
 		c = remove_quotes_get_c(str, &n, c, i);
@@ -127,6 +141,6 @@ char	*remove_quotes(char *str)
 		}
 	}
 	temp[j] = '\0';
-	free (str);
+	//free (str);
 	return (temp);
 }

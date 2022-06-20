@@ -6,11 +6,12 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:25:30 by aherrero          #+#    #+#             */
-/*   Updated: 2022/04/04 18:51:36 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/17 19:48:08 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stddef.h>
+#include <stdio.h>
 #include "libft.h"
 
 int	ft_str_equals(const char *s1, const char *s2)

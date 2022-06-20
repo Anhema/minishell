@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 16:59:35 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:53:21 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,9 @@ void	ft_execve(t_data *data)
 	argv[0] = path;
 	if (execve(path, argv, NULL) < 0)
 		print_error(data);
+	free_split_double(temp);
+	free_split_double(argv);
+	free_split_double(env);
+	free(path);
+	free(key);
 }

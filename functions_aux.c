@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:35:35 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/16 22:36:00 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:27:22 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*get_arguments(char	*str)
 
 	i = -1;
 	n = 0;
+	if (!str)
+		return (NULL);
 	while (str[++i])
 	{
 		n = aux_aux(n, &c, str, i);

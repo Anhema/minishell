@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:00:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/16 22:27:30 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:40:57 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static t_data	*get_infd(t_data *data, int j, int fd_in, int temp_in)
 		if (j == 0)
 			data->fd_aux = dup(temp_in);
 	}
+	//free (infile);
 	return (data);
 }
 
