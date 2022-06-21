@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:01:00 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 18:25:18 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:52:46 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,7 @@ char	*ft_readline(t_data *data)
 	term.c_lflag &= ~(ECHOCTL | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	ft_signals();
-	if (data->prompt)
-		free(data->prompt);
+	free(data->prompt);
 	if (data->commands)
 		delete_all(data->commands);
 	if (data->redirections)
@@ -81,6 +80,7 @@ char	*ft_readline(t_data *data)
 			i++;
 		}
 		free(data->redirections);
+		data->redirections = NULL;
 	}
 	if (data->str)
 		free(data->str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_part_two.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:33:04 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 18:43:17 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:01:11 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,40 @@ t_dict	*add_command(char *line, t_dict *command)
 {
 	//char	*built;
 	char	*arguments;
+	char	*line_;
+	char	*arg_;
 
-	line = space_front_to_back(line);
+	arg_ = NULL;
+	line_ = space_front_to_back(line);
 	//built = get_builting(line);
-	arguments = get_arguments(line);
+	arguments = get_arguments(line_);
 	//built = remove_quotes(built);
 	arguments = remove_quotes(arguments);
 	if (!arguments)
-		command = dict_add_back(command, dict_new(ft_strdup(remove_quotes(get_builting(line))), NULL));
+		command = dict_add_back(command, dict_new((remove_quotes(get_builting(line_))), NULL));
 	else
 		command = dict_add_back
-			(command, dict_new(remove_quotes(get_builting(line)), ft_strdup(arguments)));
+			(command, dict_new(remove_quotes(get_builting(line_)), ft_strcpy(arg_, arguments)));
 	// if (built)
 	// 	free(built);
 	// if (arguments)
 	// 	free(arguments);
 	// printf("--%s--\n", built);
 	// printf("--%s--\n", arguments);
-	if (line)
-		free (line);
+	//if (line)
+	//	free (line);
+	free(line_);
+	//free(line);
+	if (arguments)
+		free(arguments);
+	printf("data->key %s\n", command->key);
+	printf("data->value %s\n", command->value);
+	free(arg_);
 	return (command);
 }
 
-char	*remove_spaces_aux(char	*str, int i)
+char	*remove_spaces_aux(char	*str, int i)ls
+
 {
 	int		j;
 	int		jj;

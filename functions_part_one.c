@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_part_one.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:29:25 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 18:36:18 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:52:11 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ t_dict	*ft_pipe_parse_end(char *str, int last, t_dict *commands, int i)
 		j++;
 	}
 	temp[j] = '\0';
-	temp_temp = ft_strdup(temp);
-	commands = add_command(temp_temp, commands);
+	temp_temp = (char *)malloc(sizeof(char) * ft_strlen(temp));
+	commands = add_command(ft_strcpy(temp_temp, temp), commands);
 	free(temp);
 	return (commands);
 }

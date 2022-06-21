@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 15:53:21 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:39:02 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	ft_execve(t_data *data)
 	argv[0] = path;
 	if (execve(path, argv, NULL) < 0)
 		print_error(data);
-	free_split_double(temp);
-	free_split_double(argv);
-	free_split_double(env);
-	free(path);
-	free(key);
+	//free_split_double(temp);
+	//free_split_double(argv);
+	//free_split_double(env);
+	//free(path);
+	//free(key);
 }
