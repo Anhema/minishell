@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 19:01:36 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:40:39 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,51 @@
 
 static t_dict	*cd_aux(t_dict *temp, char *old_path)
 {
+	char	*aux;
+
+	aux = getcwd(NULL, 0);
 	while (temp->next)
 	{
 		if (ft_str_equals(temp->next->key, "PWD") == 1)
-			temp->next->value = getcwd(NULL, 0);
+		{
+			free(temp->next->value);
+			temp->next->value = ft_strdup(aux);
+		}
 		if (ft_str_equals(temp->next->key, "OLDPWD") == 1)
 			temp->next->value = old_path;
 		temp = temp->next;
 	}
+	if (aux)
+		free(aux);
 	return (temp);
 }
 
-t_data	_cd(char *str, char *usr, t_data *data)
+t_data	*_cd(char *str, char *usr, t_data *data)
 {
 	extern int	g_stats;
 	char		*path;
+	int			original;
 	char		*old_path;
 	t_dict		*temp;
 
 	path = str;
+	original = 1;
 	old_path = getcwd(NULL, 0);
 	if (!path)
+	{
+		original = 0;
 		path = ft_strjoin("/Users/", usr);
+	}
 	if (ft_str_equals(old_path, "/Users") && ft_str_equals(path, ".."))
 		path = "/";
 	if (chdir(path) == 0)
 	{
 		temp = data->env;
 		temp = cd_aux(temp, old_path);
-		return (*data);
+		free (old_path);
+		if (!original)
+			free(path);
+		return (data);
 	}
 	else
 	{
@@ -50,7 +66,8 @@ t_data	_cd(char *str, char *usr, t_data *data)
 		printf("minishell: cd: %s: No such file or directory\n", path);
 	}
 	g_stats = 0;
-	free (path);
 	free (old_path);
-	return (*data);
+	if (!original)
+		free(path);
+	return (data);
 }

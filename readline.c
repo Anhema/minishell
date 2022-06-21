@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:01:00 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 16:46:55 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:19:05 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ void	free_mem(t_data *data, char *str)
 		free(str);
 	if (data->env)
 		delete_all(data->env);
-	// if (data->prompt)
-	// 	free(data->prompt);
+	if (data->usr)
+		free(data->usr);
+	if (data->prompt)
+		free(data->prompt);
 	free(data);
 	data = NULL;
 	str = NULL;
@@ -68,7 +70,8 @@ char	*ft_readline(t_data *data)
 	term.c_lflag &= ~(ECHOCTL | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	ft_signals();
-	free(data->prompt);
+	if (data->prompt)
+		free(data->prompt);
 	if (data->commands)
 		delete_all(data->commands);
 	if (data->redirections)

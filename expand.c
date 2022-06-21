@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:58:19 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/21 20:29:57 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 21:18:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
 	int		jj;
 	int		j;
 	char	*var;
+	char	*var_two;
 	char	*aux;
 	char	*result;
 	char	*result_temp;
@@ -105,10 +106,12 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
 	j--;
 	while (str[j])
 		j++;
-	var = (char *)malloc(sizeof(char) * (j - i));
-	ft_memset(var, 0, sizeof(char *) * ((j - i)));
-	result = continue_expand_for(str, i, ft_strdup(result_temp), var);
+	var_two = NULL;
+	var_two = (char *)malloc(sizeof(char) * (j - i) + 1);
+	ft_memset(var_two, 0, sizeof(char) * (j - i));
+	result = continue_expand_for(str, i, result_temp, var_two);
 	free (var);
+	free (var_two);
 	free (aux);
 	free (tmp);
 	free (temp);
@@ -124,17 +127,16 @@ char	*continue_expand_for(char *str, int i, char *tmp, char *var)
 
 	jj = -1;
 	ii = i -1;
-	result = ft_strdup(tmp);
+	result = NULL;
 	while (str[++ii])
 		var[++jj] = str[ii];
 	var[jj + 1] = '\0';
 	if (var && !ft_str_equals(var, ""))
-	{
-		if (result)
-			free(result);
 		result = ft_strjoin(tmp, var);
-	}
+	else
+		result = ft_strdup(tmp);
 	free(str);
-	free(tmp);
+	//free(var);
+	//free(tmp);
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 20:20:38 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 21:41:57 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ char	*expand(t_data *data)
 			}
 			tmp = continue_expand_two(data->str, i, tmp, data);
 			data->str = ft_strdup(tmp);
+			if (tmp)
+				free(tmp);
 			i = 0;
 		}
 		i++;
 	}
-	//printf("--%s--\n", tmp);
-	if (tmp)
-		free(tmp);
 	return (data->str);
 }
 
@@ -72,6 +71,7 @@ void	continue_echo(char *str, char *str_temp, int n, int i)
 		}
 		str_temp[n] = '\0';
 		printf("%s", str_temp);
+		free(str_temp);
 	}
 }
 

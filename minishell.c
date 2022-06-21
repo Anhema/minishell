@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 18:11:09 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 22:25:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ char	*cd_exit_syntax(t_data *data, char *str)
 		ft_exit(str, data);
 	if (ft_str_equals(data->commands->key, "cd") && !data->commands->next)
 	{
-		*data = _cd(data->commands->value, data->usr, data);
-		str = ft_readline(data);
-		return (str);
+		data = _cd(data->commands->value, data->usr, data);
+		return (ft_readline(data));
 	}
 	if (ft_str_equals(data->commands->key, "export") && !data->commands->next)
 	{
