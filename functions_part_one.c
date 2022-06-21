@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_part_one.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:29:25 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 21:52:11 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:05:08 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ t_dict	*ft_pipe_parse_add(char *str, int *last, t_dict *commands, int i)
 	temp[jj] = '\0';
 	commands = add_command(ft_strdup(temp), commands);
 	*last = i + 1;
-	free(temp);
 	return (commands);
 }
 
@@ -99,7 +98,6 @@ t_dict	*ft_pipe_parse_end(char *str, int last, t_dict *commands, int i)
 {
 	int		j;
 	char	*temp;
-	char	*temp_temp;
 
 	j = 0;
 	temp = malloc(sizeof(char) * (i - last) + 1);
@@ -109,8 +107,6 @@ t_dict	*ft_pipe_parse_end(char *str, int last, t_dict *commands, int i)
 		j++;
 	}
 	temp[j] = '\0';
-	temp_temp = (char *)malloc(sizeof(char) * ft_strlen(temp));
-	commands = add_command(ft_strcpy(temp_temp, temp), commands);
-	free(temp);
+	commands = add_command(temp, commands);
 	return (commands);
 }

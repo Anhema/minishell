@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 18:05:17 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:23:23 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_dict	*del_one(t_dict *dict, char	*key);
 void	delete_all(t_dict *dict);
 
 char	*remove_spaces(char	*str);
-char	*expand(char *str, t_data *data);
+char	*expand(t_data *data);
 char	*ft_readline(t_data *data);
 char	*replace_redirections(char *str);
 char	*delete_redirections(char *str);

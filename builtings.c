@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtings.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 21:31:33 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:45:42 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	ft_exit(char *str, t_data *data)
 t_data	*builtings(t_data *data, char *str)
 {
 	(void)str;
+	//printf("--%s--\n", data->commands->key);
 	if (ft_str_equals(data->commands->key, "pwd"))
 		ft_pwd();
 	else if (ft_str_equals(data->commands->key, "echo"))
@@ -90,14 +91,16 @@ t_data	*redirections(t_data *data, char *str)
 	int		temp_out;
 	int		i;
 	t_dict	*temp;
+	t_data	data_temp;
 
 	(void)str;
 	temp_in = dup(0);
 	temp_out = dup(1);
 	i = -1;
-	while (data->redirections[++i])
+	data_temp = *data;
+	while (data_temp.redirections[++i])
 	{
-		temp = data->redirections[i];
+		temp = data_temp.redirections[i];
 		while (temp)
 		{
 			if (ft_str_equals(temp->value, "") || !temp->value)

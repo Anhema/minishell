@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/20 20:32:04 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:02:56 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,6 @@ char	*remove_quotes(char *str)
 		}
 	}
 	temp[j] = '\0';
-	//free (str);
+	free (str);
 	return (temp);
 }

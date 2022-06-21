@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:58:19 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/17 19:07:33 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:29:57 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*continue_expand_two(char *str, int i, char *tmp, t_data *data)
 {
 	int		ii;
 	int		j;
+	char	*result;
 
 	ii = -1;
 	tmp = malloc(sizeof(char) * (i + 1));
@@ -68,8 +69,8 @@ char	*continue_expand_two(char *str, int i, char *tmp, t_data *data)
 	tmp[ii] = '\0';
 	i++;
 	j = i;
-	tmp = continue_expand_three(str, tmp, data, i);
-	return (tmp);
+	result = continue_expand_three(str, tmp, data, i);
+	return (result);
 }
 
 char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
@@ -78,6 +79,10 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
 	int		jj;
 	int		j;
 	char	*var;
+	char	*aux;
+	char	*result;
+	char	*result_temp;
+	char	*temp;
 
 	j = get_j(str, i);
 	var = malloc(sizeof(char) * ((j - i) + 1));
@@ -87,31 +92,49 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
 		var[n] = str[i++];
 	var[n] = '\0';
 	if (get_dict_value(data->env, var))
-		tmp = ft_strjoin(tmp, get_dict_value(data->env, var));
+		aux = ft_strjoin(tmp, get_dict_value(data->env, var));
 	else if (var[0] == '?')
-		tmp = ft_strjoin(tmp, ft_strjoin("$", var));
-	tmp = ft_strreplace(tmp, "$?", ft_itoa(g_stats));
+		aux = ft_strjoin(tmp, ft_strjoin("$", var));
+	else
+		aux = NULL;
+	temp = ft_itoa(g_stats);
+	if (aux)
+		result_temp = ft_strreplace(aux, "$?", temp);
+	else
+		result_temp = ft_strreplace(tmp, "$?", temp);
 	j--;
 	while (str[j])
 		j++;
-	var = (char *)malloc(sizeof(char) * (j - i) + 1);
-	ft_memset(var, 0, sizeof(char *) * ((j - i) + 1));
-	tmp = continue_expand_for(str, i, tmp, var);
+	var = (char *)malloc(sizeof(char) * (j - i));
+	ft_memset(var, 0, sizeof(char *) * ((j - i)));
+	result = continue_expand_for(str, i, ft_strdup(result_temp), var);
 	free (var);
-	return (tmp);
+	free (aux);
+	free (tmp);
+	free (temp);
+	free (result_temp);
+	return (result);
 }
 
 char	*continue_expand_for(char *str, int i, char *tmp, char *var)
 {
 	int		jj;
 	int		ii;
+	char	*result;
 
 	jj = -1;
 	ii = i -1;
+	result = ft_strdup(tmp);
 	while (str[++ii])
 		var[++jj] = str[ii];
 	var[jj + 1] = '\0';
 	if (var && !ft_str_equals(var, ""))
-		tmp = ft_strjoin(tmp, var);
-	return (tmp);
+	{
+		if (result)
+			free(result);
+		result = ft_strjoin(tmp, var);
+	}
+	free(str);
+	free(tmp);
+	return (result);
 }

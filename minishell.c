@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 21:08:15 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:11:09 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,33 @@ char	*cd_exit_syntax(t_data *data, char *str)
 char	*minishell_loop(t_data *data, char *str)
 {
 	ft_history(str);
-	str = syntax_redirections(expand(remove_spaces(check_quotes(str)), data));
+	str = replace_redirections(syntax_redirections(remove_spaces(check_quotes(str))));
 	if (!str || ft_str_equals(str, ""))
 	{
-		str = ft_readline(data);
-		return (str);
-	}
-	str = replace_redirections(str);
-	if (!str || ft_str_equals(str, ""))
-	{
+		free (str);
 		str = ft_readline(data);
 		return (str);
 	}
 	data = get_redirections(data, str);
+	data->str = expand(data);
 	str = data->str;
-	data->commands = ft_pipe_parse(str);
+	if (!data->str || ft_str_equals(data->str, ""))
+	{
+		str = ft_readline(data);
+		return (str);
+	}
+	//free(str);
+	//str = data->str;
+	data->commands = ft_pipe_parse(data->str);
 	if (data->commands)
 	{
-		str = cd_exit_syntax(data, str);
-		if (str)
-			return (str);
+		data->str = cd_exit_syntax(data, data->str);
+		if (data->str)
+			return (data->str);
 	}
-	data = redirections(data, str);
+	data = redirections(data, data->str);
+	if (str)
+		free(str);
 	str = ft_readline(data);
 	return (str);
 }

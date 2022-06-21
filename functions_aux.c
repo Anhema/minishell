@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:35:35 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 17:27:22 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:07:59 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ t_dict	*ft_pipe_parse(char *str)
 	last = 0;
 	n = 0;
 	commands = NULL;
+	if (!str)
+		return (NULL);
 	while (str[++i] != '\0')
 	{
 		n = aux_aux(n, &c, str, i);

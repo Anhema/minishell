@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:00:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 16:40:57 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 16:58:49 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,20 @@ void	redirections_aux(t_data *data, int fd_in, int temp_in, int temp_out)
 	int		status;
 	int		j;
 	int		pid;
+	t_data	data_temp;
 
-	if (!data->commands)
+	data_temp = *data;
+	if (!data_temp.commands)
 	{
-		data = get_infd(data, 0, fd_in, temp_in);
-		data = redirections_fd(data, fd_in, temp_in, 0);
+		data_temp = *get_infd(&data_temp, 0, fd_in, temp_in);
+		data_temp = *redirections_fd(&data_temp, fd_in, temp_in, 0);
 	}
 	j = 0;
-	while (data->commands)
+	while (data_temp.commands)
 	{
-		data = get_infd(data, j, fd_in, temp_in);
-		data = redirections_fd(data, data->fd_aux, temp_out, j);
-		data = redirections_loop(data, &pid);
+		data_temp = *get_infd(&data_temp, j, fd_in, temp_in);
+		data_temp = *redirections_fd(&data_temp, data_temp.fd_aux, temp_out, j);
+		data_temp = *redirections_loop(&data_temp, &pid);
 		j++;
 	}
 	dup2(temp_in, 0);

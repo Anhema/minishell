@@ -6,38 +6,44 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 19:06:31 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:20:38 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand(char *str, t_data *data)
+char	*expand(t_data *data)
 {
 	int		i;
 	char	c;
 	char	*tmp;
 
-	if (!str)
-		return (NULL);
+	data->str = space_front_to_back(data->str);
+	if (!data->str || ft_str_equals(data->str, ""))
+		return (data->str);
+	c = 0;
 	i = 0;
-	while (str[i])
+	tmp = NULL;
+	while (data->str[i])
 	{
-		c = continue_expand(c, i, str);
-		if (str[i] == '$' && c != '\'')
+		c = continue_expand(c, i, data->str);
+		if (data->str[i] == '$' && c != '\'')
 		{
-			if (str[i + 1] == ' ' || str[i + 1] == '\0')
+			if (data->str[i + 1] == ' ' || data->str[i + 1] == '\0')
 			{
 				i++;
 				continue ;
 			}
-			tmp = continue_expand_two(str, i, tmp, data);
-			str = tmp;
+			tmp = continue_expand_two(data->str, i, tmp, data);
+			data->str = ft_strdup(tmp);
 			i = 0;
 		}
 		i++;
 	}
-	return (str);
+	//printf("--%s--\n", tmp);
+	if (tmp)
+		free(tmp);
+	return (data->str);
 }
 
 void	continue_echo(char *str, char *str_temp, int n, int i)

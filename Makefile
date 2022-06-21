@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
+#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/20 21:41:24 by cbustama         ###   ########.fr        #
+#    Updated: 2022/06/21 20:13:13 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

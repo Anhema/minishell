@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 20:15:08 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:58:27 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,6 @@ t_data	*get_redirections(t_data *data, char *str)
 			j = 0;
 		}
 	}
-	data->str = ft_strdup(str);
-	free(str);
+	data->str = str;
 	return (data);
 }

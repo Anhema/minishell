@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:27:53 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 17:36:10 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 17:56:21 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,15 @@ int	get_k(char *str, int kk)
 
 char	*modify_str(char *str, int j)
 {
+	char	*temp;
+
 	if (j == 0)
 	{
-		str = get_redirections_aux_start
+		temp = get_redirections_aux_start
 			(get_k(str, get_kk(str, j)), get_kk(str, j), str);
 	}
 	else
-		str = get_redirections_aux_continue
+		temp = get_redirections_aux_continue
 			(j, get_k(str, get_kk(str, j)), get_kk(str, j), str);
-	return (str);
+	return (temp);
 }

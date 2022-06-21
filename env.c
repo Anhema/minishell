@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 16:04:28 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:58:16 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_dict	*ft_export(t_data *data)
 	i = -1;
 	while (str[++i])
 		data->env = export_aux(str, data, i);
+	free_split_double(str);
 	return (data->env);
 }
 
