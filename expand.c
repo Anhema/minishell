@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:58:19 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/21 21:18:48 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:56:41 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,5 @@ char	*continue_expand_for(char *str, int i, char *tmp, char *var)
 	else
 		result = ft_strdup(tmp);
 	free(str);
-	//free(var);
-	//free(tmp);
 	return (result);
 }

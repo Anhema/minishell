@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:00:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 16:58:49 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:15:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*heredoc(t_data *data, t_dict *temp)
 	char	*str;
 
 	data->is_redir = 1;
-	str = ft_readline(data);
+	str = ft_readline_heredoc(data);
 	in = open(".redir", O_WRONLY | O_APPEND | O_CREAT, 0000644);
 	while (1)
 	{
@@ -33,7 +33,7 @@ char	*heredoc(t_data *data, t_dict *temp)
 		{
 			ft_putstr_fd(str, in);
 			ft_putstr_fd("\n", in);
-			str = ft_readline(data);
+			str = ft_readline_heredoc(data);
 		}
 	}
 	close(in);
@@ -83,7 +83,6 @@ static t_data	*get_infd(t_data *data, int j, int fd_in, int temp_in)
 		if (j == 0)
 			data->fd_aux = dup(temp_in);
 	}
-	//free (infile);
 	return (data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:18:26 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:57:09 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	ft_exit(char *str, t_data *data)
 t_data	*builtings(t_data *data, char *str)
 {
 	(void)str;
-	//printf("--%s--\n", data->commands->key);
 	if (ft_str_equals(data->commands->key, "pwd"))
 		ft_pwd();
 	else if (ft_str_equals(data->commands->key, "echo"))

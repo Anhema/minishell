@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:09:05 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 18:08:58 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:51:45 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,6 @@ char	*replace_redirections(char *str)
 		else
 			temp[j] = str[i];
 		j++;
-	}
-	if (ft_str_equals(temp, "") || !temp)
-	{
-		free (temp);
-		return (str);
 	}
 	free (str);
 	return (temp);

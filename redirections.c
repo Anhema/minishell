@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:19:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:11:36 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,10 @@ int	check_syntax(t_dict *commands)
 			else
 				printf(
 					"minishell: syntax error near unexpected token `newline'\n");
-			// free (str);
-			// free (str_temp);
 			return (1);
 		}
 		temp = temp->next;
 	}
-	// if (str)
-	// 	free (str);
-	// if (str_temp)
-	// 	free (str_temp);
 	return (0);
 }
 
@@ -111,16 +105,16 @@ t_dict	**add_to_dict(t_dict **result, int j, int count, char *str)
 		&& str[k] != -126 && str[k] != -127 && str[k] != '|')
 		k++;
 	value = (char *)malloc(sizeof(char) * (k - kk) + 1);
+	value = ft_memset(value, 0, sizeof(char) * (k - kk) + 1);
 	i = (k - kk);
 	k = kk;
 	n = 0;
 	while (i-- > 0)
 		value[n++] = str[k++];
-	value[n] = '\0';
 	result[count] = dict_add_back_repeat
-		(result[count], dict_new(ft_itoa(str[j]), value));
-	//free(value);
-	//free(str);
+		(result[count], dict_new(ft_itoa(str[j]), ft_strdup(value)));
+	free(str);
+	free(value);
 	return (result);
 }
 
@@ -143,9 +137,16 @@ t_data	*get_redirections(t_data *data, char *str)
 		if (str[j] == -128 || str[j] == -125
 			|| str[j] == -126 || str[j] == -127)
 		{
-			data->redirections = add_to_dict(data->redirections, j, count, str);
+			data->redirections = add_to_dict
+				(data->redirections, j, count, ft_strdup(str));
 			str = modify_str(str, j);
+			if (ft_str_equals(str, ""))
+			{
+				data->str = str;
+				return (data);
+			}
 			j = 0;
+			count = 0;
 		}
 	}
 	data->str = str;

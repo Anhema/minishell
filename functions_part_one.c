@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:29:25 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 15:44:06 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:04:44 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,14 @@ t_dict	*ft_pipe_parse_end(char *str, int last, t_dict *commands, int i)
 
 	j = 0;
 	temp = malloc(sizeof(char) * (i - last) + 1);
+	temp = ft_memset(temp, 0, sizeof(char) * (i - last) + 1);
 	while (j < i - last)
 	{
 		temp[j] = str[j + last];
 		j++;
 	}
 	temp[j] = '\0';
-	commands = add_command(temp, commands);
+	commands = add_command(ft_strdup(temp), commands);
+	free(temp);
 	return (commands);
 }

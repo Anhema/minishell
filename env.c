@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 15:43:05 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:50:53 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ t_dict	*print_export(char **str, int i, t_data data)
 t_dict	*export_aux(char **str, t_data *data, int i)
 {
 	char	**key_value;
+	char	*key;
+	char	*value;
 
+	key = NULL;
+	value = NULL;
 	if (!((str[i][0] >= 'a' && str[i][0] <= 'z')
 	|| (str[i][0] >= 'A' && str[i][0] <= 'Z')
 	|| (str[i][0] >= '_')))
@@ -70,9 +74,19 @@ t_dict	*export_aux(char **str, t_data *data, int i)
 		return (data->env);
 	}
 	key_value = ft_split(str[i], '=');
-	data->env = dict_add_back
-		(data->env, dict_new(ft_strdup(key_value[0]), ft_strdup(key_value[1])));
+	if (key_value[0])
+		key = ft_strdup(key_value[0]);
+	if (key_value[1])
+		value = ft_strdup(key_value[1]);
+	if (value)
+		data->env = dict_add_back
+			(data->env, dict_new(ft_strdup(key), ft_strdup(value)));
+	else
+		data->env = dict_add_back
+			(data->env, dict_new(ft_strdup(key), NULL));
 	free_split_double(key_value);
+	free(key);
+	free(value);
 	return (data->env);
 }
 

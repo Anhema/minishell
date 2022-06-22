@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:01:00 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 15:55:16 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:15:25 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*ft_readline(t_data *data)
 			i++;
 		}
 		free(data->redirections);
-		data->redirections = NULL;
 	}
 	if (data->str)
 		free(data->str);
@@ -103,6 +102,32 @@ char	*ft_readline(t_data *data)
 	data->str = NULL;
 	data->fd[0] = 0;
 	data->fd[1] = 1;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term_old);
+	return (str);
+}
+
+char	*ft_readline_heredoc(t_data *data)
+{
+	char			*str;
+	struct termios	term;
+	struct termios	term_old;
+	char			*count;
+
+	tcgetattr(STDIN_FILENO, &term_old);
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL | ICANON);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	ft_signals();
+	str = readline(get_prompt(data));
+	if (!str)
+	{
+		count = getcwd(NULL, 0);
+		printf("\033[1A");
+		printf("\033[%zuC", ft_strlen(count) - 2);
+		printf(" exit\n");
+		free (count);
+		exit(0);
+	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_old);
 	return (str);
 }

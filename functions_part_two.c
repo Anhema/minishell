@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:33:04 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 18:00:00 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:06:24 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,24 @@ t_dict	*add_command(char *line, t_dict *command)
 	char	*arguments;
 	char	*line_;
 	char	*built;
-	//char	*arg_;
 
-	//arg_ = NULL;
+	if (!line)
+		return (command);
 	line_ = space_front_to_back(line);
 	arguments = get_arguments(line_);
 	arguments = remove_quotes(arguments);
 	built = remove_quotes(get_builting(line_));
 	if (!arguments)
-		command = dict_add_back(command, dict_new(ft_strdup(built), NULL));
+		command = dict_add_back_repeat(command, dict_new(ft_strdup(built), NULL));
 	else
-		command = dict_add_back
+		command = dict_add_back_repeat
 			(command, dict_new(ft_strdup(built), ft_strdup(arguments)));
 	if (line_)
 		free(line_);
 	if (arguments)
 		free(arguments);
-	// if (arg_)
-	// 	free(arg_);
 	if (built && line_ != built)
 		free(built);
-	//printf("data->key %s\n", command->key);
-	//printf("data->value %s\n", command->value);
 	return (command);
 }
 

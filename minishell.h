@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:18:41 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:15:06 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		check_outfile(t_data *data, int j);
 char	*check_infile(t_data *data, int j);
 int		redirections_fd_aux(t_data *data, int temp_out);
 char	*heredoc(t_data *data, t_dict *temp);
+char	*ft_readline_heredoc(t_data *data);
 void	redirections_aux(t_data *data, int fd_in, int temp_in, int temp_out);
 t_data	*redirections_fd(t_data *data, int fd_in, int temp_out, int j);
 

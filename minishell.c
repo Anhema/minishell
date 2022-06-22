@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:33:41 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:07:51 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ char	*cd_exit_syntax(t_data *data, char *str)
 char	*minishell_loop(t_data *data, char *str)
 {
 	ft_history(str);
-	str = replace_redirections(syntax_redirections(remove_spaces(check_quotes(str))));
+	str = replace_redirections
+		(syntax_redirections(remove_spaces(check_quotes(str))));
 	if (!str || ft_str_equals(str, ""))
 	{
 		free (str);
@@ -54,15 +55,12 @@ char	*minishell_loop(t_data *data, char *str)
 	}
 	data = get_redirections(data, str);
 	data->str = expand(data);
-	// if (str)
-	// 	free(str);
 	str = data->str;
-	if (!data->str || ft_str_equals(data->str, ""))
-	{
-		str = ft_readline(data);
-		return (str);
-	}
-	//str = data->str;
+	// if (!data->str || ft_str_equals(data->str, ""))
+	// {
+	// 	str = ft_readline(data);
+	// 	return (str);
+	// }
 	data->commands = ft_pipe_parse(data->str);
 	if (data->commands)
 	{

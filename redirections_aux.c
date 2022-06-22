@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:27:53 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:21:56 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:52:17 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ char	*modify_str(char *str, int j)
 	else
 		temp = get_redirections_aux_continue
 			(j, get_k(str, get_kk(str, j)), get_kk(str, j), str);
+	free(str);
 	return (temp);
 }
