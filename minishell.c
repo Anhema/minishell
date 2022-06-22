@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 22:25:48 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:33:41 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 char	*cd_exit_syntax(t_data *data, char *str)
 {
+	char	**_unset;
+
 	if (ft_str_equals(data->commands->key, "exit") && !data->commands->next)
 		ft_exit(str, data);
 	if (ft_str_equals(data->commands->key, "cd") && !data->commands->next)
@@ -28,7 +30,12 @@ char	*cd_exit_syntax(t_data *data, char *str)
 	}
 	if (ft_str_equals(data->commands->key, "unset") && !data->commands->next)
 	{
-		data->env = ft_unset(data->env, ft_split(data->commands->value, ' '));
+		_unset = NULL;
+		if (data->commands->value)
+			_unset = ft_split(data->commands->value, ' ');
+		data->env = ft_unset(data->env, _unset);
+		if (_unset)
+			free_split_double(_unset);
 		str = ft_readline(data);
 		return (str);
 	}
@@ -47,13 +54,14 @@ char	*minishell_loop(t_data *data, char *str)
 	}
 	data = get_redirections(data, str);
 	data->str = expand(data);
+	// if (str)
+	// 	free(str);
 	str = data->str;
 	if (!data->str || ft_str_equals(data->str, ""))
 	{
 		str = ft_readline(data);
 		return (str);
 	}
-	//free(str);
 	//str = data->str;
 	data->commands = ft_pipe_parse(data->str);
 	if (data->commands)
@@ -62,7 +70,7 @@ char	*minishell_loop(t_data *data, char *str)
 		if (data->str)
 			return (data->str);
 	}
-	data = redirections(data, data->str);
+	data = redirections(data);
 	if (str)
 		free(str);
 	str = ft_readline(data);
@@ -80,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	g_stats = 0;
 	data = malloc(sizeof(t_data));
 	data->env = create_env(envp);
-	data->usr = get_dict_value(data->env, "USER");
+	data->usr = ft_strdup(get_dict_value(data->env, "USER"));
 	data->is_redir = 0;
 	data->commands = NULL;
 	data->prompt = NULL;

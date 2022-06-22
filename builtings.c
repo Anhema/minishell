@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 17:45:42 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:18:26 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_data	*builtings(t_data *data, char *str)
 	return (data);
 }
 
-t_data	*redirections(t_data *data, char *str)
+t_data	*redirections(t_data *data)
 {
 	int		temp_in;
 	int		temp_out;
@@ -93,7 +93,6 @@ t_data	*redirections(t_data *data, char *str)
 	t_dict	*temp;
 	t_data	data_temp;
 
-	(void)str;
 	temp_in = dup(0);
 	temp_out = dup(1);
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 22:40:39 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:31:50 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static t_dict	*cd_aux(t_dict *temp, char *old_path)
 			temp->next->value = ft_strdup(aux);
 		}
 		if (ft_str_equals(temp->next->key, "OLDPWD") == 1)
-			temp->next->value = old_path;
+		{
+			free(temp->next->value);
+			temp->next->value = ft_strdup(old_path);
+		}
 		temp = temp->next;
 	}
 	if (aux)
@@ -55,7 +58,8 @@ t_data	*_cd(char *str, char *usr, t_data *data)
 	{
 		temp = data->env;
 		temp = cd_aux(temp, old_path);
-		free (old_path);
+		if (old_path)
+			free (old_path);
 		if (!original)
 			free(path);
 		return (data);
@@ -66,7 +70,8 @@ t_data	*_cd(char *str, char *usr, t_data *data)
 		printf("minishell: cd: %s: No such file or directory\n", path);
 	}
 	g_stats = 0;
-	free (old_path);
+	if (old_path)
+		free (old_path);
 	if (!original)
 		free(path);
 	return (data);

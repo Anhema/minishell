@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:29:25 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 18:05:08 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:44:06 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_dict	*ft_pipe_parse_add(char *str, int *last, t_dict *commands, int i)
 	temp[jj] = '\0';
 	commands = add_command(ft_strdup(temp), commands);
 	*last = i + 1;
+	free(temp);
 	return (commands);
 }
 

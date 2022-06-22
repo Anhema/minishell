@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/09 17:34:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:25:43 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,10 @@ t_dict	*del_one(t_dict *dict, char	*key)
 			temp->next = q->next;
 		else
 			temp->next = NULL;
+		if (q->key)
+			free(q->key);
+		if (q->value)
+			free(q->value);
 		free(q);
 	}
 	return (dict);

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 22:41:27 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:43:05 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 t_dict	*create_env(char **str)
 {
 	char	**temp;
+	char	*key;
+	char	*value;
 	int		i;
 	t_dict	*env;
 
@@ -23,8 +25,14 @@ t_dict	*create_env(char **str)
 	while (str[i])
 	{
 		temp = ft_split(str[i], '=');
-		env = dict_add_back(env, dict_new(temp[0], temp[1]));
-		free(temp);
+		if (temp[0])
+			key = ft_strdup(temp[0]);
+		if (temp[1])
+			value = ft_strdup(temp[1]);
+		env = dict_add_back(env, dict_new(ft_strdup(key), ft_strdup(value)));
+		free_split_double(temp);
+		free(key);
+		free(value);
 		i++;
 	}
 	return (env);
@@ -51,7 +59,6 @@ t_dict	*print_export(char **str, int i, t_data data)
 
 t_dict	*export_aux(char **str, t_data *data, int i)
 {
-	t_dict	*new;
 	char	**key_value;
 
 	if (!((str[i][0] >= 'a' && str[i][0] <= 'z')
@@ -63,9 +70,9 @@ t_dict	*export_aux(char **str, t_data *data, int i)
 		return (data->env);
 	}
 	key_value = ft_split(str[i], '=');
-	new = dict_new(key_value[0], key_value[1]);
 	data->env = dict_add_back
-		(data->env, dict_new(key_value[0], key_value[1]));
+		(data->env, dict_new(ft_strdup(key_value[0]), ft_strdup(key_value[1])));
+	free_split_double(key_value);
 	return (data->env);
 }
 

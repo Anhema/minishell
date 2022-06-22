@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 17:58:27 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:19:50 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,9 @@ t_dict	**add_to_dict(t_dict **result, int j, int count, char *str)
 		value[n++] = str[k++];
 	value[n] = '\0';
 	result[count] = dict_add_back_repeat
-		(result[count], dict_new(ft_itoa(str[j]), ft_strdup(value)));
-	free(value);
+		(result[count], dict_new(ft_itoa(str[j]), value));
+	//free(value);
+	//free(str);
 	return (result);
 }
 

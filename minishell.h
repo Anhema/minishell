@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/21 21:32:15 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:18:41 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	continue_signal(void);
 
 int		check_syntax(t_dict *commands);
 t_data	*get_redirections(t_data *data, char *str);
-t_data	*redirections(t_data *data, char *str);
+t_data	*redirections(t_data *data);
 t_data	*builtings(t_data *data, char *str);
 void	ft_exit(char *str, t_data *data);
 char	*here_doc(t_data data, t_dict *temp);
