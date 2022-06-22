@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 18:30:06 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 21:53:00 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@ char	**join_env(t_dict *d_env)
 		temp = temp->next;
 		i++;
 	}
-	env = malloc(sizeof(char *) * i);
+	env = malloc(sizeof(char *) * (i + 1));
 	temp = d_env;
 	j = 0;
 	while (temp)
 	{
 		tmp = ft_strjoin(temp->key, "=");
 		env[j] = tmp;
-		env[j] = ft_strjoin(env[j], temp->value);
+		env[j] = ft_strjoin(tmp, temp->value);
 		temp = temp->next;
 		free(tmp);
 		j++;
 	}
+	env[j] = NULL;
 	return (env);
 }
 
@@ -51,6 +52,8 @@ void	ft_execve(t_data *data)
 	char	*key;
 
 	argv = NULL;
+	path = NULL;
+	env = NULL;
 	key = ft_strreplace(data->commands->key, "/bin/", "");
 	temp = ft_split(data->commands->value, ' ');
 	if (!temp)
@@ -66,11 +69,13 @@ void	ft_execve(t_data *data)
 	_execve_print(data);
 	path = get_path(get_dict_value(data->env, "PATH"), key);
 	argv[0] = path;
-	if (execve(path, argv, NULL) < 0)
+	printf("path === %s argv === %s env == %s\n", path, *argv, *env);
+	if (execve(path, argv, env) < 0)
 		print_error(data);
 	free_split_double(temp);
-	free_split_double(argv);
+	free(argv);
 	free_split_double(env);
-	free(path);
+	if (path)
+		free(path);
 	free(key);
 }
