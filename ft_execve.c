@@ -6,7 +6,7 @@
 /*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/20 21:39:02 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/22 17:12:38 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	**join_env(t_dict *d_env)
 	int		i;
 	int		j;
 	t_dict	*temp;
+	char	*tmp;
 
 	temp = d_env;
 	i = 0;
@@ -31,11 +32,14 @@ char	**join_env(t_dict *d_env)
 	j = 0;
 	while (temp)
 	{
-		env[j] = ft_strjoin(temp->key, "=");
+		tmp = ft_strjoin(temp->key, "=");
+		env[j] = tmp;
 		env[j] = ft_strjoin(env[j], temp->value);
 		temp = temp->next;
+		free(tmp);
 		j++;
 	}
+	//free(tmp);
 	return (env);
 }
 
@@ -65,9 +69,9 @@ void	ft_execve(t_data *data)
 	argv[0] = path;
 	if (execve(path, argv, NULL) < 0)
 		print_error(data);
-	//free_split_double(temp);
-	//free_split_double(argv);
-	//free_split_double(env);
-	//free(path);
-	//free(key);
+	free_split_double(temp);
+	free_split_double(argv);
+	free_split_double(env);
+	free(path);
+	free(key);
 }

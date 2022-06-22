@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   continue_execve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/17 19:05:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 18:18:27 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,27 @@ char	*get_path(char *_path, char *command)
 	char	**paths;
 	int		i;
 	char	*path;
+	char	*tmp;
 
 	paths = ft_split(_path, 58);
 	i = 0;
 	while (paths[i])
 	{
-		paths[i] = ft_strjoin(paths[i], "/");
+		tmp = ft_strjoin(paths[i], "/");
+		paths[i] = tmp;
 		paths[i] = ft_strjoin(paths[i], command);
+		free(tmp);
 		i++;
 	}
 	i = 0;
 	while (paths[i])
 	{
 		if (access(paths[i], F_OK) == 0)
-			path = ft_strdup(paths[i]);
+			path = paths[i];
 		i++;
 	}
 	free_split_double(paths);
+	printf("---yo %s---yoo\n", *paths);
 	return (path);
 }
 
@@ -43,20 +47,25 @@ void	print_error(t_data *data)
 	char		*str;
 	char		*temp;
 	extern int	g_stats;
+	char		*temp_two;
 
 	env = data->env;
 	str = data->commands->key;
 	while (env)
 	{
 		temp = ft_strjoin("$", env->key);
-		str = ft_strreplace(str, temp, env->value);
+		temp_two = ft_strreplace(str, temp, env->value);
+		str = temp_two;
 		env = env->next;
+		free(temp);
+		free(temp_two);
 	}
-	str = ft_strreplace(str, ft_itoa(-125), "<");
-	str = ft_strreplace(str, ft_itoa(-126), "<<");
-	str = ft_strreplace(str, ft_itoa(-127), ">");
-	str = ft_strreplace(str, ft_itoa(-128), ">>");
-	if (ft_strstr(data->commands->key, "/"))
+	str = ft_strreplace(ft_strdup(str), ft_itoa(-125), "<");
+	str = ft_strreplace(ft_strdup(str), ft_itoa(-126), "<<");
+	str = ft_strreplace(ft_strdup(str), ft_itoa(-127), ">");
+	str = ft_strreplace(ft_strdup(str), ft_itoa(-128), ">>");
+	temp = ft_strstr(data->commands->key, "/");
+	if (temp)
 		printf("minishell: %s: No such file or directory\n",
 			data->commands->key);
 	else
@@ -64,8 +73,10 @@ void	print_error(t_data *data)
 		g_stats = 127;
 		printf("minishell: %s: command not found\n", str);
 	}
+	delete_all(env);
 	free(temp);
 	free(str);
+	str = NULL;
 }
 
 void	_execve_print(t_data *data)
