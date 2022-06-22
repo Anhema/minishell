@@ -6,7 +6,7 @@
 /*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/22 21:44:32 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/22 22:13:32 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	*get_path(char *_path, char *command)
 	char	*tmp;
 	char	*aux;
 
+	path = NULL;
 	paths = ft_split(_path, 58);
 	i = 0;
 	while (paths[i])
@@ -27,7 +28,8 @@ char	*get_path(char *_path, char *command)
 		tmp = ft_strjoin(paths[i], "/");
 		aux = ft_strjoin(tmp, command);
 		free(paths[i]);
-		paths[i] = aux;
+		paths[i] = NULL;
+		paths[i] = ft_strdup(aux);
 		free(tmp);
 		free (aux);
 		i++;
@@ -36,10 +38,16 @@ char	*get_path(char *_path, char *command)
 	while (paths[i])
 	{
 		if (access(paths[i], F_OK) == 0)
-			path = paths[i];
+		{		
+			path = ft_strdup(paths[i]);
+			free_split_double(paths);
+			return (path);
+		}
 		i++;
 	}
-	free(paths);
+	printf("PATH1 ==== %s\n", path);
+	free_split_double(paths);
+	printf("PATH2 ==== %s\n", path);
 	return (path);
 }
 
