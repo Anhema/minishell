@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 19:27:28 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:12:39 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,18 @@ void	print_dict(t_dict *env)
 	}
 }
 
-t_dict	*del_one_aux(t_dict *temp, t_dict *q, char *key)
+void	del_one_aux(t_dict *temp, t_dict *q, char *key)
 {
-	while (q)
+	if (ft_str_equals(q->key, key))
 	{
-		if (ft_str_equals(q->key, key))
-			break ;
-		temp = temp->next;
-		q = q->next;
+		if (q->next)
+			temp->next = q->next;
+		else
+			temp->next = NULL;
+		if (q->key)
+			free(q->key);
+		if (q->value)
+			free(q->value);
+		free(q);
 	}
-	return (q);
 }

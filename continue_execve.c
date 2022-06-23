@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   continue_execve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/23 17:40:59 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:13:14 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ char	*get_path(char *_path, char *command)
 	char	*tmp;
 	char	*aux;
 
-	path = NULL;
+	if (!_path)
+		return (NULL);
 	paths = ft_split(_path, 58);
-	i = 0;
-	while (paths[i])
+	i = -1;
+	while (paths[++i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		aux = ft_strjoin(tmp, command);
@@ -32,9 +33,8 @@ char	*get_path(char *_path, char *command)
 		paths[i] = ft_strdup(aux);
 		free(tmp);
 		free (aux);
-		i++;
 	}
-	path = aux_get_path(paths, path);
+	path = aux_get_path(paths, NULL);
 	if (path)
 		return (path);
 	free_split_double(paths);
@@ -57,13 +57,15 @@ char	*str_aux(char *str)
 	return (str);
 }
 
-void	print_error(t_data *data)
+void	print_error(t_data *data, char *path)
 {
 	char		*str;
 	char		*temp;
 	extern int	g_stats;
 	char		*aux;
 
+	if (!path)
+		return ;
 	str = data->commands->key;
 	aux = str_aux(str);
 	temp = ft_strstr(data->commands->key, "/");

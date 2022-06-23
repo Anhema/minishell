@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 21:11:08 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:43:08 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*expand(t_data *data)
 
 	if (!data->str || ft_str_equals(data->str, ""))
 		return (data->str);
-	data->str = space_front_to_back(data->str);
 	c = 0;
 	i = 0;
 	tmp = NULL;

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 19:27:43 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:12:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_execve(t_data *data)
 	path = get_path(get_dict_value(data->env, "PATH"), key);
 	argv[0] = path;
 	if (execve(path, argv, env) < 0)
-		print_error(data);
+		print_error(data, path);
 	aux_execve_free(temp, argv, env, path);
 	free(key);
 }

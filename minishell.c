@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 21:27:28 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:01:54 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*pipe_errors(char *str, t_data *data)
 	result = pipe_errors_aux(str);
 	if (!result)
 		return (NULL);
-	if (str[ft_strlen(str) - 1] == '|')
+	if (ft_strlen(str) > 1 && str[ft_strlen(str) - 1] == '|')
 	{
 		data->is_redir = 1;
 		line = ft_readline_heredoc(data);
@@ -88,7 +88,6 @@ char	*minishell_loop(t_data *data, char *str)
 	}
 	data = get_redirections(data, str);
 	data->str = expand(data);
-	str = data->str;
 	data->commands = ft_pipe_parse(data->str);
 	if (data->commands)
 	{
@@ -97,8 +96,7 @@ char	*minishell_loop(t_data *data, char *str)
 			return (data->str);
 	}
 	data = redirections(data);
-	str = ft_readline(data);
-	return (str);
+	return (ft_readline(data));
 }
 
 int	main(int argc, char **argv, char **envp)

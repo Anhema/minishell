@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 21:34:38 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:13:34 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_dict	*dict_add_front(t_dict *lst, t_dict *new);
 char	*get_dict_value(t_dict *dict, char	*key);
 t_dict	*del_one(t_dict *dict, char	*key);
 void	delete_all(t_dict *dict);
-t_dict	*del_one_aux(t_dict *temp, t_dict *q, char *key);
+void	del_one_aux(t_dict *temp, t_dict *q, char *key);
 
 char	*remove_spaces(char	*str);
 char	*expand(t_data *data);
@@ -80,7 +80,7 @@ void	ft_echo(t_data *data);
 char	*syntax_redirections(char *str);
 char	*check_quotes(char *str);
 char	*get_path(char *_path, char *command);
-void	print_error(t_data *data);
+void	print_error(t_data *data, char *path);
 
 void	export_aux_continue(char *value,
 			char *key, char **key_value, t_data *data);

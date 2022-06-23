@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:41:29 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/23 21:14:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 22:34:37 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	free_data_readline_two(t_data *data)
 	i = 0;
 	if (data->prompt)
 		free(data->prompt);
-	delete_all(data->commands);
+	if (data->commands)
+		delete_all(data->commands);
 	if (data->redirections)
 	{
 		i = 0;
@@ -82,7 +83,6 @@ char	*aux_replace_redirections(char *str, char *temp, char c, int n)
 			temp[j] = str[i];
 		j++;
 	}
-	free(str);
 	return (temp);
 }
 

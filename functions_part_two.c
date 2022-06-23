@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:33:04 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 17:10:39 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 23:07:23 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ t_dict	*add_command(char *line, t_dict *command)
 	arguments = get_arguments(line_);
 	arguments = remove_quotes(arguments);
 	built = remove_quotes(get_builting(line_));
-	if (!arguments)
+	if (!built && !arguments)
+		command = NULL;
+	else if (!arguments && built)
 		command = dict_add_back_repeat
 			(command, dict_new(ft_strdup(built), NULL));
 	else
