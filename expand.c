@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 20:58:19 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/22 16:56:41 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:01:28 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	continue_expand(char c, int i, char *str)
 	return (c);
 }
 
-static int	get_j(char *str, int j)
+int	get_j(char *str, int j)
 {
 	int	n;
 
@@ -79,11 +79,7 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
 	int		jj;
 	int		j;
 	char	*var;
-	char	*var_two;
 	char	*aux;
-	char	*result;
-	char	*result_temp;
-	char	*temp;
 
 	j = get_j(str, i);
 	var = malloc(sizeof(char) * ((j - i) + 1));
@@ -98,25 +94,8 @@ char	*continue_expand_three(char *str, char *tmp, t_data *data, int i)
 		aux = ft_strjoin(tmp, ft_strjoin("$", var));
 	else
 		aux = NULL;
-	temp = ft_itoa(g_stats);
-	if (aux)
-		result_temp = ft_strreplace(aux, "$?", temp);
-	else
-		result_temp = ft_strreplace(tmp, "$?", temp);
-	j--;
-	while (str[j])
-		j++;
-	var_two = NULL;
-	var_two = (char *)malloc(sizeof(char) * (j - i) + 1);
-	ft_memset(var_two, 0, sizeof(char) * (j - i));
-	result = continue_expand_for(str, i, result_temp, var_two);
 	free (var);
-	free (var_two);
-	free (aux);
-	free (tmp);
-	free (temp);
-	free (result_temp);
-	return (result);
+	return (continue_expand_three_aux(str, aux, i, tmp));
 }
 
 char	*continue_expand_for(char *str, int i, char *tmp, char *var)

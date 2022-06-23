@@ -6,7 +6,7 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/23 19:40:24 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/23 20:01:13 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC = minishell.c \
 		readline.c\
 		continue_execve.c\
 		expand.c\
+		expand_aux.c\
 		free.c\
 		aux_functions.c\
 

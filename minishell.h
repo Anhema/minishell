@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 19:40:12 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:01:37 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,8 @@ int		replace_aux(int n, char *c, char *str, int j);
 char	replace_char(char *str, int i, int n);
 
 void	end_redirections_aux(int temp_in, int temp_out, int pid, int status);
+char	*continue_expand_three_aux(char *str,
+			char *aux, int i, char *tmp);
+int		get_j(char *str, int j);
 
 #endif
