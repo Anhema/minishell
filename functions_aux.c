@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions_aux.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:35:35 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 20:41:25 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:17:57 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,14 @@ t_dict	*ft_pipe_parse(char *str)
 	{
 		n = aux_aux(n, &c, str, i);
 		if (str[i] == '|' && n == 0)
+		{
 			commands = ft_pipe_parse_add(str, &last, commands, i);
+			if (!commands)
+				return (NULL);
+		}
 	}
 	if (n == 0)
 		commands = ft_pipe_parse_end(str, last, commands, i);
-	else
-	{
-		printf("minishell: syntax error unclosed quotes\n");
-		commands = NULL;
-	}
 	return (commands);
 }
 

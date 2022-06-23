@@ -6,19 +6,20 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 19:41:23 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:11:08 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	expand_aux(t_data *data, char *tmp, int *i)
+static t_data	*expand_aux(t_data *data, char *tmp, int *i)
 {
 	tmp = continue_expand_two(data->str, *i, tmp, data);
 	data->str = ft_strdup(tmp);
 	if (tmp)
 		free(tmp);
 	*i = 0;
+	return (data);
 }
 
 char	*expand(t_data *data)
@@ -27,23 +28,23 @@ char	*expand(t_data *data)
 	char	c;
 	char	*tmp;
 
-	data->str = space_front_to_back(data->str);
 	if (!data->str || ft_str_equals(data->str, ""))
 		return (data->str);
+	data->str = space_front_to_back(data->str);
 	c = 0;
 	i = 0;
 	tmp = NULL;
-	while (data->str[i])
+	while (data->str[i] && i <= (int)ft_strlen(data->str))
 	{
 		c = continue_expand(c, i, data->str);
-		if (data->str[i] == '$' && c != '\'')
+		if (data->str[i] == '$' && c != '\'' && i > 1)
 		{
 			if (data->str[i + 1] == ' ' || data->str[i + 1] == '\0')
 			{
 				i++;
 				continue ;
 			}
-			expand_aux(data, tmp, &i);
+			data = expand_aux(data, tmp, &i);
 		}
 		i++;
 	}

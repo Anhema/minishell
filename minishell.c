@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 16:58:08 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:27:28 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,41 @@ char	*cd_exit_syntax(t_data *data, char *str)
 	return (NULL);
 }
 
+char	*pipe_errors(char *str, t_data *data)
+{
+	char	*line;
+	char	*temp;
+	char	*result;
+
+	if (!str)
+		return (NULL);
+	result = str;
+	result = pipe_errors_aux(str);
+	if (!result)
+		return (NULL);
+	if (str[ft_strlen(str) - 1] == '|')
+	{
+		data->is_redir = 1;
+		line = ft_readline_heredoc(data);
+		temp = ft_strdup(str);
+		result = ft_strjoin(temp, line);
+		free(str);
+		free(temp);
+		data->is_redir = 0;
+	}
+	return (result);
+}
+
 char	*minishell_loop(t_data *data, char *str)
 {
 	ft_history(str);
 	str = replace_redirections
 		(syntax_redirections(remove_spaces(check_quotes(str))));
+	str = pipe_errors(str, data);
 	if (!str || ft_str_equals(str, ""))
 	{
-		free (str);
+		if (str)
+			free (str);
 		str = ft_readline(data);
 		return (str);
 	}
@@ -70,8 +97,6 @@ char	*minishell_loop(t_data *data, char *str)
 			return (data->str);
 	}
 	data = redirections(data);
-	if (str)
-		free(str);
 	str = ft_readline(data);
 	return (str);
 }

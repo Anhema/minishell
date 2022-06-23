@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:29:25 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 22:27:23 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:21:36 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,15 @@ t_dict	*ft_pipe_parse_add(char *str, int *last, t_dict *commands, int i)
 	int		jj;
 	char	*temp;
 
+	if (str[i + 1] == '|' || (str[i + 1] == ' ' && str[i + 2] == '|'))
+	{
+		printf("bash: syntax error near unexpected token `|'\n");
+		g_stats = 258;
+		delete_all(commands);
+		return (NULL);
+	}
 	j = *last;
-	temp = malloc(sizeof(char) * (i - *last) + 1);
-	temp = ft_memset(temp, 0, sizeof(char) * (i - *last) + 1);
+	temp = ft_calloc((i - *last) + 1, sizeof(char));
 	jj = 0;
 	while (j < i)
 	{

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:09:05 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 19:10:47 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 21:19:44 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ char	*replace_redirections(char *str)
 	n = 0;
 	i = -1;
 	c = 0;
+	if (!str)
+		return (str);
 	temp = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	ft_memset(temp, 0, sizeof(char) * (ft_strlen(str) + 1));
 	temp = aux_replace_redirections(str, temp, c, n);
