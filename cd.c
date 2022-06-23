@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 16:29:12 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:43:37 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,28 @@ static t_dict	*cd_aux(t_dict *temp, char *old_path)
 	return (temp);
 }
 
-/*static char	*free_cd()
+static t_data	*exec_cd(char *path, t_data *data, char *old_path, int original)
 {
+	t_dict		*temp;
 
-}*/
+	temp = data->env;
+	temp = cd_aux(temp, old_path);
+	if (old_path)
+		free (old_path);
+	if (!original)
+		free(path);
+	return (data);
+}
+
+static char	*_get_path(char *usr, int *orig, char *path)
+{
+	if (!path)
+	{
+		*orig = 0;
+		path = ft_strjoin("/Users/", usr);
+	}
+	return (path);
+}
 
 t_data	*_cd(char *str, char *usr, t_data *data)
 {
@@ -47,36 +65,22 @@ t_data	*_cd(char *str, char *usr, t_data *data)
 	char		*path;
 	int			original;
 	char		*old_path;
-	t_dict		*temp;
 
 	path = str;
 	original = 1;
 	old_path = getcwd(NULL, 0);
-	if (!path)
-	{
-		original = 0;
-		path = ft_strjoin("/Users/", usr);
-	}
+	path = _get_path(usr, &original, path);
 	if (ft_str_equals(old_path, "/Users") && ft_str_equals(path, ".."))
 		path = "/";
 	if (chdir(path) == 0)
-	{
-		temp = data->env;
-		temp = cd_aux(temp, old_path);
-		if (old_path)
-			free (old_path);
-		if (!original)
-			free(path);
-		return (data);
-	}
+		return (exec_cd(path, data, old_path, original));
 	else
 	{
 		g_stats = 1;
 		printf("minishell: cd: %s: No such file or directory\n", path);
 	}
 	g_stats = 0;
-	if (old_path)
-		free (old_path);
+	free (old_path);
 	if (!original)
 		free(path);
 	return (data);

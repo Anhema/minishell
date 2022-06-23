@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 15:34:51 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:02:53 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	delete_all(t_dict *dict)
 {
 	t_dict	*temp;
 
+	if (!dict)
+		return ;
 	while (dict)
 	{
 		temp = dict->next;
@@ -75,4 +77,16 @@ void	print_dict(t_dict *env)
 			env = temp;
 		}
 	}
+}
+
+t_dict	*del_one_aux(t_dict *temp, t_dict *q, char *key)
+{
+	while (q)
+	{
+		if (ft_str_equals(q->key, key))
+			break ;
+		temp = temp->next;
+		q = q->next;
+	}
+	return (q);
 }

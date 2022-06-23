@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:27:53 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:52:17 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:48:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char	*get_redirections_aux_start(int k, int kk, char *str)
 		kk++;
 		k++;
 	}
+	value[kk] = '\0';
 	return (value);
 }
 

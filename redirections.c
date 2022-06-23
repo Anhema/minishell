@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 17:22:27 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:42:50 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ t_dict	**add_to_dict(t_dict **result, int j, int count, char *str)
 	while (str[k] != '\0' && str[k] != ' ' && str[k] != -128 && str[k] != -125
 		&& str[k] != -126 && str[k] != -127 && str[k] != '|')
 		k++;
-	value = (char *)malloc(sizeof(char) * (k - kk) + 1);
-	value = ft_memset(value, 0, sizeof(char) * (k - kk) + 1);
+	value = ft_calloc((k - kk + 1), sizeof(char));
 	i = (k - kk);
 	k = kk;
 	n = 0;
@@ -113,11 +112,9 @@ t_dict	**add_to_dict(t_dict **result, int j, int count, char *str)
 		value[n++] = str[k++];
 	value[n] = '\0';
 	value = remove_quotes(value);
-	result[count] = (t_dict *)dict_add_back_repeat((t_dict *)result[count], (t_dict *)dict_new(ft_itoa(str[j]), ft_strdup(value)));
-	if (str)
-		free(str);
-	if (value)
-		free(value);
+	result[count] = dict_add_back_repeat
+		(result[count], dict_new(ft_itoa(str[j]), ft_strdup(value)));
+	add_to_dict_aux(str, value);
 	return (result);
 }
 
@@ -127,38 +124,21 @@ t_data	*get_redirections(t_data *data, char *str)
 	int		n;
 	char	c;
 	int		count;
-	int		count_result;
 
 	data->redirections = get_n_commands(str);
 	j = -1;
 	count = 0;
-	count_result = 0;
 	n = 0;
 	while (str[++j] && !ft_str_equals(str, ""))
 	{
 		n = aux_aux(n, &c, str, j);
 		if (n == 0 && str[j] == '|')
-		{
 			count++;
-			count_result++;
-		}
-		if (str[j] == -128 || str[j] == -125
-			|| str[j] == -126 || str[j] == -127)
-		{
-			data->redirections = add_to_dict
-				(data->redirections, j, count, ft_strdup(str));
-			str = modify_str(str, j);
-			if (ft_str_equals(str, ""))
-			{
-				data->rediretions_conut = count_result;
-				data->str = str;
-				return (data);
-			}
-			j = 0;
-			count = 0;
-		}
+		str = get_redirections_loop(data, str, &j, &count);
+		if (!str)
+			return (data);
 	}
-	data->rediretions_conut = count_result;
+	data->rediretions_conut = count + 1;
 	data->str = str;
 	return (data);
 }
