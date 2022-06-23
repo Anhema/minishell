@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   functions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/22 22:42:19 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:24:21 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,7 @@ t_dict	*ft_sort(char **c)
 		str = "";
 		temp = ft_split(space_front_to_back(c[j]), ' ');
 		i = 1;
-		while (temp[i])
-		{
-			str = ft_strjoin(str, temp[i]);
-			str = ft_strjoin(str, " ");
-			i++;
-		}
+		str = sort_aux(str, temp, &i);
 		command = dict_add_back(command, dict_new(temp[0], ft_strdup(str)));
 		j++;
 	}
@@ -106,42 +101,14 @@ char	*get_builting(char	*str)
 
 char	*remove_quotes(char *str)
 {
-	int		i;
-	int		j;
 	int		n;
-	char	c;
 	char	*temp;
 
-	i = -1;
-	n = 0;
-	j = 0;
-	c = 0;
-	if (!str)
-		return (NULL);
-	while (str[++i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-			n++;
-	}
+	n = aux_quotes(str);
 	if (n == 0)
 		return (str);
-	temp = malloc(sizeof(char) * (ft_strlen(str)) + 1);
-	temp = ft_memset(temp, 0, sizeof(char) * (ft_strlen(str) - n) + 1);
-	n = 0;
-	i = -1;
-	while (str[++i])
-	{
-		c = remove_quotes_get_c(str, &n, c, i);
-		if (str[i] != c)
-		{
-			if ((str[i] == '>' || str[i] == '<') && n == 0)
-				remove_quotes_aux(str, temp, &i, j);
-			else
-				temp[j] = str[i];
-			j++;
-		}
-	}
-	temp[j] = '\0';
+	temp = (char *)calloc((int)ft_strlen(str) + 1, sizeof(char));
+	temp = aux_quotes_two(temp, str);
 	if (str)
 		free (str);
 	return (temp);

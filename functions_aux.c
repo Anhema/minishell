@@ -3,25 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   functions_aux.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:35:35 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 22:26:54 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 20:41:25 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static char	*aux_get_path_two(char *str, char *temp, int *i)
+{
+	int	j;
+
+	j = -1;
+	temp = malloc(sizeof(char) * (ft_strlen(str) - *i) + 1);
+	while (++j <= (int)(ft_strlen(str) - *i))
+		temp[j] = str[j + *i];
+	return (temp);
+}
+
 char	*get_arguments(char	*str)
 {
 	int		i;
-	int		j;
 	int		n;
 	char	c;
 	char	*temp;
 
 	i = -1;
 	n = 0;
+	temp = NULL;
 	if (!str)
 		return (NULL);
 	while (str[++i])
@@ -31,11 +42,8 @@ char	*get_arguments(char	*str)
 		{
 			if (n == 0)
 			{
-				j = -1;
 				i++;
-				temp = malloc(sizeof(char) * (ft_strlen(str) - i) + 1);
-				while (++j <= (int)(ft_strlen(str) - i))
-					temp[j] = str[j + i];
+				temp = aux_get_path_two(str, temp, &i);
 				return (temp);
 			}
 		}
@@ -82,9 +90,7 @@ t_dict	*ft_pipe_parse(char *str)
 	last = 0;
 	n = 0;
 	commands = NULL;
-	if (!str)
-		return (NULL);
-	while (str[++i] != '\0')
+	while (str && str[++i] != '\0')
 	{
 		n = aux_aux(n, &c, str, i);
 		if (str[i] == '|' && n == 0)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
+#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/23 20:01:13 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/23 20:18:34 by cbustama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = minishell.c \
 		echo.c \
 		functions.c \
 		functions_aux.c \
+		functions_aux_two.c\
 		functions_part_one.c \
 		functions_part_two.c \
 		ft_execve.c \
