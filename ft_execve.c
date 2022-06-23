@@ -6,7 +6,11 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2022/06/23 17:50:36 by cbustama         ###   ########.fr       */
+=======
 /*   Updated: 2022/06/23 17:29:15 by aherrero         ###   ########.fr       */
+>>>>>>> 0c4fa1cf89dff3153f72e1cdf088521879471a2f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +51,6 @@ char	**join_env(t_dict *d_env)
 	temp = d_env;
 	j = 0;
 	env = aux_join_env(env, temp, j);
-	env[j] = NULL;
 	return (env);
 }
 

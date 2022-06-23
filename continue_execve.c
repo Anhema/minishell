@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   continue_execve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/22 22:18:58 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:40:59 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,10 @@ char	*get_path(char *_path, char *command)
 		free (aux);
 		i++;
 	}
-	i = 0;
-	while (paths[i])
-	{
-		if (access(paths[i], F_OK) == 0)
-		{		
-			path = ft_strdup(paths[i]);
-			free_split_double(paths);
-			return (path);
-		}
-		i++;
-	}
-	if (paths)
-		free_split_double(paths);
+	path = aux_get_path(paths, path);
+	if (path)
+		return (path);
+	free_split_double(paths);
 	return (path);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   readline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:01:00 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 17:23:31 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:59:09 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,13 @@ char	*ft_readline(t_data *data)
 	struct termios	term;
 	struct termios	term_old;
 	char			*count;
-	int				i;
 
 	tcgetattr(STDIN_FILENO, &term_old);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ECHOCTL | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	ft_signals();
-	if (data->prompt)
-		free(data->prompt);
-	if (data->commands)
-		delete_all(data->commands);
-	if (data->redirections)
-	{
-		i = 0;
-		while (i < data->rediretions_conut)
-		{
-			delete_all(data->redirections[i]);
-			i++;
-		}
-		free(data->redirections);
-	}
-	if (data->str)
-		free(data->str);
+	free_data_readline(data);
 	str = readline(get_prompt(data));
 	if (!str)
 	{
@@ -97,11 +81,7 @@ char	*ft_readline(t_data *data)
 		free (count);
 		exit(0);
 	}
-	data->commands = NULL;
-	data->redirections = NULL;
-	data->str = NULL;
-	data->fd[0] = 0;
-	data->fd[1] = 1;
+	free_data_readline(data);
 	tcsetattr(STDIN_FILENO, TCSANOW, &term_old);
 	return (str);
 }

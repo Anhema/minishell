@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
+#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/23 16:14:38 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/23 17:42:20 by cbustama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC = minishell.c \
 		continue_execve.c\
 		expand.c\
 		free.c\
+		aux_functions.c\
 
 OBJ = $(SRC:.c=.o)
 
