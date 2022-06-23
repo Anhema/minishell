@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   continue_execve.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/22 22:13:32 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/22 22:18:58 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ char	*get_path(char *_path, char *command)
 		}
 		i++;
 	}
-	printf("PATH1 ==== %s\n", path);
-	free_split_double(paths);
-	printf("PATH2 ==== %s\n", path);
+	if (paths)
+		free_split_double(paths);
 	return (path);
 }
 
@@ -56,17 +55,7 @@ char	*str_aux(char *str)
 	char	*aux;
 	char	*temp;
 	char	*tmp;
-	//char	*_aux;
 
-	/*s1 = ft_itoa(-125);
-	s2 = ft_itoa(-126);
-	s3 = ft_itoa(-127);
-	_aux = ft_itoa(-128);*/
-	/*
-	str = ft_strreplace(str, aux, "<");
-	str = ft_strreplace(str, temp, "<<");
-	str = ft_strreplace(str, tmp, ">");
-	str = ft_strreplace(str, _aux, ">>");*/
 	aux = ft_strreplace(str, "-125", "<");
 	temp = ft_strreplace(aux, "-126", "<<");
 	tmp = ft_strreplace(temp, "-127", ">");
@@ -74,34 +63,17 @@ char	*str_aux(char *str)
 	free (aux);
 	free (temp);
 	free (tmp);
-	/*free (_aux);
-	free (s1);
-	free(s2);
-	free (s3);*/
 	return (str);
 }
 
 void	print_error(t_data *data)
 {
-	//t_dict		*env;
 	char		*str;
 	char		*temp;
 	extern int	g_stats;
 	char		*aux;
-	//env = data->env;
+
 	str = data->commands->key;
-	/*while (env)
-	{
-		temp = ft_strjoin("$", env->key);
-		str = ft_strreplace(str, temp, env->value);
-		env = env->next;
-		free(temp);
-	}*/
-	/*
-	str = ft_strreplace(str, ft_itoa(-125), "<");
-	str = ft_strreplace(str, ft_itoa(-126), "<<");
-	str = ft_strreplace(str, ft_itoa(-127), ">");
-	str = ft_strreplace(str, ft_itoa(-128), ">>");*/
 	aux = str_aux(str);
 	temp = ft_strstr(data->commands->key, "/");
 	if (temp)
@@ -112,8 +84,6 @@ void	print_error(t_data *data)
 		g_stats = 127;
 		printf("minishell: %s: command not found\n", str);
 	}
-	//delete_all(env);
-	//free(temp);
 	free(aux);
 }
 

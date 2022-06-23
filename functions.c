@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/21 17:02:56 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/22 22:42:19 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,8 @@ char	*remove_quotes(char *str)
 	}
 	if (n == 0)
 		return (str);
-	temp = malloc(sizeof(char) * (ft_strlen(str) - n) + 1);
+	temp = malloc(sizeof(char) * (ft_strlen(str)) + 1);
+	temp = ft_memset(temp, 0, sizeof(char) * (ft_strlen(str) - n) + 1);
 	n = 0;
 	i = -1;
 	while (str[++i])
@@ -141,6 +142,7 @@ char	*remove_quotes(char *str)
 		}
 	}
 	temp[j] = '\0';
-	free (str);
+	if (str)
+		free (str);
 	return (temp);
 }
