@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:08:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 16:21:41 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:22:27 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,8 @@ t_dict	**add_to_dict(t_dict **result, int j, int count, char *str)
 	while (i-- > 0)
 		value[n++] = str[k++];
 	value[n] = '\0';
-	if (!value)
-		result[count] = dict_add_back_repeat
-			(result[count], dict_new(ft_itoa(str[j]), NULL));
-	else
-		result[count] = dict_add_back_repeat
-			(result[count], dict_new(ft_itoa(str[j]), ft_strdup(value)));
+	value = remove_quotes(value);
+	result[count] = (t_dict *)dict_add_back_repeat((t_dict *)result[count], (t_dict *)dict_new(ft_itoa(str[j]), ft_strdup(value)));
 	if (str)
 		free(str);
 	if (value)
@@ -131,16 +127,21 @@ t_data	*get_redirections(t_data *data, char *str)
 	int		n;
 	char	c;
 	int		count;
+	int		count_result;
 
 	data->redirections = get_n_commands(str);
 	j = -1;
 	count = 0;
+	count_result = 0;
 	n = 0;
 	while (str[++j] && !ft_str_equals(str, ""))
 	{
 		n = aux_aux(n, &c, str, j);
 		if (n == 0 && str[j] == '|')
+		{
 			count++;
+			count_result++;
+		}
 		if (str[j] == -128 || str[j] == -125
 			|| str[j] == -126 || str[j] == -127)
 		{
@@ -149,6 +150,7 @@ t_data	*get_redirections(t_data *data, char *str)
 			str = modify_str(str, j);
 			if (ft_str_equals(str, ""))
 			{
+				data->rediretions_conut = count_result;
 				data->str = str;
 				return (data);
 			}
@@ -156,6 +158,7 @@ t_data	*get_redirections(t_data *data, char *str)
 			count = 0;
 		}
 	}
+	data->rediretions_conut = count_result;
 	data->str = str;
 	return (data);
 }

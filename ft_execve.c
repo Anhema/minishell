@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 17:26:40 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:29:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	**join_env(t_dict *d_env)
 
 static char	**execv_aux(t_data *data, char **temp, char *key, char **argv)
 {
-
 	if (!temp)
 	{
 		argv = malloc(sizeof(char *) * 3);

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:01:00 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 16:20:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:23:31 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,11 @@ char	*ft_readline(t_data *data)
 	if (data->redirections)
 	{
 		i = 0;
-		while (data->redirections[i])
+		while (i < data->rediretions_conut)
 		{
 			delete_all(data->redirections[i]);
 			i++;
 		}
-		delete_all(data->redirections[i]);
 		free(data->redirections);
 	}
 	if (data->str)

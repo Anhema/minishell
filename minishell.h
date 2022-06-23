@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 18:15:06 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:14:27 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	t_dict					**redirections;
 	int						is_redir;
 	int						fd_aux;
+	int						rediretions_conut;
 	int						fd[2];
 }	t_data;
 
