@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:25:43 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:52:47 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ t_dict	*dict_add_back_repeat(t_dict *lst, t_dict *new)
 {
 	t_dict	*temp;
 
+	temp = lst;
 	if (lst == NULL)
 		lst = new;
 	else
 	{
-		temp = lst;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new;

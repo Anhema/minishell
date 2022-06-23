@@ -6,7 +6,11 @@
 /*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/23 18:18:19 by cbustama         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/23 17:14:27 by aherrero         ###   ########.fr       */
+>>>>>>> 0c4fa1cf89dff3153f72e1cdf088521879471a2f
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +48,7 @@ typedef struct s_data
 	t_dict					**redirections;
 	int						is_redir;
 	int						fd_aux;
+	int						rediretions_conut;
 	int						fd[2];
 }	t_data;
 

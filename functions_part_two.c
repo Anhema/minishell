@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:33:04 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 22:42:30 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:10:39 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_dict	*add_command(char *line, t_dict *command)
 	arguments = remove_quotes(arguments);
 	built = remove_quotes(get_builting(line_));
 	if (!arguments)
-		command = dict_add_back_repeat(command, dict_new(ft_strdup(built), NULL));
+		command = dict_add_back_repeat
+			(command, dict_new(ft_strdup(built), NULL));
 	else
 		command = dict_add_back_repeat
 			(command, dict_new(ft_strdup(built), ft_strdup(arguments)));
@@ -45,6 +46,7 @@ char	*remove_spaces_aux(char	*str, int i)
 	int		jj;
 	char	*temp;
 	char	*aux;
+	char	*aux_temp;
 
 	j = i;
 	jj = 0;
@@ -56,10 +58,12 @@ char	*remove_spaces_aux(char	*str, int i)
 	jj = i + jj;
 	temp = remove_spaces_aux_temp(str, i);
 	aux = remove_spaces_aux_aux(str, jj);
-	str = ft_strjoin(temp, " ");
-	str = ft_strjoin(str, aux);
+	free(str);
+	aux_temp = ft_strjoin(temp, " ");
+	str = ft_strjoin(aux_temp, aux);
 	free(temp);
 	free(aux);
+	free(aux_temp);
 	return (str);
 }
 
@@ -68,8 +72,8 @@ char	*remove_spaces_aux_aux(char *str, int jj)
 	char	*aux;
 	int		j;
 
-	aux = (char *)calloc((int)ft_strlen(str) - jj, sizeof(char));
-	aux = ft_memset(aux, 0, (int)ft_strlen(str) - jj);
+	aux = (char *)calloc((int)ft_strlen(str) - jj + 1, sizeof(char));
+	aux = ft_memset(aux, 0, (int)ft_strlen(str) - jj + 1);
 	j = 0;
 	while (str[jj])
 	{
