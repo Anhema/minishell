@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 15:31:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:29:12 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ static t_dict	*cd_aux(t_dict *temp, char *old_path)
 		free(aux);
 	return (temp);
 }
+
+/*static char	*free_cd()
+{
+
+}*/
 
 t_data	*_cd(char *str, char *usr, t_data *data)
 {

@@ -3,33 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execve.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 22:17:00 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:26:40 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**join_env(t_dict *d_env)
+static char	**aux_join_env(char **env, t_dict *temp, int j)
 {
-	char	**env;
-	int		i;
-	int		j;
-	t_dict	*temp;
 	char	*tmp;
 
-	temp = d_env;
-	i = 0;
-	while (temp)
-	{
-		temp = temp->next;
-		i++;
-	}
-	env = malloc(sizeof(char *) * (i + 1));
-	temp = d_env;
-	j = 0;
 	while (temp)
 	{
 		tmp = ft_strjoin(temp->key, "=");
@@ -41,6 +27,51 @@ char	**join_env(t_dict *d_env)
 	}
 	env[j] = NULL;
 	return (env);
+}
+
+char	**join_env(t_dict *d_env)
+{
+	char	**env;
+	int		i;
+	int		j;
+	t_dict	*temp;
+
+	temp = d_env;
+	i = 0;
+	while (temp)
+	{
+		temp = temp->next;
+		i++;
+	}
+	env = malloc(sizeof(char *) * (i + 1));
+	temp = d_env;
+	j = 0;
+	env = aux_join_env(env, temp, j);
+	env[j] = NULL;
+	return (env);
+}
+
+static char	**execv_aux(t_data *data, char **temp, char *key, char **argv)
+{
+
+	if (!temp)
+	{
+		argv = malloc(sizeof(char *) * 3);
+		argv[0] = key;
+		argv[1] = data->commands->value;
+		argv[2] = NULL;
+	}
+	return (argv);
+}
+
+static void	aux_execve_free(char **temp, char **argv, char **env, char *path)
+{
+	free_split_double(temp);
+	if (argv)
+		free(argv);
+	free_split_double(env);
+	if (path)
+		free(path);
 }
 
 void	ft_execve(t_data *data)
@@ -56,14 +87,8 @@ void	ft_execve(t_data *data)
 	env = NULL;
 	key = ft_strreplace(data->commands->key, "/bin/", "");
 	temp = ft_split(data->commands->value, ' ');
-	if (!temp)
-	{
-		argv = malloc(sizeof(char *) * 3);
-		argv[0] = key;
-		argv[1] = data->commands->value;
-		argv[2] = NULL;
-	}
-	else
+	argv = execv_aux(data, temp, key, argv);
+	if (temp)
 		argv = continue_execve(data, temp, argv, key);
 	env = join_env(data->env);
 	_execve_print(data);
@@ -71,13 +96,6 @@ void	ft_execve(t_data *data)
 	argv[0] = path;
 	if (execve(path, argv, env) < 0)
 		print_error(data);
-	if (temp)
-		free_split_double(temp);
-	if (argv)
-		free(argv);
-	if (env)
-		free_split_double(env);
-	if (path)
-		free(path);
+	aux_execve_free(temp, argv, env, path);
 	free(key);
 }

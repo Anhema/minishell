@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 18:05:36 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:35:52 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*expand(t_data *data)
 	return (data->str);
 }
 
-void	continue_echo(char *str, char *str_temp, int n, int i)
+static int	aux_echo(char *str, int n, int i)
 {
 	while (str[i] != ' ')
 	{
@@ -58,7 +58,13 @@ void	continue_echo(char *str, char *str_temp, int n, int i)
 	}
 	if (n == 1)
 		printf("");
-	else
+	return (i);
+}
+
+void	continue_echo(char *str, char *str_temp, int n, int i)
+{
+	i = aux_echo(str, n, i);
+	if (n != 1)
 	{
 		str_temp = malloc(sizeof(char) * (ft_strlen(str) - i));
 		i++;

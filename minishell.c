@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:11 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 18:07:51 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:58:08 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*aux_str(char *str, t_data *data, char **_unset)
+{
+	if (_unset)
+		free_split_double(_unset);
+	str = ft_readline(data);
+	return (str);
+}
 
 char	*cd_exit_syntax(t_data *data, char *str)
 {
@@ -34,9 +42,7 @@ char	*cd_exit_syntax(t_data *data, char *str)
 		if (data->commands->value)
 			_unset = ft_split(data->commands->value, ' ');
 		data->env = ft_unset(data->env, _unset);
-		if (_unset)
-			free_split_double(_unset);
-		str = ft_readline(data);
+		str = aux_str(str, data, _unset);
 		return (str);
 	}
 	return (NULL);
@@ -56,11 +62,6 @@ char	*minishell_loop(t_data *data, char *str)
 	data = get_redirections(data, str);
 	data->str = expand(data);
 	str = data->str;
-	// if (!data->str || ft_str_equals(data->str, ""))
-	// {
-	// 	str = ft_readline(data);
-	// 	return (str);
-	// }
 	data->commands = ft_pipe_parse(data->str);
 	if (data->commands)
 	{

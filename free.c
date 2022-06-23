@@ -6,7 +6,7 @@
 /*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 20:17:33 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/16 20:21:40 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:09:51 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	free_split_double(char **temp)
 	int	i;
 
 	i = -1;
+	if (!temp)
+		return ;
 	while (temp[++i])
 		free(temp[i]);
 	free(temp);
