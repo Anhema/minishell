@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+         #
+#    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/23 17:42:20 by cbustama         ###   ########.fr        #
+#    Updated: 2022/06/23 19:40:24 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = minishell
 
 SRC = minishell.c \
 		env.c \
+		env_aux.c \
 		dict.c \
 		dict_aux.c \
 		echo.c \

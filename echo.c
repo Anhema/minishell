@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 17:49:47 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:41:23 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	expand_aux(t_data *data, char *tmp, int *i)
+{
+	tmp = continue_expand_two(data->str, *i, tmp, data);
+	data->str = ft_strdup(tmp);
+	if (tmp)
+		free(tmp);
+	*i = 0;
+}
 
 char	*expand(t_data *data)
 {
@@ -34,11 +43,7 @@ char	*expand(t_data *data)
 				i++;
 				continue ;
 			}
-			tmp = continue_expand_two(data->str, i, tmp, data);
-			data->str = ft_strdup(tmp);
-			if (tmp)
-				free(tmp);
-			i = 0;
+			expand_aux(data, tmp, &i);
 		}
 		i++;
 	}

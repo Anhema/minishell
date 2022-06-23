@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/23 18:18:19 by cbustama         ###   ########.fr       */
-=======
-/*   Updated: 2022/06/23 17:14:27 by aherrero         ###   ########.fr       */
->>>>>>> 0c4fa1cf89dff3153f72e1cdf088521879471a2f
+/*   Updated: 2022/06/23 19:40:12 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +62,7 @@ t_dict	*dict_add_front(t_dict *lst, t_dict *new);
 char	*get_dict_value(t_dict *dict, char	*key);
 t_dict	*del_one(t_dict *dict, char	*key);
 void	delete_all(t_dict *dict);
+t_dict	*del_one_aux(t_dict *temp, t_dict *q, char *key);
 
 char	*remove_spaces(char	*str);
 char	*expand(t_data *data);
@@ -84,6 +81,9 @@ char	*syntax_redirections(char *str);
 char	*check_quotes(char *str);
 char	*get_path(char *_path, char *command);
 void	print_error(t_data *data);
+
+void	export_aux_continue(char *value,
+			char *key, char **key_value, t_data *data);
 
 t_dict	*ft_sort(char **c);
 void	ft_history(char *str);
@@ -109,6 +109,9 @@ char	*heredoc(t_data *data, t_dict *temp);
 char	*ft_readline_heredoc(t_data *data);
 void	redirections_aux(t_data *data, int fd_in, int temp_in, int temp_out);
 t_data	*redirections_fd(t_data *data, int fd_in, int temp_out, int j);
+char	*get_redirections_loop(t_data *data, char *str, int *j, int *count);
+void	add_to_dict_aux(char *str, char *value);
+t_dict	**add_to_dict(t_dict **result, int j, int count, char *str);
 
 char	**continue_execve(t_data *data, char **temp, char **argv, char *key);
 void	_execve_print(t_data *data);
@@ -146,5 +149,9 @@ char	*aux_get_path(char **paths, char *path);
 void	free_data_readline_two(t_data *data);
 void	free_data_readline(t_data *data);
 char	*aux_replace_redirections(char *str, char *temp, char c, int n);
+int		replace_aux(int n, char *c, char *str, int j);
+char	replace_char(char *str, int i, int n);
+
+void	end_redirections_aux(int temp_in, int temp_out, int pid, int status);
 
 #endif

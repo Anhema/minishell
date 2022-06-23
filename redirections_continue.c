@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:51:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 18:40:50 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:21:21 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ char	*get_redirections_loop(t_data *data, char *str, int *j, int *count)
 		*count = 0;
 		if (ft_str_equals(str, ""))
 		{
-			data->rediretions_conut = 0;
-			data->str = str;
+			data->rediretions_conut = 1;
+			free(str);
+			data->str = NULL;
 			return (NULL);
 		}
 	}

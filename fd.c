@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:00:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 18:15:48 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:30:38 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_data	*redirections_fd(t_data *data, int fd_in, int temp_out, int j)
 	int		fd_out;
 	int		outfile;
 
+	fd_out = 0;
 	dup2(fd_in, 0);
 	close(fd_in);
 	if (data->commands)
@@ -108,6 +109,8 @@ void	redirections_aux(t_data *data, int fd_in, int temp_in, int temp_out)
 	int		pid;
 	t_data	data_temp;
 
+	pid = 0;
+	status = 0;
 	data_temp = *data;
 	if (!data_temp.commands)
 	{
@@ -122,11 +125,7 @@ void	redirections_aux(t_data *data, int fd_in, int temp_in, int temp_out)
 		data_temp = *redirections_loop(&data_temp, &pid);
 		j++;
 	}
-	dup2(temp_in, 0);
-	dup2(temp_out, 1);
-	close(temp_out);
-	close(temp_in);
-	waitpid(pid, &status, 0);
+	end_redirections_aux(temp_in, temp_out, pid, status);
 	expand_execve(data, status);
 	if (open(".redir", O_RDONLY, 0000644) >= 0)
 		unlink(".redir");

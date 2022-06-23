@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   aux_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:41:29 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/23 18:18:44 by cbustama         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:31:47 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ void	free_data_readline_two(t_data *data)
 	if (data->redirections)
 	{
 		i = 0;
-		while (data->redirections[i])
+		while (i <= data->rediretions_conut)
 		{
 			delete_all(data->redirections[i]);
 			i++;
 		}
-		delete_all(data->redirections[i]);
 		free(data->redirections);
 	}
 	if (data->str)
@@ -85,4 +84,13 @@ char	*aux_replace_redirections(char *str, char *temp, char c, int n)
 	}
 	free(str);
 	return (temp);
+}
+
+void	end_redirections_aux(int temp_in, int temp_out, int pid, int status)
+{
+	dup2(temp_in, 0);
+	dup2(temp_out, 1);
+	close(temp_out);
+	close(temp_in);
+	waitpid(pid, &status, 0);
 }

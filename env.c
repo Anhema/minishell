@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 17:49:51 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:50:53 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 19:38:29 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ t_dict	*export_aux(char **str, t_data *data, int i)
 	key = NULL;
 	value = NULL;
 	if (!((str[i][0] >= 'a' && str[i][0] <= 'z')
-	|| (str[i][0] >= 'A' && str[i][0] <= 'Z')
-	|| (str[i][0] >= '_')))
+	|| (str[i][0] >= 'A' && str[i][0] <= 'Z') || (str[i][0] >= '_')))
 	{
 		g_stats = 1;
 		printf("export: `%s': not a valid identifier\n", str[i]);
@@ -78,15 +77,7 @@ t_dict	*export_aux(char **str, t_data *data, int i)
 		key = ft_strdup(key_value[0]);
 	if (key_value[1])
 		value = ft_strdup(key_value[1]);
-	if (value)
-		data->env = dict_add_back
-			(data->env, dict_new(ft_strdup(key), ft_strdup(value)));
-	else
-		data->env = dict_add_back
-			(data->env, dict_new(ft_strdup(key), NULL));
-	free_split_double(key_value);
-	free(key);
-	free(value);
+	export_aux_continue(value, key, key_value, data);
 	return (data->env);
 }
 
