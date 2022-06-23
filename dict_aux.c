@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dict_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 15:34:51 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:09:34 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	delete_all(t_dict *dict)
 {
 	t_dict	*temp;
 
+	if (!dict)
+		return ;
 	while (dict)
 	{
 		temp = dict->next;

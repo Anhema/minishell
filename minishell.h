@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 18:15:06 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:18:19 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,5 +137,9 @@ char	*get_builting(char	*str);
 
 void	free_split(char *temp);
 void	free_split_double(char **temp);
+char	*aux_get_path(char **paths, char *path);
+void	free_data_readline_two(t_data *data);
+void	free_data_readline(t_data *data);
+char	*aux_replace_redirections(char *str, char *temp, char c, int n);
 
 #endif

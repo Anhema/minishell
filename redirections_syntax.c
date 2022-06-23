@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_syntax.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: cbustama <cbustama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 20:09:05 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:51:45 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:18:34 by cbustama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,19 +123,6 @@ char	*replace_redirections(char *str)
 	i = -1;
 	temp = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	ft_memset(temp, 0, sizeof(char) * (ft_strlen(str) + 1));
-	while (str[++i])
-	{
-		n = replace_aux(n, &c, str, j);
-		if (n == 0)
-		{
-			temp[j] = replace_char(str, i, n);
-			if (temp[j] == -126 || temp[j] == -125)
-				i++;
-		}
-		else
-			temp[j] = str[i];
-		j++;
-	}
-	free (str);
+	temp = aux_replace_redirections(str, temp, c, n);
 	return (temp);
 }
