@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:29:25 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 21:21:36 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:54:29 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,9 @@ t_dict	*ft_pipe_parse_end(char *str, int last, t_dict *commands, int i)
 		j++;
 	}
 	temp[j] = '\0';
-	commands = add_command(ft_strdup(temp), commands);
-	free(temp);
+	if (!ft_str_equals(temp, "") && temp)
+		commands = add_command(ft_strdup(temp), commands);
+	if (temp)
+		free(temp);
 	return (commands);
 }

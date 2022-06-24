@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 16:41:22 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 23:12:48 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:40:55 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	ft_execve(t_data *data)
 	argv = NULL;
 	path = NULL;
 	env = NULL;
+	if (data->infile_error)
+		return ;
 	key = ft_strreplace(data->commands->key, "/bin/", "");
 	temp = ft_split(data->commands->value, ' ');
 	argv = execv_aux(data, temp, key, argv);

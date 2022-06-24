@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 19:26:30 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/23 23:13:14 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:54:18 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void	print_error(t_data *data, char *path)
 	extern int	g_stats;
 	char		*aux;
 
-	if (!path)
+	(void)path;
+	if (data->infile_error)
 		return ;
 	str = data->commands->key;
 	aux = str_aux(str);
@@ -86,6 +87,8 @@ void	_execve_print(t_data *data)
 	{
 		printf("minishell: %s: No such file or directory\n",
 			data->commands->key);
+		data->infile_error = 1;
+		g_stats = 127;
 		return ;
 	}
 }

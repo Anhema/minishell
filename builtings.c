@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 18:49:58 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/22 16:57:09 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 19:25:09 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,23 @@ void	ft_exit(char *str, t_data *data)
 {
 	int	n;
 	int	i;
+	int	space;
 
 	i = -1;
 	n = 0;
+	space = 0;
 	if (data->commands->value)
 	{
 		while (data->commands->value[++i])
 		{
-			if (data->commands->value[i] == '-')
-				continue ;
-			if (data->commands->value[i] < 47
-				|| data->commands->value[i] > 57)
+			if (space >= 1)
 			{
-				printf("exit: %s: numeric argument required\n",
-					data->commands->value);
-				exit(255);
+				g_stats = 1;
+				printf("exit\nminishell: exit: too many arguments\n");
+				return ;
 			}
+			if (ft_exit_end(data, i, &space))
+				continue ;
 		}
 		n = ft_magic_nbr(n, data);
 	}

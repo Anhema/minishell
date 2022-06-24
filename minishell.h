@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 16:34:28 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 23:13:34 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 19:18:17 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	t_dict					**redirections;
 	int						is_redir;
 	int						fd_aux;
+	int						infile_error;
 	int						rediretions_conut;
 	int						fd[2];
 }	t_data;
@@ -65,7 +66,7 @@ void	delete_all(t_dict *dict);
 void	del_one_aux(t_dict *temp, t_dict *q, char *key);
 
 char	*remove_spaces(char	*str);
-char	*expand(t_data *data);
+char	*expand(t_data *data, char *str);
 char	*ft_readline(t_data *data);
 char	*replace_redirections(char *str);
 char	*delete_redirections(char *str);
@@ -81,6 +82,7 @@ char	*syntax_redirections(char *str);
 char	*check_quotes(char *str);
 char	*get_path(char *_path, char *command);
 void	print_error(t_data *data, char *path);
+char	*minishell_loop(t_data *data, char *str);
 
 void	export_aux_continue(char *value,
 			char *key, char **key_value, t_data *data);
@@ -98,8 +100,9 @@ t_data	*get_redirections(t_data *data, char *str);
 t_data	*redirections(t_data *data);
 t_data	*builtings(t_data *data, char *str);
 void	ft_exit(char *str, t_data *data);
+int		ft_exit_end(t_data *data, int i, int *space);
 char	*here_doc(t_data data, t_dict *temp);
-void	expand_execve(t_data *data, int status);
+void	expand_execve(int status);
 
 void	free_mem(t_data *data, char *str);
 

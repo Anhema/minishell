@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 18:27:53 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 22:52:15 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:45:52 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ char	*get_redirections_aux_continue(int j, int k, int kk, char *str)
 	char	*value_aux;
 	char	*result;
 
-	value = (char *)malloc(sizeof(char) * (j + 1));
-	ft_memset(value, 0, sizeof(char) * (j + 1));
+	value = ft_calloc((j + 1), sizeof(char));
 	kk = 0;
 	while (kk < j)
 	{
@@ -35,8 +34,10 @@ char	*get_redirections_aux_continue(int j, int k, int kk, char *str)
 		k++;
 	}
 	result = ft_strjoin(value, value_aux);
-	free(value_aux);
-	free(value);
+	if (value_aux)
+		free(value_aux);
+	if (value)
+		free(value);
 	return (result);
 }
 

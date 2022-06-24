@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 17:11:20 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 22:43:08 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 19:09:48 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,22 @@ static t_data	*expand_aux(t_data *data, char *tmp, int *i)
 	return (data);
 }
 
-char	*expand(t_data *data)
+char	*expand(t_data *data, char *str)
 {
 	int		i;
 	char	c;
 	char	*tmp;
 
+	data->str = ft_strdup(str);
 	if (!data->str || ft_str_equals(data->str, ""))
 		return (data->str);
 	c = 0;
-	i = 0;
+	i = -1;
 	tmp = NULL;
-	while (data->str[i] && i <= (int)ft_strlen(data->str))
+	while (data->str[++i] && i <= (int)ft_strlen(data->str))
 	{
 		c = continue_expand(c, i, data->str);
-		if (data->str[i] == '$' && c != '\'' && i > 1)
+		if (data->str[i] == '$' && c != '\'')
 		{
 			if (data->str[i + 1] == ' ' || data->str[i + 1] == '\0')
 			{
@@ -45,34 +46,35 @@ char	*expand(t_data *data)
 			}
 			data = expand_aux(data, tmp, &i);
 		}
-		i++;
 	}
+	free (str);
 	return (data->str);
 }
 
-static int	aux_echo(char *str, int n, int i)
+static int	aux_echo(char *str, int *n, int i)
 {
-	while (str[i] != ' ')
+	while (str[i] != ' ' && str[i])
 	{
 		if (str[i] != 'n')
 		{
-			n = 1;
+			*n = 1;
 			break ;
 		}
 		i++;
-	}
-	if (n == 1)
+	}	
+	if (*n == 1)
 		printf("");
 	return (i);
 }
 
 void	continue_echo(char *str, char *str_temp, int n, int i)
 {
-	i = aux_echo(str, n, i);
+	i = aux_echo(str, &n, i);
 	if (n != 1)
 	{
-		str_temp = malloc(sizeof(char) * (ft_strlen(str) - i));
-		i++;
+		str_temp = malloc(sizeof(char) * (ft_strlen(str) - i) + 1);
+		if ((int)ft_strlen(str) > i)
+			i++;
 		n = 0;
 		while (str[i])
 		{
@@ -84,6 +86,8 @@ void	continue_echo(char *str, char *str_temp, int n, int i)
 		printf("%s", str_temp);
 		free(str_temp);
 	}
+	else
+		printf("%s\n", str);
 }
 
 void	ft_echo(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 17:00:01 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 23:07:36 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:44:13 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void	redirections_aux(t_data *data, int fd_in, int temp_in, int temp_out)
 		j++;
 	}
 	end_redirections_aux(temp_in, temp_out, pid, status);
-	expand_execve(data, status);
 	if (open(".redir", O_RDONLY, 0000644) >= 0)
 		unlink(".redir");
 }

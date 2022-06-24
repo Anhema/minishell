@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 17:41:29 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/23 22:34:37 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:43:15 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	free_data_readline_two(t_data *data)
 		}
 		free(data->redirections);
 	}
-	if (data->str)
-		free(data->str);
 }
 
 void	free_data_readline(t_data *data)
@@ -93,4 +91,5 @@ void	end_redirections_aux(int temp_in, int temp_out, int pid, int status)
 	close(temp_out);
 	close(temp_in);
 	waitpid(pid, &status, 0);
+	expand_execve(status);
 }

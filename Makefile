@@ -6,13 +6,14 @@
 #    By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 16:29:52 by aherrero          #+#    #+#              #
-#    Updated: 2022/06/23 22:16:43 by aherrero         ###   ########.fr        #
+#    Updated: 2022/06/24 19:06:41 by aherrero         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
 SRC = minishell.c \
+		main.c \
 		env.c \
 		env_aux.c \
 		dict.c \

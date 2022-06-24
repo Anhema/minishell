@@ -6,17 +6,16 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 18:55:58 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/09 17:25:15 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 17:43:41 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_execve(t_data *data, int status)
+void	expand_execve(int status)
 {
 	extern int	g_stats;
 
-	(void)data;
 	if (WIFEXITED(status))
 		g_stats = WEXITSTATUS(status);
 	if (WIFSIGNALED(status))

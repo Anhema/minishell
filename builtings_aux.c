@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:54:19 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/17 19:01:11 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:33:28 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*check_infile_aux(t_data *data, t_dict *temp, char *infile)
 				str = ft_strjoin("minishell: ", temp->value);
 				perror(str);
 				free (str);
+				data->infile_error = 1;
 				return ("1_");
 			}
 			else
@@ -53,6 +54,7 @@ char	*check_infile_aux(t_data *data, t_dict *temp, char *infile)
 			infile = heredoc(data, temp);
 		temp = temp->next;
 	}
+	data->infile_error = 0;
 	return (infile);
 }
 

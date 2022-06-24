@@ -6,7 +6,7 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:19:32 by cbustama          #+#    #+#             */
-/*   Updated: 2022/06/23 22:30:17 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:45:58 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,5 @@ char	*remove_quotes(char *str)
 		return (str);
 	temp = (char *)calloc((int)ft_strlen(str) + 1, sizeof(char));
 	temp = aux_quotes_two(temp, str);
-	if (str)
-		free (str);
 	return (temp);
 }
