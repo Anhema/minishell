@@ -6,23 +6,37 @@
 /*   By: aherrero <aherrero@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 22:33:04 by aherrero          #+#    #+#             */
-/*   Updated: 2022/06/23 23:07:23 by aherrero         ###   ########.fr       */
+/*   Updated: 2022/06/24 19:33:44 by aherrero         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	free_add_command(char *line_,
+	char *arguments, char *arguments_temp, char *built)
+{
+	if (line_)
+		free(line_);
+	if (arguments)
+		free(arguments);
+	if (arguments_temp)
+		free(arguments_temp);
+	if (built && line_ != built)
+		free(built);
+}
+
 t_dict	*add_command(char *line, t_dict *command)
 {
 	char	*arguments;
+	char	*arguments_temp;
 	char	*line_;
 	char	*built;
 
 	if (!line)
 		return (command);
 	line_ = space_front_to_back(line);
-	arguments = get_arguments(line_);
-	arguments = remove_quotes(arguments);
+	arguments_temp = get_arguments(line_);
+	arguments = remove_quotes(arguments_temp);
 	built = remove_quotes(get_builting(line_));
 	if (!built && !arguments)
 		command = NULL;
@@ -32,12 +46,7 @@ t_dict	*add_command(char *line, t_dict *command)
 	else
 		command = dict_add_back_repeat
 			(command, dict_new(ft_strdup(built), ft_strdup(arguments)));
-	if (line_)
-		free(line_);
-	if (arguments)
-		free(arguments);
-	if (built && line_ != built)
-		free(built);
+	free_add_command(line_, arguments, arguments_temp, built);
 	return (command);
 }
 
